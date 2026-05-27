@@ -102,7 +102,7 @@ function VerificationDrawer({ listing, onClose }: { listing: Listing | null; onC
               <span className="text-sm font-medium">{listing.scoreConfianca}/100</span>
             </div>
             {listing.alertaPrecoSuspeito && (
-              <p className="mt-2 text-xs text-amber-700">⚠️ Preço abaixo de 50% da FIPE</p>
+              <p className="mt-2 text-xs text-amber-700">⚠️ Preço suspeitamente abaixo do mercado</p>
             )}
             {listing.fotoDuplicadaFlag && (
               <p className="mt-1 text-xs text-amber-700">⚠️ Foto duplicada detectada</p>
@@ -250,7 +250,6 @@ function AdminListings() {
               <TableHead>Condição</TableHead>
               <TableHead>Vendedor</TableHead>
               <TableHead>Preço</TableHead>
-              <TableHead>% FIPE</TableHead>
               <TableHead>Local</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Criado</TableHead>
@@ -262,7 +261,6 @@ function AdminListings() {
             {paged.map((l) => {
               const seller = users.find((u) => u.id === l.sellerId);
               const verif = getVerificationIcon(l.id);
-              const fipeColor = l.percFipe < -30 ? "text-amber-600" : l.percFipe > 50 ? "text-[#185FA5]" : "text-foreground";
               return (
                 <TableRow key={l.id} className={`hover:bg-secondary/60 ${VERIFICATION_RED.has(l.id) ? "bg-red-50/50" : ""}`}>
                   <TableCell><Checkbox checked={selected.has(l.id)} onCheckedChange={() => toggle(l.id)} /></TableCell>
@@ -279,9 +277,6 @@ function AdminListings() {
                     </Link>
                   </TableCell>
                   <TableCell className="text-sm">{formatPrice(l.price)}</TableCell>
-                  <TableCell className={`text-sm font-medium ${fipeColor}`}>
-                    {l.percFipe > 0 ? "+" : ""}{l.percFipe}%
-                  </TableCell>
                   <TableCell className="text-sm whitespace-nowrap">{l.city}/{l.state}</TableCell>
                   <TableCell><StatusBadge tone={STATUS_TONE[l.status]}>{l.status}</StatusBadge></TableCell>
                   <TableCell className="text-xs text-muted-foreground">{formatDate(l.createdAt)}</TableCell>
