@@ -5,7 +5,6 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CategoryChip } from "@/components/CategoryChip";
 import { EmptyState } from "@/components/EmptyState";
-import { FipeTag } from "@/components/FipeTag";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -92,7 +91,7 @@ function Index() {
             </h1>
             <p className="mt-5 max-w-xl text-base md:text-lg leading-relaxed text-white/70">
               Compre e venda Opalas, Fuscas, Galaxies, Kombis e outras lendas brasileiras
-              com transparência, FIPE verificado e contato direto com o dono.
+              com transparência, curadoria especializada e contato direto com o dono.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
@@ -137,7 +136,7 @@ function Index() {
       <section className="border-b border-border bg-card/60">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px overflow-hidden md:grid-cols-4 px-6">
           {[
-            { icon: ShieldCheck, title: "FIPE verificado", desc: "Preço comparado em tempo real" },
+            { icon: ShieldCheck, title: "Documentação validada", desc: "Chassi, motor e situação fiscal" },
             { icon: Sparkles, title: "Score de confiança", desc: "Anunciantes com histórico" },
             { icon: Handshake, title: "Contato direto", desc: "Sem atravessador, sem taxa" },
             { icon: Award, title: "Curadoria de clássicos", desc: "Só carros 20+ anos" },
@@ -388,7 +387,6 @@ function Index() {
 
                       {/* Tags */}
                       <div className="flex flex-wrap gap-1.5">
-                        <FipeTag perc={listing.percFipe} />
                         <ScoreBadge score={listing.scoreConfianca} />
                       </div>
 
