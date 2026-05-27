@@ -9,38 +9,526 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as MinhaContaRouteImport } from './routes/minha-conta'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
+import { Route as CriarRouteImport } from './routes/criar'
+import { Route as CompraSeguraRouteImport } from './routes/compra-segura'
+import { Route as CompararRouteImport } from './routes/comparar'
+import { Route as ChatRouteImport } from './routes/chat'
+import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as BlogRouteImport } from './routes/blog'
+import { Route as AnunciosRouteImport } from './routes/anuncios'
+import { Route as AnunciarRouteImport } from './routes/anunciar'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as PerfilIdRouteImport } from './routes/perfil.$id'
+import { Route as CarIdRouteImport } from './routes/car.$id'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AnunciosIdRouteImport } from './routes/anuncios.$id'
+import { Route as AdminUsuariosRouteImport } from './routes/admin.usuarios'
+import { Route as AdminSegurancaRouteImport } from './routes/admin.seguranca'
+import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
+import { Route as AdminPendentesRouteImport } from './routes/admin.pendentes'
+import { Route as AdminPagamentosRouteImport } from './routes/admin.pagamentos'
+import { Route as AdminDenunciasRouteImport } from './routes/admin.denuncias'
+import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
+import { Route as AdminConfigRouteImport } from './routes/admin.config'
+import { Route as AdminChatRouteImport } from './routes/admin.chat'
+import { Route as AdminCadastrosPendentesRouteImport } from './routes/admin.cadastros-pendentes'
+import { Route as AdminBlogRouteImport } from './routes/admin.blog'
+import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MinhaContaRoute = MinhaContaRouteImport.update({
+  id: '/minha-conta',
+  path: '/minha-conta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EsqueciSenhaRoute = EsqueciSenhaRouteImport.update({
+  id: '/esqueci-senha',
+  path: '/esqueci-senha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CriarRoute = CriarRouteImport.update({
+  id: '/criar',
+  path: '/criar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompraSeguraRoute = CompraSeguraRouteImport.update({
+  id: '/compra-segura',
+  path: '/compra-segura',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompararRoute = CompararRouteImport.update({
+  id: '/comparar',
+  path: '/comparar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatRoute = ChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnunciosRoute = AnunciosRouteImport.update({
+  id: '/anuncios',
+  path: '/anuncios',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnunciarRoute = AnunciarRouteImport.update({
+  id: '/anunciar',
+  path: '/anunciar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const PerfilIdRoute = PerfilIdRouteImport.update({
+  id: '/perfil/$id',
+  path: '/perfil/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CarIdRoute = CarIdRouteImport.update({
+  id: '/car/$id',
+  path: '/car/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
+const AnunciosIdRoute = AnunciosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => AnunciosRoute,
+} as any)
+const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
+  id: '/usuarios',
+  path: '/usuarios',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSegurancaRoute = AdminSegurancaRouteImport.update({
+  id: '/seguranca',
+  path: '/seguranca',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPlanosRoute = AdminPlanosRouteImport.update({
+  id: '/planos',
+  path: '/planos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPendentesRoute = AdminPendentesRouteImport.update({
+  id: '/pendentes',
+  path: '/pendentes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPagamentosRoute = AdminPagamentosRouteImport.update({
+  id: '/pagamentos',
+  path: '/pagamentos',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminDenunciasRoute = AdminDenunciasRouteImport.update({
+  id: '/denuncias',
+  path: '/denuncias',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfigRoute = AdminConfigRouteImport.update({
+  id: '/config',
+  path: '/config',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminChatRoute = AdminChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCadastrosPendentesRoute = AdminCadastrosPendentesRouteImport.update({
+  id: '/cadastros-pendentes',
+  path: '/cadastros-pendentes',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogRoute = AdminBlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnunciosRoute = AdminAnunciosRouteImport.update({
+  id: '/anuncios',
+  path: '/anuncios',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/anunciar': typeof AnunciarRoute
+  '/anuncios': typeof AnunciosRouteWithChildren
+  '/blog': typeof BlogRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/chat': typeof ChatRoute
+  '/comparar': typeof CompararRoute
+  '/compra-segura': typeof CompraSeguraRoute
+  '/criar': typeof CriarRoute
+  '/esqueci-senha': typeof EsqueciSenhaRoute
+  '/favoritos': typeof FavoritosRoute
+  '/login': typeof LoginRoute
+  '/minha-conta': typeof MinhaContaRoute
+  '/register': typeof RegisterRoute
+  '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/cadastros-pendentes': typeof AdminCadastrosPendentesRoute
+  '/admin/chat': typeof AdminChatRoute
+  '/admin/config': typeof AdminConfigRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/denuncias': typeof AdminDenunciasRoute
+  '/admin/pagamentos': typeof AdminPagamentosRoute
+  '/admin/pendentes': typeof AdminPendentesRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/seguranca': typeof AdminSegurancaRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
+  '/anuncios/$id': typeof AnunciosIdRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/car/$id': typeof CarIdRoute
+  '/perfil/$id': typeof PerfilIdRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/anunciar': typeof AnunciarRoute
+  '/anuncios': typeof AnunciosRouteWithChildren
+  '/blog': typeof BlogRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/chat': typeof ChatRoute
+  '/comparar': typeof CompararRoute
+  '/compra-segura': typeof CompraSeguraRoute
+  '/criar': typeof CriarRoute
+  '/esqueci-senha': typeof EsqueciSenhaRoute
+  '/favoritos': typeof FavoritosRoute
+  '/login': typeof LoginRoute
+  '/minha-conta': typeof MinhaContaRoute
+  '/register': typeof RegisterRoute
+  '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/cadastros-pendentes': typeof AdminCadastrosPendentesRoute
+  '/admin/chat': typeof AdminChatRoute
+  '/admin/config': typeof AdminConfigRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/denuncias': typeof AdminDenunciasRoute
+  '/admin/pagamentos': typeof AdminPagamentosRoute
+  '/admin/pendentes': typeof AdminPendentesRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/seguranca': typeof AdminSegurancaRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
+  '/anuncios/$id': typeof AnunciosIdRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/car/$id': typeof CarIdRoute
+  '/perfil/$id': typeof PerfilIdRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/anunciar': typeof AnunciarRoute
+  '/anuncios': typeof AnunciosRouteWithChildren
+  '/blog': typeof BlogRouteWithChildren
+  '/cadastro': typeof CadastroRoute
+  '/chat': typeof ChatRoute
+  '/comparar': typeof CompararRoute
+  '/compra-segura': typeof CompraSeguraRoute
+  '/criar': typeof CriarRoute
+  '/esqueci-senha': typeof EsqueciSenhaRoute
+  '/favoritos': typeof FavoritosRoute
+  '/login': typeof LoginRoute
+  '/minha-conta': typeof MinhaContaRoute
+  '/register': typeof RegisterRoute
+  '/admin/anuncios': typeof AdminAnunciosRoute
+  '/admin/blog': typeof AdminBlogRoute
+  '/admin/cadastros-pendentes': typeof AdminCadastrosPendentesRoute
+  '/admin/chat': typeof AdminChatRoute
+  '/admin/config': typeof AdminConfigRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
+  '/admin/denuncias': typeof AdminDenunciasRoute
+  '/admin/pagamentos': typeof AdminPagamentosRoute
+  '/admin/pendentes': typeof AdminPendentesRoute
+  '/admin/planos': typeof AdminPlanosRoute
+  '/admin/seguranca': typeof AdminSegurancaRoute
+  '/admin/usuarios': typeof AdminUsuariosRoute
+  '/anuncios/$id': typeof AnunciosIdRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/car/$id': typeof CarIdRoute
+  '/perfil/$id': typeof PerfilIdRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/admin'
+    | '/anunciar'
+    | '/anuncios'
+    | '/blog'
+    | '/cadastro'
+    | '/chat'
+    | '/comparar'
+    | '/compra-segura'
+    | '/criar'
+    | '/esqueci-senha'
+    | '/favoritos'
+    | '/login'
+    | '/minha-conta'
+    | '/register'
+    | '/admin/anuncios'
+    | '/admin/blog'
+    | '/admin/cadastros-pendentes'
+    | '/admin/chat'
+    | '/admin/config'
+    | '/admin/configuracoes'
+    | '/admin/denuncias'
+    | '/admin/pagamentos'
+    | '/admin/pendentes'
+    | '/admin/planos'
+    | '/admin/seguranca'
+    | '/admin/usuarios'
+    | '/anuncios/$id'
+    | '/blog/$slug'
+    | '/car/$id'
+    | '/perfil/$id'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/anunciar'
+    | '/anuncios'
+    | '/blog'
+    | '/cadastro'
+    | '/chat'
+    | '/comparar'
+    | '/compra-segura'
+    | '/criar'
+    | '/esqueci-senha'
+    | '/favoritos'
+    | '/login'
+    | '/minha-conta'
+    | '/register'
+    | '/admin/anuncios'
+    | '/admin/blog'
+    | '/admin/cadastros-pendentes'
+    | '/admin/chat'
+    | '/admin/config'
+    | '/admin/configuracoes'
+    | '/admin/denuncias'
+    | '/admin/pagamentos'
+    | '/admin/pendentes'
+    | '/admin/planos'
+    | '/admin/seguranca'
+    | '/admin/usuarios'
+    | '/anuncios/$id'
+    | '/blog/$slug'
+    | '/car/$id'
+    | '/perfil/$id'
+    | '/admin'
+  id:
+    | '__root__'
+    | '/'
+    | '/admin'
+    | '/anunciar'
+    | '/anuncios'
+    | '/blog'
+    | '/cadastro'
+    | '/chat'
+    | '/comparar'
+    | '/compra-segura'
+    | '/criar'
+    | '/esqueci-senha'
+    | '/favoritos'
+    | '/login'
+    | '/minha-conta'
+    | '/register'
+    | '/admin/anuncios'
+    | '/admin/blog'
+    | '/admin/cadastros-pendentes'
+    | '/admin/chat'
+    | '/admin/config'
+    | '/admin/configuracoes'
+    | '/admin/denuncias'
+    | '/admin/pagamentos'
+    | '/admin/pendentes'
+    | '/admin/planos'
+    | '/admin/seguranca'
+    | '/admin/usuarios'
+    | '/anuncios/$id'
+    | '/blog/$slug'
+    | '/car/$id'
+    | '/perfil/$id'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AnunciarRoute: typeof AnunciarRoute
+  AnunciosRoute: typeof AnunciosRouteWithChildren
+  BlogRoute: typeof BlogRouteWithChildren
+  CadastroRoute: typeof CadastroRoute
+  ChatRoute: typeof ChatRoute
+  CompararRoute: typeof CompararRoute
+  CompraSeguraRoute: typeof CompraSeguraRoute
+  CriarRoute: typeof CriarRoute
+  EsqueciSenhaRoute: typeof EsqueciSenhaRoute
+  FavoritosRoute: typeof FavoritosRoute
+  LoginRoute: typeof LoginRoute
+  MinhaContaRoute: typeof MinhaContaRoute
+  RegisterRoute: typeof RegisterRoute
+  CarIdRoute: typeof CarIdRoute
+  PerfilIdRoute: typeof PerfilIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/minha-conta': {
+      id: '/minha-conta'
+      path: '/minha-conta'
+      fullPath: '/minha-conta'
+      preLoaderRoute: typeof MinhaContaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/esqueci-senha': {
+      id: '/esqueci-senha'
+      path: '/esqueci-senha'
+      fullPath: '/esqueci-senha'
+      preLoaderRoute: typeof EsqueciSenhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/criar': {
+      id: '/criar'
+      path: '/criar'
+      fullPath: '/criar'
+      preLoaderRoute: typeof CriarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compra-segura': {
+      id: '/compra-segura'
+      path: '/compra-segura'
+      fullPath: '/compra-segura'
+      preLoaderRoute: typeof CompraSeguraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comparar': {
+      id: '/comparar'
+      path: '/comparar'
+      fullPath: '/comparar'
+      preLoaderRoute: typeof CompararRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat': {
+      id: '/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof ChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anuncios': {
+      id: '/anuncios'
+      path: '/anuncios'
+      fullPath: '/anuncios'
+      preLoaderRoute: typeof AnunciosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anunciar': {
+      id: '/anunciar'
+      path: '/anunciar'
+      fullPath: '/anunciar'
+      preLoaderRoute: typeof AnunciarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +536,203 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/perfil/$id': {
+      id: '/perfil/$id'
+      path: '/perfil/$id'
+      fullPath: '/perfil/$id'
+      preLoaderRoute: typeof PerfilIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/car/$id': {
+      id: '/car/$id'
+      path: '/car/$id'
+      fullPath: '/car/$id'
+      preLoaderRoute: typeof CarIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
+    '/anuncios/$id': {
+      id: '/anuncios/$id'
+      path: '/$id'
+      fullPath: '/anuncios/$id'
+      preLoaderRoute: typeof AnunciosIdRouteImport
+      parentRoute: typeof AnunciosRoute
+    }
+    '/admin/usuarios': {
+      id: '/admin/usuarios'
+      path: '/usuarios'
+      fullPath: '/admin/usuarios'
+      preLoaderRoute: typeof AdminUsuariosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/seguranca': {
+      id: '/admin/seguranca'
+      path: '/seguranca'
+      fullPath: '/admin/seguranca'
+      preLoaderRoute: typeof AdminSegurancaRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/planos': {
+      id: '/admin/planos'
+      path: '/planos'
+      fullPath: '/admin/planos'
+      preLoaderRoute: typeof AdminPlanosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pendentes': {
+      id: '/admin/pendentes'
+      path: '/pendentes'
+      fullPath: '/admin/pendentes'
+      preLoaderRoute: typeof AdminPendentesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/pagamentos': {
+      id: '/admin/pagamentos'
+      path: '/pagamentos'
+      fullPath: '/admin/pagamentos'
+      preLoaderRoute: typeof AdminPagamentosRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/denuncias': {
+      id: '/admin/denuncias'
+      path: '/denuncias'
+      fullPath: '/admin/denuncias'
+      preLoaderRoute: typeof AdminDenunciasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/configuracoes': {
+      id: '/admin/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/admin/configuracoes'
+      preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/config': {
+      id: '/admin/config'
+      path: '/config'
+      fullPath: '/admin/config'
+      preLoaderRoute: typeof AdminConfigRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/chat': {
+      id: '/admin/chat'
+      path: '/chat'
+      fullPath: '/admin/chat'
+      preLoaderRoute: typeof AdminChatRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/cadastros-pendentes': {
+      id: '/admin/cadastros-pendentes'
+      path: '/cadastros-pendentes'
+      fullPath: '/admin/cadastros-pendentes'
+      preLoaderRoute: typeof AdminCadastrosPendentesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blog': {
+      id: '/admin/blog'
+      path: '/blog'
+      fullPath: '/admin/blog'
+      preLoaderRoute: typeof AdminBlogRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/anuncios': {
+      id: '/admin/anuncios'
+      path: '/anuncios'
+      fullPath: '/admin/anuncios'
+      preLoaderRoute: typeof AdminAnunciosRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
+interface AdminRouteChildren {
+  AdminAnunciosRoute: typeof AdminAnunciosRoute
+  AdminBlogRoute: typeof AdminBlogRoute
+  AdminCadastrosPendentesRoute: typeof AdminCadastrosPendentesRoute
+  AdminChatRoute: typeof AdminChatRoute
+  AdminConfigRoute: typeof AdminConfigRoute
+  AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
+  AdminDenunciasRoute: typeof AdminDenunciasRoute
+  AdminPagamentosRoute: typeof AdminPagamentosRoute
+  AdminPendentesRoute: typeof AdminPendentesRoute
+  AdminPlanosRoute: typeof AdminPlanosRoute
+  AdminSegurancaRoute: typeof AdminSegurancaRoute
+  AdminUsuariosRoute: typeof AdminUsuariosRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnunciosRoute: AdminAnunciosRoute,
+  AdminBlogRoute: AdminBlogRoute,
+  AdminCadastrosPendentesRoute: AdminCadastrosPendentesRoute,
+  AdminChatRoute: AdminChatRoute,
+  AdminConfigRoute: AdminConfigRoute,
+  AdminConfiguracoesRoute: AdminConfiguracoesRoute,
+  AdminDenunciasRoute: AdminDenunciasRoute,
+  AdminPagamentosRoute: AdminPagamentosRoute,
+  AdminPendentesRoute: AdminPendentesRoute,
+  AdminPlanosRoute: AdminPlanosRoute,
+  AdminSegurancaRoute: AdminSegurancaRoute,
+  AdminUsuariosRoute: AdminUsuariosRoute,
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface AnunciosRouteChildren {
+  AnunciosIdRoute: typeof AnunciosIdRoute
+}
+
+const AnunciosRouteChildren: AnunciosRouteChildren = {
+  AnunciosIdRoute: AnunciosIdRoute,
+}
+
+const AnunciosRouteWithChildren = AnunciosRoute._addFileChildren(
+  AnunciosRouteChildren,
+)
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AnunciarRoute: AnunciarRoute,
+  AnunciosRoute: AnunciosRouteWithChildren,
+  BlogRoute: BlogRouteWithChildren,
+  CadastroRoute: CadastroRoute,
+  ChatRoute: ChatRoute,
+  CompararRoute: CompararRoute,
+  CompraSeguraRoute: CompraSeguraRoute,
+  CriarRoute: CriarRoute,
+  EsqueciSenhaRoute: EsqueciSenhaRoute,
+  FavoritosRoute: FavoritosRoute,
+  LoginRoute: LoginRoute,
+  MinhaContaRoute: MinhaContaRoute,
+  RegisterRoute: RegisterRoute,
+  CarIdRoute: CarIdRoute,
+  PerfilIdRoute: PerfilIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
