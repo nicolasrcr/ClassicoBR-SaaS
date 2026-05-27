@@ -1361,11 +1361,11 @@ export const mockFavorites: Favorite[] = [
 // ============ ANÚNCIOS FLAGADOS ============
 
 export const mockFlaggedListings: FlaggedListing[] = [
-  { id: "f1", anuncioId: "l4",  motivo: "Preço suspeito (< 50% FIPE)", data: "2024-01-20", absolvido: false },
+  { id: "f1", anuncioId: "l4",  motivo: "Preço suspeitamente baixo", data: "2024-01-20", absolvido: false },
   { id: "f2", anuncioId: "l7",  motivo: "Preço suspeito + foto duplicada", data: "2024-01-19", absolvido: false },
-  { id: "f3", anuncioId: "l9",  motivo: "Preço suspeito (< 50% FIPE)", data: "2024-01-18", absolvido: false },
+  { id: "f3", anuncioId: "l9",  motivo: "Preço suspeitamente baixo", data: "2024-01-18", absolvido: false },
   { id: "f4", anuncioId: "l14", motivo: "Preço suspeito + divergência IP + EXIF", data: "2024-01-17", absolvido: false },
-  { id: "f5", anuncioId: "l15", motivo: "Preço suspeito (< 50% FIPE)", data: "2024-01-16", absolvido: false },
+  { id: "f5", anuncioId: "l15", motivo: "Preço suspeitamente baixo", data: "2024-01-16", absolvido: false },
   { id: "f6", anuncioId: "l11", motivo: "Foto duplicada + divergência IP", data: "2024-01-15", absolvido: false },
 ];
 
