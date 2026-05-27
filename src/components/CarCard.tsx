@@ -3,7 +3,6 @@ import { Heart, MapPin, Car, ArrowRight } from "lucide-react";
 import type { Listing } from "@/lib/types";
 import { CATEGORY_COLORS, CATEGORY_LABELS } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
-import { FipeTag } from "./FipeTag";
 import { ScoreBadge } from "./ScoreBadge";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { useFavoritesStore } from "@/store/favorites-store";
@@ -101,7 +100,6 @@ export function CarCard({ listing, showCompare = false }: CarCardProps) {
 
           {/* Tags */}
           <div className="flex flex-wrap gap-1.5">
-            <FipeTag perc={listing.percFipe} />
             <ScoreBadge score={listing.scoreConfianca} />
           </div>
 
