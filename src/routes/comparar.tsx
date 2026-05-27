@@ -40,7 +40,6 @@ type ListingItem = Listing;
 
 function getValRaw(l: ListingItem, key: string): string {
   if (key === "price") return l.price != null ? String(l.price) : "null";
-  if (key === "percFipe") return String(l.percFipe ?? 0);
   if (key === "km") return String(l.km ?? 0);
   if (key === "scoreConfianca") return String(l.scoreConfianca);
   if (key === "verificacaoLocalizacao") return l.verificacaoLocalizacao.badge;
@@ -75,7 +74,6 @@ function CellContent({ listing, rowKey }: { listing: ListingItem; rowKey: string
     );
   }
   if (rowKey === "price") return <span className="font-serif font-semibold">{formatPrice(listing.price)}</span>;
-  if (rowKey === "percFipe") return <FipeTag perc={listing.percFipe} />;
   if (rowKey === "km") return <span>{formatKm(listing.km)}</span>;
   if (rowKey === "scoreConfianca") return <ScoreBadge score={listing.scoreConfianca} />;
   return <span className="text-sm">{getValRaw(listing, rowKey)}</span>;
