@@ -8,7 +8,6 @@ import {
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { FipeTag } from "@/components/FipeTag";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -277,12 +276,12 @@ function AnuncioDetalhe() {
   // Estimador
   const ipvaCusto =
     sit.ipva === "atrasado" && sit.ipvaAnosAtraso
-      ? Math.round(listing.precoFipe * 0.04 * sit.ipvaAnosAtraso)
+      ? Math.round((listing.price ?? 30000) * 0.04 * sit.ipvaAnosAtraso)
       : 0;
   const totalEstimado = ipvaCusto + 400 + 180 + 250;
 
   // Financiamento
-  const precoBase = listing.price ?? listing.precoFipe;
+  const precoBase = listing.price ?? 0;
   const entradaVal = Math.round((entrada / 100) * precoBase);
   const financiado = precoBase - entradaVal;
   const taxa = 0.018;
@@ -350,7 +349,7 @@ function AnuncioDetalhe() {
                 {listing.city}, {listing.state} — {listing.distancia}
               </p>
 
-              {/* Price + FIPE */}
+              {/* Price */}
               <div className="mt-5 flex flex-wrap items-end gap-4">
                 <div>
                   <p className="text-xs text-muted-foreground mb-0.5">Preço</p>
@@ -359,12 +358,6 @@ function AnuncioDetalhe() {
                       <span className="text-xl text-muted-foreground">A combinar</span>
                     )}
                   </p>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-xs text-muted-foreground">
-                    Ref. FIPE: {formatPrice(listing.precoFipe)}
-                  </span>
-                  <FipeTag perc={listing.percFipe} />
                 </div>
               </div>
 
@@ -592,10 +585,7 @@ function AnuncioDetalhe() {
                     <span className="text-xl font-normal text-muted-foreground">A combinar</span>
                   )}
                 </p>
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="text-xs text-muted-foreground">FIPE: {formatPrice(listing.precoFipe)}</span>
-                  <FipeTag perc={listing.percFipe} />
-                </div>
+                <p className="mt-1 text-xs text-muted-foreground">Valor negociável — peça raríssima</p>
 
                 {/* Share buttons */}
                 <div className="mt-4 flex gap-2">
