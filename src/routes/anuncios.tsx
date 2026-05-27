@@ -7,7 +7,6 @@ import {
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CategoryChip } from "@/components/CategoryChip";
-import { FipeTag } from "@/components/FipeTag";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { EmptyState } from "@/components/EmptyState";
 import { Input } from "@/components/ui/input";
@@ -418,7 +417,6 @@ function Anuncios() {
 
                           {/* Tags */}
                           <div className="flex flex-wrap gap-1.5">
-                            <FipeTag perc={listing.percFipe} />
                             <ScoreBadge score={listing.scoreConfianca} />
                           </div>
 
@@ -479,7 +477,6 @@ function Anuncios() {
                               {listing.year} · {listing.engine} · {listing.color} · {formatKm(listing.km)}
                             </p>
                             <div className="mt-2 flex flex-wrap gap-1.5">
-                              <FipeTag perc={listing.percFipe} />
                               <ScoreBadge score={listing.scoreConfianca} />
                             </div>
                           </div>
