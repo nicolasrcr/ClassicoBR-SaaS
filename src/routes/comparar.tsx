@@ -53,7 +53,7 @@ function getValRaw(l: ListingItem, key: string): string {
   if (key === "multasDoc") return l.situacaoDocumental.multas;
   if (key === "docNomeDoc") return l.situacaoDocumental.documentoNome;
   if (key === "photo") return l.photos[0] ?? "";
-  return String((l as Record<string, unknown>)[key] ?? "—");
+  return String((l as unknown as Record<string, unknown>)[key] ?? "—");
 }
 
 function CellContent({ listing, rowKey }: { listing: ListingItem; rowKey: string }) {
