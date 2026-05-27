@@ -11,7 +11,7 @@ import { formatDate } from "@/lib/format";
 export const Route = createFileRoute("/admin/pendentes")({ component: Pending });
 
 function Pending() {
-  const { users, approveUser, rejectUser } = useAppStore();
+  const { users, approveRegistration, rejectRegistration } = useAppStore();
   const pending = users.filter((u) => !u.approved);
   const [manual, setManual] = useState(true);
 
@@ -46,10 +46,10 @@ function Pending() {
                 <TableCell className="text-xs text-muted-foreground">{formatDate(u.memberSince)}</TableCell>
                 <TableCell className="text-right">
                   <div className="flex justify-end gap-2">
-                    <Button size="sm" variant="outline" onClick={() => { approveUser(u.id); toast.success("Aprovado"); }}>
+                    <Button size="sm" variant="outline" onClick={() => { approveRegistration(u.id); toast.success("Aprovado"); }}>
                       <Check className="h-3 w-3" /> Aprovar
                     </Button>
-                    <Button size="sm" variant="outline" className="text-destructive" onClick={() => { rejectUser(u.id); toast.success("Rejeitado"); }}>
+                    <Button size="sm" variant="outline" className="text-destructive" onClick={() => { rejectRegistration(u.id); toast.success("Rejeitado"); }}>
                       <X className="h-3 w-3" /> Rejeitar
                     </Button>
                   </div>
