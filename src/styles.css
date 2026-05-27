@@ -101,7 +101,7 @@
 
 /* ── Hero dark section ── */
 .hero-dark {
-  background: linear-gradient(135deg, #111110 0%, #1e1e1c 40%, #2a1f1a 100%);
+  background: linear-gradient(135deg, #0c0a09 0%, #1a1411 45%, #2a1810 100%);
   position: relative;
   overflow: hidden;
 }
@@ -110,9 +110,10 @@
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(ellipse 60% 50% at 80% 50%, rgba(196,85,42,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,148,58,0.07) 0%, transparent 60%);
+    radial-gradient(ellipse 70% 60% at 85% 40%, rgba(196,85,42,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 70% at 5% 90%, rgba(201,148,58,0.10) 0%, transparent 60%);
   pointer-events: none;
+  z-index: 1;
 }
 .hero-dark::after {
   content: '';
@@ -121,7 +122,8 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(196,85,42,0.4), rgba(201,148,58,0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(196,85,42,0.5), rgba(201,148,58,0.5), transparent);
+  z-index: 2;
 }
 
 /* ── Card hover lift ── */
@@ -171,13 +173,14 @@
 
 /* ── Terracotta gradient button ── */
 .btn-terra {
-  background: linear-gradient(135deg, #C4552A 0%, #a03d1c 100%);
-  box-shadow: 0 2px 8px rgba(196,85,42,0.35);
-  transition: box-shadow 0.2s, transform 0.15s;
+  background: linear-gradient(135deg, #d96338 0%, #C4552A 55%, #a03d1c 100%);
+  box-shadow: 0 4px 14px rgba(196,85,42,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+  transition: box-shadow 0.2s, transform 0.15s, filter 0.2s;
 }
 .btn-terra:hover {
-  box-shadow: 0 4px 16px rgba(196,85,42,0.45);
+  box-shadow: 0 6px 22px rgba(196,85,42,0.55), inset 0 1px 0 rgba(255,255,255,0.2);
   transform: translateY(-1px);
+  filter: brightness(1.05);
 }
 
 /* ── Section divider ── */
