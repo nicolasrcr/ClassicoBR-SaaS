@@ -37,7 +37,8 @@ const ROWS: { key: string; label: string }[] = [
   { key: "distancia", label: "Distância" },
 ];
 
-type ListingItem = ReturnType<typeof useAppStore>["listings"][0];
+import type { Listing } from "@/lib/types";
+type ListingItem = Listing;
 
 function getValRaw(l: ListingItem, key: string): string {
   if (key === "price") return l.price != null ? String(l.price) : "null";
@@ -69,9 +70,9 @@ function CellContent({ listing, rowKey }: { listing: ListingItem; rowKey: string
     return (
       <span
         className="inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold text-white"
-        style={{ backgroundColor: CATEGORY_COLORS[listing.category] }}
+        style={{ backgroundColor: CATEGORY_COLORS[listing.category as keyof typeof CATEGORY_COLORS] }}
       >
-        {CATEGORY_LABELS[listing.category]}
+        {CATEGORY_LABELS[listing.category as keyof typeof CATEGORY_LABELS]}
       </span>
     );
   }
