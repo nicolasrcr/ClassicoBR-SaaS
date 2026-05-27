@@ -58,7 +58,7 @@ function Config() {
         <Row label="Tagline"><Input className="w-64" value={s.tagline} onChange={(e) => upd("tagline", e.target.value)} /></Row>
         <Row label="E-mail de contato"><Input className="w-64" value={s.email} onChange={(e) => upd("email", e.target.value)} /></Row>
         <Row label="Modo manutenção" hint="Tira o site do ar para usuários comuns">
-          <Switch checked={settings.manutencao} onCheckedChange={() => settings.toggle("manutencao")} />
+          <Switch checked={settings.modoManutencao} onCheckedChange={() => settings.toggle("modoManutencao")} />
         </Row>
       </Section>
 
