@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
-import { BR_STATES, fipeFor } from "@/lib/mock-data";
+import { BR_STATES } from "@/lib/mock-data";
 import type { Category, Listing } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { CATEGORY_LABELS, CATEGORY_COLORS } from "@/lib/types";
@@ -72,8 +72,6 @@ function Create() {
   const [photos, setPhotos] = useState<string[]>([]);
   const [uploadError, setUploadError] = useState("");
   const [placaStatus, setPlacaStatus] = useState<"idle"|"ok"|"divergencia">("idle");
-  const [fipeRef, setFipeRef] = useState<number | null>(null);
-  const [percFipe, setPercFipe] = useState<number>(0);
   const [alertaPreco, setAlertaPreco] = useState(false);
 
   // Situação documental
@@ -91,23 +89,9 @@ function Create() {
 
   const update = (k: keyof typeof data, v: string | boolean) => setData((d) => ({ ...d, [k]: v }));
 
-  // Auto-calc FIPE when model changes
-  useEffect(() => {
-    if (data.model) {
-      const fipe = fipeFor(data.model);
-      setFipeRef(fipe);
-    }
-  }, [data.model]);
-
-  // Auto-calc % FIPE when price changes
-  useEffect(() => {
-    if (fipeRef && data.price && !data.noPrice) {
-      const price = Number(data.price);
-      const perc = Math.round(((price - fipeRef) / fipeRef) * 100);
-      setPercFipe(perc);
-      setAlertaPreco(price < fipeRef * 0.5);
-    }
-  }, [data.price, fipeRef, data.noPrice]);
+  // Suppress unused warning until preço-suspeito heuristic is reworked
+  void alertaPreco;
+  void setAlertaPreco;
 
   const consultarPlaca = () => {
     const placa = data.placa.toUpperCase().replace(/[^A-Z0-9]/g, "");
@@ -160,7 +144,6 @@ function Create() {
 
   const submit = () => {
     const price = data.noPrice ? null : Number(data.price) || null;
-    const fipe = fipeFor(data.model);
     const newListing: Listing = {
       id: "l" + Date.now(),
       title: `${data.brand} ${data.model}`.trim() || "Sem título",
@@ -174,11 +157,11 @@ function Create() {
       sellerId: user?.id ?? "u9",
       status: "ativo",
       createdAt: new Date().toISOString().slice(0, 10),
-      precoFipe: fipe,
-      percFipe: price != null ? Math.round(((price - fipe) / fipe) * 100) : 0,
+      precoFipe: 0,
+      percFipe: 0,
       distancia: "a 0 km de você",
       scoreConfianca: 50,
-      alertaPrecoSuspeito: price != null && price < fipe * 0.5,
+      alertaPrecoSuspeito: false,
       fotoDuplicadaFlag: false,
       verificacaoLocalizacao: { badge: "semDados", fonteA: `${data.city}, ${data.state || "SP"}`, fonteB: null, fonteC: null },
       situacaoDocumental: {
