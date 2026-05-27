@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ShieldCheck, CheckCircle2, AlertTriangle, MessageCircle, ArrowRight, FileText, TrendingUp } from "lucide-react";
+import { ShieldCheck, CheckCircle2, AlertTriangle, MessageCircle, ArrowRight, FileText } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
@@ -101,46 +101,6 @@ function CompraSegura() {
             </div>
           </section>
 
-          {/* Seção 3: Como usar a Tabela FIPE */}
-          <section>
-            <div className="flex items-center gap-3 mb-4">
-              <TrendingUp className="h-6 w-6 text-[#185FA5]" />
-              <h2 className="font-serif text-2xl">Como usar a Tabela FIPE</h2>
-            </div>
-            <div className="rounded-xl border border-[#E8E6E0] bg-white p-6 space-y-4 shadow-sm">
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                A Tabela FIPE é o principal referencial de mercado para precificação de veículos no Brasil,
-                mas para clássicos ela deve ser usada com cautela. Os valores FIPE são médias calculadas
-                periodicamente e podem não refletir o estado real do veículo ou a raridade do modelo.
-              </p>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                Use o percentual em relação à FIPE como <strong>ponto de partida</strong>, não como valor absoluto:
-              </p>
-              <ul className="space-y-3 text-sm text-foreground/80">
-                <li className="flex items-start gap-3 rounded-lg bg-[#1D6E4E]/5 border border-[#1D6E4E]/15 p-3">
-                  <span className="text-[#1D6E4E] font-bold shrink-0 mt-0.5">▲</span>
-                  <span><strong>Acima da FIPE (até +20%):</strong> normal para carros em ótimo estado, originais e com documentação perfeita.</span>
-                </li>
-                <li className="flex items-start gap-3 rounded-lg bg-[#185FA5]/5 border border-[#185FA5]/15 p-3">
-                  <span className="text-[#185FA5] font-bold shrink-0 mt-0.5">–</span>
-                  <span><strong>Na faixa da FIPE (±15%):</strong> preço justo, típico de veículos "para fazer" ou com pendências documentais.</span>
-                </li>
-                <li className="flex items-start gap-3 rounded-lg bg-amber-50 border border-amber-200 p-3">
-                  <span className="text-amber-600 font-bold shrink-0 mt-0.5">▼</span>
-                  <span><strong>Abaixo de –30%:</strong> reflita. Pode ser legítimo (veículo para peças, situação documental grave), mas exige atenção redobrada.</span>
-                </li>
-                <li className="flex items-start gap-3 rounded-lg bg-red-50 border border-red-200 p-3">
-                  <span className="text-red-600 font-bold shrink-0 mt-0.5">⚠</span>
-                  <span><strong>Abaixo de –50%:</strong> sinal de alerta automático no ClassicosBR. Investigue antes de qualquer contato.</span>
-                </li>
-              </ul>
-              <p className="text-sm text-foreground/80 leading-relaxed">
-                Sempre pesquise outros anúncios do mesmo modelo para ter uma noção real do que o mercado
-                está praticando. A FIPE é referência, não regra.
-              </p>
-            </div>
-          </section>
-
           {/* Seção 4: Tabela de custos de regularização */}
           <section>
             <h2 className="font-serif text-2xl mb-2">Estimativa de custos de regularização</h2>
@@ -180,7 +140,7 @@ function CompraSegura() {
                   <ul className="space-y-2.5 text-sm text-red-700">
                     <li className="flex items-start gap-2">
                       <span className="font-bold shrink-0 mt-0.5">•</span>
-                      <span><strong>Preço mais de 50% abaixo da FIPE</strong> sem justificativa clara (veículo para peças, documentação inviável)</span>
+                      <span><strong>Preço muito abaixo do mercado</strong> sem justificativa clara (veículo para peças, documentação inviável)</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="font-bold shrink-0 mt-0.5">•</span>
