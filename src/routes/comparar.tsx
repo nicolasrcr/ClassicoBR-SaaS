@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Plus, X, Car, Scale } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { FipeTag } from "@/components/FipeTag";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -19,7 +18,6 @@ const ROWS: { key: string; label: string }[] = [
   { key: "photo", label: "Foto" },
   { key: "category", label: "Condição" },
   { key: "price", label: "Preço" },
-  { key: "percFipe", label: "% FIPE" },
   { key: "brand", label: "Marca" },
   { key: "model", label: "Modelo" },
   { key: "year", label: "Ano" },
