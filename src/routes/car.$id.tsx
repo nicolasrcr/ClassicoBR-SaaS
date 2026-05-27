@@ -7,7 +7,6 @@ import {
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { FipeTag } from "@/components/FipeTag";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -84,12 +83,12 @@ function CarDetail() {
 
   // Estimador
   const ipvaCusto = sit.ipva === "atrasado" && sit.ipvaAnosAtraso
-    ? Math.round(listing.precoFipe * 0.04 * sit.ipvaAnosAtraso)
+    ? Math.round((listing.price ?? 30000) * 0.04 * sit.ipvaAnosAtraso)
     : 0;
   const totalEstimado = ipvaCusto + 400 + 180 + 250;
 
   // Financiamento
-  const precoBase = listing.price ?? listing.precoFipe;
+  const precoBase = listing.price ?? 0;
   const entradaVal = Math.round((entrada / 100) * precoBase);
   const financiado = precoBase - entradaVal;
   const taxa = 0.018;
@@ -138,10 +137,8 @@ function CarDetail() {
               </p>
               <p className="mt-6 font-serif text-3xl">{formatPrice(listing.price)}</p>
 
-              {/* FIPE tag */}
+              {/* Score */}
               <div className="mt-2 flex items-center gap-3 flex-wrap">
-                <span className="text-sm text-muted-foreground">Ref. Tabela FIPE: {formatPrice(listing.precoFipe)}</span>
-                <FipeTag perc={listing.percFipe} />
                 <ScoreBadge score={listing.scoreConfianca} />
               </div>
 

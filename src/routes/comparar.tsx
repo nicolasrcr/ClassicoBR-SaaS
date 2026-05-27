@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Plus, X, Car, Scale } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { FipeTag } from "@/components/FipeTag";
 import { ScoreBadge } from "@/components/ScoreBadge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -19,7 +18,6 @@ const ROWS: { key: string; label: string }[] = [
   { key: "photo", label: "Foto" },
   { key: "category", label: "Condição" },
   { key: "price", label: "Preço" },
-  { key: "percFipe", label: "% FIPE" },
   { key: "brand", label: "Marca" },
   { key: "model", label: "Modelo" },
   { key: "year", label: "Ano" },
@@ -42,7 +40,6 @@ type ListingItem = Listing;
 
 function getValRaw(l: ListingItem, key: string): string {
   if (key === "price") return l.price != null ? String(l.price) : "null";
-  if (key === "percFipe") return String(l.percFipe ?? 0);
   if (key === "km") return String(l.km ?? 0);
   if (key === "scoreConfianca") return String(l.scoreConfianca);
   if (key === "verificacaoLocalizacao") return l.verificacaoLocalizacao.badge;
@@ -77,7 +74,6 @@ function CellContent({ listing, rowKey }: { listing: ListingItem; rowKey: string
     );
   }
   if (rowKey === "price") return <span className="font-serif font-semibold">{formatPrice(listing.price)}</span>;
-  if (rowKey === "percFipe") return <FipeTag perc={listing.percFipe} />;
   if (rowKey === "km") return <span>{formatKm(listing.km)}</span>;
   if (rowKey === "scoreConfianca") return <ScoreBadge score={listing.scoreConfianca} />;
   return <span className="text-sm">{getValRaw(listing, rowKey)}</span>;
