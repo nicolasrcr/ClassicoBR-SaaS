@@ -277,13 +277,6 @@ function Create() {
                 ))}
               </div>
 
-              {/* FIPE reference */}
-              {fipeRef && data.model && (
-                <div className="rounded-[8px] bg-secondary border border-border p-3 text-sm">
-                  📊 Valor de referência FIPE para <strong>{data.model}</strong>: <strong>{formatPrice(fipeRef)}</strong> (estimativa)
-                </div>
-              )}
-
               {/* SITUAÇÃO DOCUMENTAL */}
               <div className="rounded-[10px] border-2 border-amber-300 bg-amber-50/50 p-5 space-y-5">
                 <div>
@@ -437,20 +430,9 @@ function Create() {
                 </div>
                 <Input type="number" disabled={data.noPrice} value={data.price}
                   onChange={(e) => update("price", e.target.value)} placeholder="R$ 0" />
-
-                {/* FIPE live comparison */}
-                {!data.noPrice && data.price && fipeRef && (
-                  <div className={cn("mt-2 rounded-[8px] p-3 text-sm flex items-center justify-between",
-                    alertaPreco ? "bg-amber-50 border border-amber-200" : "bg-secondary border border-border")}>
-                    <span>Ref. FIPE: <strong>{formatPrice(fipeRef)}</strong></span>
-                    <span className={cn("font-semibold", percFipe < 0 ? "text-green-600" : percFipe > 0 ? "text-red-500" : "text-muted-foreground")}>
-                      {percFipe > 0 ? `+${percFipe}%` : `${percFipe}%`} {percFipe < 0 ? "abaixo" : "acima"} da FIPE
-                    </span>
-                  </div>
-                )}
-                {alertaPreco && (
-                  <p className="mt-1 text-xs text-amber-700">⚠️ Preço muito abaixo do valor de mercado — isso pode gerar alerta de verificação</p>
-                )}
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Clássicos são peças únicas — defina o preço com base no estado, raridade e originalidade do veículo.
+                </p>
               </div>
 
               {/* Visibilidade */}
