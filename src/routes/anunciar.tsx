@@ -917,30 +917,94 @@ function Anunciar() {
                   </label>
                 </div>
 
-                {/* Tag FIPE comparativa */}
-                {fipeValue && !form.semPreco && form.price && (
-                  <div className={cn(
-                    "mt-3 inline-flex items-center gap-2 rounded-md border px-3 py-2 text-sm",
-                    percFipe !== null && percFipe >= 0
-                      ? "border-[#1D6E4E]/30 bg-[#1D6E4E]/10 text-[#1D6E4E]"
-                      : "border-[#185FA5]/30 bg-[#185FA5]/10 text-[#185FA5]",
-                  )}>
-                    <Sparkles className="h-4 w-4" />
-                    FIPE: R$ {fipeValue.toLocaleString("pt-BR")}
-                    {percFipe !== null && (
-                      <span className="font-semibold">
-                        ({percFipe > 0 ? "+" : ""}{percFipe}%)
-                      </span>
-                    )}
-                  </div>
-                )}
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Clássicos são peças únicas — não existe tabela FIPE confiável. Use os campos abaixo para justificar seu valor de forma transparente.
+                </p>
+              </section>
 
-                {/* Alerta preço suspeito */}
-                {alertaPreco && (
-                  <div className="mt-3 flex items-start gap-2 rounded-md border border-amber-300/50 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+              {/* Precificação guiada para clássicos */}
+              <section className="rounded-[10px] border border-border bg-card p-6">
+                <div className="mb-2 flex items-center gap-2">
+                  <Gem className="h-5 w-5 text-[color:var(--color-terracotta)]" />
+                  <SectionTitle>Precificação guiada do clássico</SectionTitle>
+                </div>
+                <p className="mb-5 text-sm text-muted-foreground">
+                  Como reliquia, o valor depende de estado, originalidade e raridade. Responda os campos abaixo e justifique o preço pedido — isso aumenta a confiança do comprador.
+                </p>
+
+                <div className="space-y-5">
+                  <FieldGroup label="Estado de conservação" required>
+                    <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
+                      <ShieldCheck className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                      <span>Como está hoje o veículo, em termos de carroceria, mecânica e acabamento.</span>
+                    </div>
+                    <RadioGroup
+                      name="estadoConservacao"
+                      value={form.estadoConservacao}
+                      onChange={(v) => upd("estadoConservacao", v as EstadoConservacao)}
+                      options={(Object.keys(ESTADO_LABELS) as EstadoConservacao[]).map((k) => ({
+                        value: k, label: ESTADO_LABELS[k],
+                      }))}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup label="Originalidade" required>
+                    <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
+                      <Star className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                      <span>Quanto do veículo permanece original de fábrica (motor, câmbio, pintura, interior).</span>
+                    </div>
+                    <RadioGroup
+                      name="originalidade"
+                      value={form.originalidade}
+                      onChange={(v) => upd("originalidade", v as Originalidade)}
+                      options={(Object.keys(ORIGINALIDADE_LABELS) as Originalidade[]).map((k) => ({
+                        value: k, label: ORIGINALIDADE_LABELS[k],
+                      }))}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup label="Raridade no mercado" required>
+                    <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
+                      <Gem className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+                      <span>Quão difícil é encontrar outro exemplar similar à venda no Brasil.</span>
+                    </div>
+                    <RadioGroup
+                      name="raridade"
+                      value={form.raridade}
+                      onChange={(v) => upd("raridade", v as Raridade)}
+                      options={(Object.keys(RARIDADE_LABELS) as Raridade[]).map((k) => ({
+                        value: k, label: RARIDADE_LABELS[k],
+                      }))}
+                    />
+                  </FieldGroup>
+
+                  <FieldGroup label="Justificativa do valor pedido" required>
+                    <Textarea
+                      rows={5}
+                      maxLength={1000}
+                      placeholder="Explique por que esse valor faz sentido: histórico do carro, restauração recente, peças originais difíceis de encontrar, comparáveis vendidos, premiações, etc."
+                      value={form.justificativaPreco}
+                      onChange={(e) => upd("justificativaPreco", e.target.value)}
+                      className="resize-none"
+                    />
+                    <div className="mt-1 flex items-center justify-between text-xs">
+                      <span className={cn(
+                        form.justificativaPreco.trim().length >= 40 ? "text-[#1D6E4E]" : "text-muted-foreground"
+                      )}>
+                        {form.justificativaPreco.trim().length >= 40
+                          ? "Justificativa pronta"
+                          : `Mínimo 40 caracteres (${form.justificativaPreco.trim().length}/40)`}
+                      </span>
+                      <span className="text-muted-foreground">{form.justificativaPreco.length}/1000</span>
+                    </div>
+                  </FieldGroup>
+                </div>
+
+                {!precificacaoCompleta && (
+                  <div className="mt-4 flex items-start gap-2 rounded-md border border-amber-300/50 bg-amber-50 px-4 py-3 text-sm text-amber-800">
                     <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
                     <span>
-                      <strong>Atenção:</strong> O preço informado está abaixo de 50% da referência FIPE. Preços muito abaixo do mercado podem gerar desconfiança nos compradores.
+                      Complete todos os campos da precificação guiada — compradores de clássicos valorizam transparência sobre estado, originalidade e raridade.
                     </span>
                   </div>
                 )}
