@@ -48,6 +48,61 @@ export type MotorStatus = "original" | "trocadoMesmaFamilia" | "trocadoDiferente
 export type MultasStatus = "nenhuma" | "comMultas" | "naoVerificado";
 export type AjudaRegularizacao = "sim" | "parcialmente" | "nao";
 
+export type EstadoConservacao =
+  | "concursoOriginal"
+  | "restauradoCompleto"
+  | "originalPreservado"
+  | "bomEstadoUso"
+  | "precisaReparos"
+  | "paraRestaurar";
+
+export type Originalidade =
+  | "totalmenteOriginal"
+  | "maioriaOriginal"
+  | "restauradoOriginal"
+  | "restauradoReposicao"
+  | "modificadoTuning";
+
+export type Raridade =
+  | "unicoConhecido"
+  | "muitoRaro"
+  | "raro"
+  | "incomum"
+  | "comum";
+
+export interface PrecificacaoGuiada {
+  valor: number | null;
+  estadoConservacao: EstadoConservacao;
+  originalidade: Originalidade;
+  raridade: Raridade;
+  justificativa: string;
+}
+
+export const ESTADO_LABELS: Record<EstadoConservacao, string> = {
+  concursoOriginal: "Estado de concurso / colecionador",
+  restauradoCompleto: "Restaurado por completo",
+  originalPreservado: "Original preservado",
+  bomEstadoUso: "Bom estado, em uso",
+  precisaReparos: "Precisa de reparos",
+  paraRestaurar: "Para restaurar",
+};
+
+export const ORIGINALIDADE_LABELS: Record<Originalidade, string> = {
+  totalmenteOriginal: "100% original (matching numbers)",
+  maioriaOriginal: "Maioria das peças originais",
+  restauradoOriginal: "Restaurado com peças originais",
+  restauradoReposicao: "Restaurado com peças de reposição",
+  modificadoTuning: "Modificado / customizado",
+};
+
+export const RARIDADE_LABELS: Record<Raridade, string> = {
+  unicoConhecido: "Único exemplar conhecido",
+  muitoRaro: "Muito raro (poucas unidades)",
+  raro: "Raro",
+  incomum: "Incomum",
+  comum: "Comum no mercado",
+};
+
 export interface SituacaoDocumental {
   documentoNome: DocumentoNome;
   transferenciasAcumuladas: TransferenciasAcc;
@@ -82,8 +137,7 @@ export interface Listing {
   sellerId: string;
   status: ListingStatus;
   createdAt: string;
-  precoFipe: number;
-  percFipe: number;
+  precificacao?: PrecificacaoGuiada;
   distancia: string;
   scoreConfianca: number;
   alertaPrecoSuspeito: boolean;
