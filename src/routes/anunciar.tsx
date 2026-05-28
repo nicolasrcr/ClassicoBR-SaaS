@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Car, Wrench, Package, Upload, X, AlertTriangle, CheckCircle, ChevronRight, Sparkles } from "lucide-react";
+import { Car, Wrench, Package, Upload, X, AlertTriangle, CheckCircle, ChevronRight, Gem, ShieldCheck, Star } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -10,9 +10,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
-import { BRANDS, FIPE_BY_MODEL, fipeFor } from "@/lib/mock-data";
+import { BRANDS } from "@/lib/mock-data";
 import { useAppStore } from "@/store/app-store";
-import type { Category, Listing } from "@/lib/types";
+import type { Category, Listing, EstadoConservacao, Originalidade, Raridade } from "@/lib/types";
+import { ESTADO_LABELS, ORIGINALIDADE_LABELS, RARIDADE_LABELS } from "@/lib/types";
 
 export const Route = createFileRoute("/anunciar")({ component: Anunciar });
 
@@ -110,6 +111,10 @@ interface FormData {
   photos: string[];
   price: string;
   semPreco: boolean;
+  estadoConservacao: EstadoConservacao | "";
+  originalidade: Originalidade | "";
+  raridade: Raridade | "";
+  justificativaPreco: string;
   cep: string;
   cidade: string;
   estado: string;
@@ -132,6 +137,7 @@ const defaultForm: FormData = {
   description: "",
   photos: [],
   price: "", semPreco: false,
+  estadoConservacao: "", originalidade: "", raridade: "", justificativaPreco: "",
   cep: "", cidade: "", estado: "", raio: "Todo Brasil",
   whatsapp: "", exibirWhatsapp: true,
   plano: "gratuito",
