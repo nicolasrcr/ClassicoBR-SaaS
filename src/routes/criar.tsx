@@ -157,8 +157,6 @@ function Create() {
       sellerId: user?.id ?? "u9",
       status: "ativo",
       createdAt: new Date().toISOString().slice(0, 10),
-      precoFipe: 0,
-      percFipe: 0,
       distancia: "a 0 km de você",
       scoreConfianca: 50,
       alertaPrecoSuspeito: false,

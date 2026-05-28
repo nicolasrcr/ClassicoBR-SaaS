@@ -328,8 +328,6 @@ function Anunciar() {
       sellerId: currentUser?.id ?? "u1",
       status: "ativo",
       createdAt: new Date().toISOString().slice(0, 10),
-      precoFipe: fipeValue ?? 50000,
-      percFipe: percFipe ?? 0,
       distancia: "—",
       scoreConfianca: 75,
       alertaPrecoSuspeito: !!alertaPreco,
