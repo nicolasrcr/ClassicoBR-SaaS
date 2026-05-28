@@ -82,7 +82,7 @@ function Index() {
             {/* Eyebrow */}
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 backdrop-blur-sm px-3.5 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--color-terracotta-light)] animate-pulse" />
-              <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/80">O marketplace dos clássicos brasileiros</span>
+              <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/80">O marketplace dos clássicos</span>
             </div>
 
             <h1 className="font-serif text-5xl font-semibold leading-[1.02] text-white md:text-7xl">
