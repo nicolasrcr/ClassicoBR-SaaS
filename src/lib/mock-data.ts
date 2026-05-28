@@ -16,46 +16,6 @@ export const BRANDS = [
   "Puma", "Renault", "Simca", "GM",
 ];
 
-export const FIPE_BY_MODEL: Record<string, number> = {
-  "Opala": 35000,
-  "Opala 2.5": 35000,
-  "Galaxie": 98000,
-  "Galaxie 500": 98000,
-  "Brasília": 12000,
-  "Charger": 140000,
-  "Charger RT": 140000,
-  "Charger R/T": 140000,
-  "Kombi": 22000,
-  "Kombi Standard": 22000,
-  "Veraneio": 15000,
-  "Veraneio C10": 15000,
-  "Corcel": 25000,
-  "Corcel II GT": 25000,
-  "147": 11000,
-  "Fiat 147": 11000,
-  "Maverick": 30000,
-  "Maverick 2.3": 30000,
-  "Variant": 13000,
-  "Puma": 72000,
-  "Puma GTE": 72000,
-  "Rural": 20000,
-  "Rural Willys": 20000,
-  "Gordini": 18000,
-  "Renault Gordini": 18000,
-  "Chambord": 16000,
-  "Simca Chambord": 16000,
-  "Fusca": 18000,
-  "Fusca 1300": 18000,
-};
-
-export function fipeFor(model: string): number {
-  if (FIPE_BY_MODEL[model]) return FIPE_BY_MODEL[model];
-  for (const k of Object.keys(FIPE_BY_MODEL)) {
-    if (model.includes(k) || k.includes(model)) return FIPE_BY_MODEL[k];
-  }
-  return 50000;
-}
-
 // ============ HELPERS DE IP ============
 
 function makeIps(cidade: string, estado: string): IpEntry[] {
