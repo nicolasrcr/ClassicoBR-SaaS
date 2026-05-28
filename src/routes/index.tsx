@@ -90,7 +90,7 @@ function Index() {
               <span className="italic text-[color:var(--color-terracotta-light)]">quatro rodas</span>
             </h1>
             <p className="mt-5 max-w-xl text-base md:text-lg leading-relaxed text-white/70">
-              Compre e venda Opalas, Fuscas, Galaxies, Kombis e outras lendas brasileiras
+              Compre e venda Opalas, Fuscas, Galaxies, Kombis e outras lendas 
               com transparência, curadoria especializada e contato direto com o dono.
             </p>
 
