@@ -11,7 +11,7 @@ export function calcularScoreConfianca(anuncio: Listing, usuario: User): number 
   if (sit.documentoNome && sit.transferenciasAcumuladas && sit.ipva && sit.licenciamento && sit.chassi && sit.motor && sit.multas) pts += 5;
   if (sit.aceitaAjudarRegularizacao === "sim") pts += 5;
   if (anuncio.verificacaoLocalizacao.badge === "verificada") pts += 10;
-  if (Math.abs(anuncio.percFipe) <= 40) pts += 5;
+  if (anuncio.precificacao?.justificativa && anuncio.precificacao.justificativa.length >= 40) pts += 5;
   if (!anuncio.fotoDuplicadaFlag) pts += 5;
   if (usuario.sellerScore > 80) pts += 5;
   if (anuncio.photos.length >= 3) pts += 5;
