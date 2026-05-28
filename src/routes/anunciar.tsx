@@ -244,10 +244,10 @@ function Anunciar() {
   const upd = <K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
 
-  const fipeValue = form.model ? fipeFor(form.model) : null;
   const priceNum = parseFloat(form.price.replace(/\D/g, "")) / 100 || 0;
-  const percFipe = fipeValue ? Math.round(((priceNum - fipeValue) / fipeValue) * 100) : null;
-  const alertaPreco = fipeValue && priceNum > 0 && priceNum < fipeValue * 0.5;
+  const justificativaOk = form.justificativaPreco.trim().length >= 40;
+  const precificacaoCompleta =
+    !!form.estadoConservacao && !!form.originalidade && !!form.raridade && justificativaOk;
 
   const availableModels = form.brand ? (MODELS_BY_BRAND[form.brand] ?? []) : [];
 
@@ -561,15 +561,6 @@ function Anunciar() {
                   </FieldGroup>
                 </div>
 
-                {/* Referência FIPE */}
-                {form.brand && form.model && form.anoFab && fipeValue && (
-                  <div className="mt-4 flex items-center gap-2 rounded-md border border-[#C9A84C]/30 bg-[#C9A84C]/10 px-4 py-3 text-sm">
-                    <Sparkles className="h-4 w-4 text-[#8a6f1e]" />
-                    <span className="text-[#8a6f1e]">
-                      Referência FIPE: <strong>R$ {fipeValue.toLocaleString("pt-BR")} (estimativa)</strong>
-                    </span>
-                  </div>
-                )}
               </section>
 
               {/* Checkboxes opcionais */}
