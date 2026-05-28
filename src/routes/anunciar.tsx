@@ -303,6 +303,12 @@ function Anunciar() {
 
   const validateStep3 = () => {
     if (!form.semPreco && !form.price) { toast.error("Informe o preço ou marque 'Não informar preço'"); return false; }
+    if (!form.estadoConservacao) { toast.error("Indique o estado de conservação"); return false; }
+    if (!form.originalidade) { toast.error("Indique o nível de originalidade"); return false; }
+    if (!form.raridade) { toast.error("Indique a raridade do modelo"); return false; }
+    if (form.justificativaPreco.trim().length < 40) {
+      toast.error("Justifique o valor pedido (mínimo 40 caracteres)"); return false;
+    }
     if (!form.cidade) { toast.error("Informe a cidade"); return false; }
     return true;
   };
@@ -336,7 +342,14 @@ function Anunciar() {
       createdAt: new Date().toISOString().slice(0, 10),
       distancia: "—",
       scoreConfianca: 75,
-      alertaPrecoSuspeito: !!alertaPreco,
+      alertaPrecoSuspeito: false,
+      precificacao: {
+        valor: form.semPreco ? null : priceNum || null,
+        estadoConservacao: form.estadoConservacao as EstadoConservacao,
+        originalidade: form.originalidade as Originalidade,
+        raridade: form.raridade as Raridade,
+        justificativa: form.justificativaPreco.trim(),
+      },
       fotoDuplicadaFlag: false,
       verificacaoLocalizacao: {
         badge: "semDados",
