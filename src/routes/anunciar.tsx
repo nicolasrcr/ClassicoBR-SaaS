@@ -360,6 +360,9 @@ function Anunciar() {
     if (!form.category) { toast.error("Selecione a condição do veículo"); return false; }
     if (!form.brand) { toast.error("Selecione a marca"); return false; }
     if (!form.model) { toast.error("Selecione o modelo"); return false; }
+    if (form.model === MODEL_NAO_LISTADO && !form.modelCustom.trim()) {
+      toast.error("Escreva o nome do modelo não listado"); return false;
+    }
     if (!form.anoFab) { toast.error("Informe o ano de fabricação"); return false; }
     return true;
   };
@@ -374,10 +377,6 @@ function Anunciar() {
     if (!form.semPreco && !form.price) { toast.error("Informe o preço ou marque 'Não informar preço'"); return false; }
     if (!form.estadoConservacao) { toast.error("Indique o estado de conservação"); return false; }
     if (!form.originalidade) { toast.error("Indique o nível de originalidade"); return false; }
-    if (!form.raridade) { toast.error("Indique a raridade do modelo"); return false; }
-    if (form.justificativaPreco.trim().length < 40) {
-      toast.error("Justifique o valor pedido (mínimo 40 caracteres)"); return false;
-    }
     if (!form.cidade) { toast.error("Informe a cidade"); return false; }
     return true;
   };
@@ -387,11 +386,12 @@ function Anunciar() {
     if (!validateStep3()) return;
 
     const id = "l_" + Date.now();
+    const modeloFinal = form.model === MODEL_NAO_LISTADO ? form.modelCustom.trim() : form.model;
     const listing: Listing = {
       id,
-      title: `${form.brand} ${form.model} ${form.anoFab}`,
+      title: `${form.brand} ${modeloFinal} ${form.anoFab}`,
       brand: form.brand,
-      model: form.model,
+      model: modeloFinal,
       year: parseInt(form.anoFab) || 2000,
       category: form.category ?? "completo",
       engine: form.motor || "—",
@@ -427,6 +427,7 @@ function Anunciar() {
         fonteC: null,
       },
       situacaoDocumental: DOC_DEFAULTS,
+      destaquePremium: form.plano === "premium",
     };
 
     addListing(listing);
