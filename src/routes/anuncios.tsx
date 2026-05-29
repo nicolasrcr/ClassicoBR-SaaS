@@ -334,23 +334,13 @@ function Anuncios() {
                 {filtered.map((listing) => {
                   const color = CATEGORY_COLORS[listing.category];
                   const favorited = user ? isFavorited(user.id, listing.id) : false;
-                  const inCompare = compareIds.includes(listing.id);
                   return (
                     <div key={listing.id} className="car-card group relative flex flex-col overflow-hidden rounded-[10px] border border-border bg-card">
-                      {/* Compare checkbox */}
-                      <label
-                        className="absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-1 text-[10px] font-medium text-white shadow cursor-pointer hover:bg-black/75 transition-colors"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <input
-                          type="checkbox"
-                          checked={inCompare}
-                          onChange={() => toggleCompare(listing.id)}
-                          disabled={!inCompare && compareIds.length >= 3}
-                          className="h-3 w-3 accent-[color:var(--color-terracotta)]"
-                        />
-                        Comparar
-                      </label>
+                      {listing.destaquePremium && (
+                        <span className="absolute left-3 top-3 z-10 rounded-full bg-[color:var(--color-gold)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                          ★ Destaque
+                        </span>
+                      )}
 
                       {/* Favorite */}
                       {user && (
