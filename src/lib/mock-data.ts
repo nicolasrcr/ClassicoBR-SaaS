@@ -15,7 +15,7 @@ export const BR_STATES = [
 
 export const BRANDS = [
   "Chevrolet", "Volkswagen", "Ford", "Fiat", "Dodge", "Willys",
-  "Puma", "Renault", "Simca", "GM",
+  "Puma", "Renault", "Simca", "GM", "Toyota", "Mercedes", "BMW", "Alfa", "Lada",
 ];
 
 // ============ HELPERS DE IP ============

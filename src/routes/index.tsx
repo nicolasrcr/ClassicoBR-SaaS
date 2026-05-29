@@ -46,6 +46,8 @@ function Index() {
     if (filters.unicoDono) l = l.filter((x) => x.situacaoDocumental.transferenciasAcumuladas === "nenhuma");
     if (filters.sort === "preco-asc") l = [...l].sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
     else if (filters.sort === "preco-desc") l = [...l].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+    // Premium destacados sempre primeiro
+    l = [...l].sort((a, b) => Number(!!b.destaquePremium) - Number(!!a.destaquePremium));
     return l;
   }, [listings, filters]);
 
@@ -96,10 +98,7 @@ function Index() {
             {/* Left: copy */}
             <div className="md:col-span-7 lg:col-span-7">
               {/* Eyebrow */}
-              <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-md pl-2 pr-4 py-1.5 animate-fade-up">
-                <span className="flex h-5 items-center gap-1.5 rounded-full bg-[color:var(--color-terracotta)]/90 px-2 text-[10px] font-bold uppercase tracking-wider text-white">
-                  <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> ao vivo
-                </span>
+              <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-md px-4 py-1.5 animate-fade-up">
                 <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-white/80">O marketplace dos clássicos</span>
               </div>
 
@@ -114,8 +113,8 @@ function Index() {
 
               <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/70 animate-fade-up animate-fade-up-2">
                 Compre e venda Opalas, Fuscas, Galaxies, Mavericks e outras lendas
-                com <span className="text-white font-medium">documentação validada</span>,
-                curadoria especializada e contato direto com o dono.
+                com <span className="text-white font-medium">histórico declarado pelo vendedor</span>
+                e contato direto com o dono.
               </p>
 
               {/* Inline glass search */}
@@ -194,7 +193,7 @@ function Index() {
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[color:var(--color-terracotta)]/20 border border-[color:var(--color-terracotta)]/40">
                         <Sparkles className="h-3.5 w-3.5 text-[color:var(--color-terracotta-light)]" />
                       </div>
-                      <span className="text-[11px] uppercase tracking-wider text-white/60 font-medium">Marketplace ao vivo</span>
+                      <span className="text-[11px] uppercase tracking-wider text-white/60 font-medium">Marketplace dos clássicos</span>
                     </div>
                     <span className="flex h-2 w-2 rounded-full bg-green-400 animate-pulse" />
                   </div>
@@ -237,7 +236,7 @@ function Index() {
       <section className="border-b border-border bg-card/60">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px overflow-hidden md:grid-cols-4 px-6">
           {[
-            { icon: ShieldCheck, title: "Documentação validada", desc: "Chassi, motor e situação fiscal" },
+            { icon: ShieldCheck, title: "Histórico transparente", desc: "Vendedor declara chassi, motor e situação fiscal" },
             { icon: Sparkles, title: "Score de confiança", desc: "Anunciantes com histórico" },
             { icon: Handshake, title: "Contato direto", desc: "Sem atravessador, sem taxa" },
             { icon: Award, title: "Curadoria de clássicos", desc: "Só carros 20+ anos" },
@@ -407,24 +406,14 @@ function Index() {
             {filtered.map((listing) => {
               const color = CATEGORY_COLORS[listing.category];
               const favorited = user ? isFavorited(user.id, listing.id) : false;
-              const inCompare = compareIds.includes(listing.id);
               const sellerStars = Math.round(listing.scoreConfianca / 20);
               return (
                 <div key={listing.id} className="car-card group relative flex flex-col overflow-hidden rounded-[10px] border border-border bg-card">
-                  {/* Compare */}
-                  <label
-                    className="absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-1 text-[10px] font-medium text-white shadow cursor-pointer hover:bg-black/75 transition-colors"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={inCompare}
-                      onChange={() => toggleCompare(listing.id)}
-                      disabled={!inCompare && compareIds.length >= 3}
-                      className="h-3 w-3 accent-[color:var(--color-terracotta)]"
-                    />
-                    Comparar
-                  </label>
+                  {listing.destaquePremium && (
+                    <span className="absolute left-3 top-3 z-10 flex items-center gap-1 rounded-full bg-[color:var(--color-gold)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                      <Sparkles className="h-3 w-3" /> Destaque
+                    </span>
+                  )}
 
                   {/* Favorite */}
                   {user && (

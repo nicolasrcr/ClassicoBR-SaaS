@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Car, Wrench, Package, Upload, X, AlertTriangle, CheckCircle, ChevronRight, Gem, ShieldCheck, Star } from "lucide-react";
+import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -20,17 +20,55 @@ export const Route = createFileRoute("/anunciar")({ component: Anunciar });
 // ─── Constantes ───────────────────────────────────────────────────────────────
 
 const MODELS_BY_BRAND: Record<string, string[]> = {
-  Chevrolet: ["Opala", "Opala 2.5", "Veraneio C10"],
-  Volkswagen: ["Fusca", "Fusca 1300", "Brasília", "Kombi Standard", "Variant"],
-  Ford: ["Galaxie", "Galaxie 500", "Corcel II GT", "Maverick", "Maverick 2.3"],
-  Fiat: ["Fiat 147"],
-  Dodge: ["Charger R/T", "Charger RT"],
-  Willys: ["Rural Willys"],
-  Puma: ["Puma GTE"],
-  Renault: ["Renault Gordini"],
-  Simca: ["Simca Chambord"],
-  GM: ["Veraneio C10"],
+  Chevrolet: [
+    "Opala", "Opala 2.5", "Opala Comodoro", "Opala Diplomata", "Opala SS",
+    "Caravan", "Caravan Comodoro", "Veraneio", "Veraneio C10", "C10", "C14", "D10", "D20",
+    "Chevette", "Chevette SL", "Chevette Hatch", "Marajó", "Chevy 500",
+    "Monza", "Monza Classic", "Monza SL/E", "Kadett", "Kadett GSi",
+    "Bel Air", "Impala", "Camaro SS",
+  ],
+  Volkswagen: [
+    "Fusca", "Fusca 1300", "Fusca 1500", "Fusca 1600", "Itamar",
+    "Brasília", "Variant", "Variant II", "TL", "SP2",
+    "Kombi Standard", "Kombi Luxo", "Kombi Pick-up",
+    "Passat", "Passat TS", "Gol", "Gol GT", "Gol GTI", "Voyage", "Parati", "Saveiro",
+    "Karmann Ghia", "Karmann Ghia TC", "Santana", "Apollo", "Quantum",
+  ],
+  Ford: [
+    "Galaxie", "Galaxie 500", "Galaxie LTD", "Landau",
+    "Maverick", "Maverick GT", "Maverick 2.3", "Maverick Super",
+    "Corcel", "Corcel II", "Corcel II GT", "Belina", "Belina II", "Del Rey", "Del Rey Ghia",
+    "Escort", "Escort XR3", "Escort Hobby", "Verona", "Pampa",
+    "F-100", "F-1000", "F-75", "Rural", "Mustang",
+  ],
+  Fiat: [
+    "Fiat 147", "Fiat 147 Rallye", "Panorama", "Spazio", "Oggi",
+    "Uno", "Uno Mille", "Uno Turbo", "Premio", "Elba",
+    "Tempra", "Tipo", "Palio", "Strada",
+  ],
+  Dodge: [
+    "Charger", "Charger R/T", "Charger RT", "Charger 318", "Charger 383",
+    "Dart", "Dart De Luxo", "Dart GT", "Dart Gran Sedan", "Magnum", "LeBaron", "Polara",
+  ],
+  Willys: [
+    "Rural Willys", "Rural 4x4", "Jeep CJ-5", "Jeep CJ-6", "Aero Willys",
+    "Itamaraty", "Itamaraty Executivo", "Interlagos", "Gordini",
+  ],
+  Puma: ["Puma GT", "Puma GTE", "Puma GTI", "Puma GTB", "Puma AM"],
+  Renault: [
+    "Renault Gordini", "Renault Dauphine", "Renault 4", "Renault 12",
+    "Renault 5", "Alpine", "Clio", "Twingo",
+  ],
+  Simca: ["Simca Chambord", "Simca Présidence", "Simca Esplanada", "Simca Tufão", "Simca Rallye"],
+  GM: ["Veraneio C10", "C14", "C15"],
+  Toyota: ["Bandeirante", "Bandeirante Curto", "Bandeirante Longo", "Corolla"],
+  Mercedes: ["180", "190", "220", "280 SL", "L-1113", "LP-321"],
+  BMW: ["2002", "2002 Tii", "Série 3 E21", "Série 3 E30"],
+  Alfa: ["Alfa Romeo 2300", "Alfa Romeo JK", "Alfa Romeo Giulia", "Spider Duetto"],
+  Lada: ["Niva", "Laika", "Samara"],
 };
+
+const MODEL_NAO_LISTADO = "__nao_listado__";
 
 const COMBUSTIVEIS = ["Gasolina", "Álcool", "Flex", "Diesel", "GNV"];
 const CAMBIOS = ["Manual", "Automático", "Semi-automático"];
@@ -85,6 +123,7 @@ interface FormData {
   category: Category | null;
   brand: string;
   model: string;
+  modelCustom: string;
   anoFab: string;
   anoMod: string;
   motor: string;
@@ -126,7 +165,7 @@ interface FormData {
 
 const defaultForm: FormData = {
   category: null,
-  brand: "", model: "", anoFab: "", anoMod: "",
+  brand: "", model: "", modelCustom: "", anoFab: "", anoMod: "",
   motor: "", combustivel: "", cambio: "", cor: "", km: "",
   carroceria: "", finalPlaca: "",
   unicoDono: false, ipvaPago: false, comManual: false,
@@ -145,7 +184,7 @@ const defaultForm: FormData = {
 
 const testForm: FormData = {
   category: "completo",
-  brand: "Chevrolet", model: "Opala", anoFab: "1979", anoMod: "1979",
+  brand: "Chevrolet", model: "Opala", modelCustom: "", anoFab: "1979", anoMod: "1979",
   motor: "4.1 6cc", combustivel: "Gasolina", cambio: "Manual", cor: "Preto", km: "85000",
   carroceria: "Sedã", finalPlaca: "7",
   unicoDono: true, ipvaPago: true, comManual: true,
@@ -275,9 +314,6 @@ function Anunciar() {
     setForm((p) => ({ ...p, [k]: v }));
 
   const priceNum = parseFloat(form.price.replace(/\D/g, "")) / 100 || 0;
-  const justificativaOk = form.justificativaPreco.trim().length >= 40;
-  const precificacaoCompleta =
-    !!form.estadoConservacao && !!form.originalidade && !!form.raridade && justificativaOk;
 
   const availableModels = form.brand ? (MODELS_BY_BRAND[form.brand] ?? []) : [];
 
@@ -321,6 +357,9 @@ function Anunciar() {
     if (!form.category) { toast.error("Selecione a condição do veículo"); return false; }
     if (!form.brand) { toast.error("Selecione a marca"); return false; }
     if (!form.model) { toast.error("Selecione o modelo"); return false; }
+    if (form.model === MODEL_NAO_LISTADO && !form.modelCustom.trim()) {
+      toast.error("Escreva o nome do modelo não listado"); return false;
+    }
     if (!form.anoFab) { toast.error("Informe o ano de fabricação"); return false; }
     return true;
   };
@@ -335,10 +374,6 @@ function Anunciar() {
     if (!form.semPreco && !form.price) { toast.error("Informe o preço ou marque 'Não informar preço'"); return false; }
     if (!form.estadoConservacao) { toast.error("Indique o estado de conservação"); return false; }
     if (!form.originalidade) { toast.error("Indique o nível de originalidade"); return false; }
-    if (!form.raridade) { toast.error("Indique a raridade do modelo"); return false; }
-    if (form.justificativaPreco.trim().length < 40) {
-      toast.error("Justifique o valor pedido (mínimo 40 caracteres)"); return false;
-    }
     if (!form.cidade) { toast.error("Informe a cidade"); return false; }
     return true;
   };
@@ -348,11 +383,12 @@ function Anunciar() {
     if (!validateStep3()) return;
 
     const id = "l_" + Date.now();
+    const modeloFinal = form.model === MODEL_NAO_LISTADO ? form.modelCustom.trim() : form.model;
     const listing: Listing = {
       id,
-      title: `${form.brand} ${form.model} ${form.anoFab}`,
+      title: `${form.brand} ${modeloFinal} ${form.anoFab}`,
       brand: form.brand,
-      model: form.model,
+      model: modeloFinal,
       year: parseInt(form.anoFab) || 2000,
       category: form.category ?? "completo",
       engine: form.motor || "—",
@@ -388,6 +424,7 @@ function Anunciar() {
         fonteC: null,
       },
       situacaoDocumental: DOC_DEFAULTS,
+      destaquePremium: form.plano === "premium",
     };
 
     addListing(listing);
@@ -527,14 +564,23 @@ function Anunciar() {
                   <FieldGroup label="Modelo" required>
                     <Select
                       value={form.model}
-                      onValueChange={(v) => upd("model", v)}
+                      onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); }}
                       disabled={!form.brand}
                     >
                       <SelectTrigger><SelectValue placeholder={form.brand ? "Selecione..." : "Selecione a marca primeiro"} /></SelectTrigger>
                       <SelectContent>
                         {availableModels.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                        <SelectItem value={MODEL_NAO_LISTADO}>Não listado — escrever manualmente</SelectItem>
                       </SelectContent>
                     </Select>
+                    {form.model === MODEL_NAO_LISTADO && (
+                      <Input
+                        className="mt-2"
+                        placeholder="Digite o nome exato do modelo"
+                        value={form.modelCustom}
+                        onChange={(e) => upd("modelCustom", e.target.value)}
+                      />
+                    )}
                   </FieldGroup>
 
                   <FieldGroup label="Ano de fabricação" required>
@@ -1007,7 +1053,7 @@ function Anunciar() {
                     />
                   </FieldGroup>
 
-                  <FieldGroup label="Raridade no mercado" required>
+                  <FieldGroup label="Raridade no mercado">
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <Gem className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Quão difícil é encontrar outro exemplar similar à venda no Brasil.</span>
@@ -1022,36 +1068,22 @@ function Anunciar() {
                     />
                   </FieldGroup>
 
-                  <FieldGroup label="Justificativa do valor pedido" required>
+                  <FieldGroup label="Justificativa do valor pedido">
                     <Textarea
                       rows={5}
                       maxLength={1000}
-                      placeholder="Explique por que esse valor faz sentido: histórico do carro, restauração recente, peças originais difíceis de encontrar, comparáveis vendidos, premiações, etc."
+                      placeholder="Opcional — explique por que esse valor faz sentido: histórico, restauração, originalidade, raridade, etc."
                       value={form.justificativaPreco}
                       onChange={(e) => upd("justificativaPreco", e.target.value)}
                       className="resize-none"
                     />
                     <div className="mt-1 flex items-center justify-between text-xs">
-                      <span className={cn(
-                        form.justificativaPreco.trim().length >= 40 ? "text-[#1D6E4E]" : "text-muted-foreground"
-                      )}>
-                        {form.justificativaPreco.trim().length >= 40
-                          ? "Justificativa pronta"
-                          : `Mínimo 40 caracteres (${form.justificativaPreco.trim().length}/40)`}
-                      </span>
+                      <span className="text-muted-foreground">Campo opcional</span>
                       <span className="text-muted-foreground">{form.justificativaPreco.length}/1000</span>
                     </div>
                   </FieldGroup>
                 </div>
 
-                {!precificacaoCompleta && (
-                  <div className="mt-4 flex items-start gap-2 rounded-md border border-amber-300/50 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-                    <span>
-                      Complete todos os campos da precificação guiada — compradores de clássicos valorizam transparência sobre estado, originalidade e raridade.
-                    </span>
-                  </div>
-                )}
               </section>
 
               {/* Localização */}
@@ -1141,13 +1173,18 @@ function Anunciar() {
                       key: "gratuito" as const,
                       name: "Gratuito",
                       price: "R$ 0",
-                      features: ["3 anúncios ativos", "5 fotos por anúncio", "Validade: 30 dias"],
+                      features: ["Anúncio publicado normalmente", "5 fotos por anúncio", "Validade: 30 dias"],
                     },
                     {
                       key: "premium" as const,
-                      name: "Premium",
-                      price: "R$ 29,90/mês",
-                      features: ["20 anúncios ativos", "15 fotos por anúncio", "Badge de destaque", "Validade: 60 dias"],
+                      name: "Premium — Sempre no topo",
+                      price: "R$ 59,90/mês",
+                      features: [
+                        "★ Seu anúncio sempre no topo da busca",
+                        "Selo dourado de destaque",
+                        "15 fotos por anúncio",
+                        "Validade: 60 dias",
+                      ],
                     },
                   ].map((plano) => (
                     <button

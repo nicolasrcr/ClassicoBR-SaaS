@@ -144,6 +144,8 @@ export interface Listing {
   fotoDuplicadaFlag: boolean;
   verificacaoLocalizacao: VerificacaoLocalizacao;
   situacaoDocumental: SituacaoDocumental;
+  destaquePremium?: boolean;
+  destaqueAte?: string;
 }
 
 export interface User {
