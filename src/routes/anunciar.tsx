@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Car, Wrench, Package, Upload, X, AlertTriangle, CheckCircle, ChevronRight, Gem, ShieldCheck, Star } from "lucide-react";
+import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -314,9 +314,6 @@ function Anunciar() {
     setForm((p) => ({ ...p, [k]: v }));
 
   const priceNum = parseFloat(form.price.replace(/\D/g, "")) / 100 || 0;
-  const justificativaOk = form.justificativaPreco.trim().length >= 40;
-  const precificacaoCompleta =
-    !!form.estadoConservacao && !!form.originalidade && !!form.raridade && justificativaOk;
 
   const availableModels = form.brand ? (MODELS_BY_BRAND[form.brand] ?? []) : [];
 
