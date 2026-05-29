@@ -20,17 +20,55 @@ export const Route = createFileRoute("/anunciar")({ component: Anunciar });
 // ─── Constantes ───────────────────────────────────────────────────────────────
 
 const MODELS_BY_BRAND: Record<string, string[]> = {
-  Chevrolet: ["Opala", "Opala 2.5", "Veraneio C10"],
-  Volkswagen: ["Fusca", "Fusca 1300", "Brasília", "Kombi Standard", "Variant"],
-  Ford: ["Galaxie", "Galaxie 500", "Corcel II GT", "Maverick", "Maverick 2.3"],
-  Fiat: ["Fiat 147"],
-  Dodge: ["Charger R/T", "Charger RT"],
-  Willys: ["Rural Willys"],
-  Puma: ["Puma GTE"],
-  Renault: ["Renault Gordini"],
-  Simca: ["Simca Chambord"],
-  GM: ["Veraneio C10"],
+  Chevrolet: [
+    "Opala", "Opala 2.5", "Opala Comodoro", "Opala Diplomata", "Opala SS",
+    "Caravan", "Caravan Comodoro", "Veraneio", "Veraneio C10", "C10", "C14", "D10", "D20",
+    "Chevette", "Chevette SL", "Chevette Hatch", "Marajó", "Chevy 500",
+    "Monza", "Monza Classic", "Monza SL/E", "Kadett", "Kadett GSi",
+    "Bel Air", "Impala", "Camaro SS",
+  ],
+  Volkswagen: [
+    "Fusca", "Fusca 1300", "Fusca 1500", "Fusca 1600", "Itamar",
+    "Brasília", "Variant", "Variant II", "TL", "SP2",
+    "Kombi Standard", "Kombi Luxo", "Kombi Pick-up",
+    "Passat", "Passat TS", "Gol", "Gol GT", "Gol GTI", "Voyage", "Parati", "Saveiro",
+    "Karmann Ghia", "Karmann Ghia TC", "Santana", "Apollo", "Quantum",
+  ],
+  Ford: [
+    "Galaxie", "Galaxie 500", "Galaxie LTD", "Landau",
+    "Maverick", "Maverick GT", "Maverick 2.3", "Maverick Super",
+    "Corcel", "Corcel II", "Corcel II GT", "Belina", "Belina II", "Del Rey", "Del Rey Ghia",
+    "Escort", "Escort XR3", "Escort Hobby", "Verona", "Pampa",
+    "F-100", "F-1000", "F-75", "Rural", "Mustang",
+  ],
+  Fiat: [
+    "Fiat 147", "Fiat 147 Rallye", "Panorama", "Spazio", "Oggi",
+    "Uno", "Uno Mille", "Uno Turbo", "Premio", "Elba",
+    "Tempra", "Tipo", "Palio", "Strada",
+  ],
+  Dodge: [
+    "Charger", "Charger R/T", "Charger RT", "Charger 318", "Charger 383",
+    "Dart", "Dart De Luxo", "Dart GT", "Dart Gran Sedan", "Magnum", "LeBaron", "Polara",
+  ],
+  Willys: [
+    "Rural Willys", "Rural 4x4", "Jeep CJ-5", "Jeep CJ-6", "Aero Willys",
+    "Itamaraty", "Itamaraty Executivo", "Interlagos", "Gordini",
+  ],
+  Puma: ["Puma GT", "Puma GTE", "Puma GTI", "Puma GTB", "Puma AM"],
+  Renault: [
+    "Renault Gordini", "Renault Dauphine", "Renault 4", "Renault 12",
+    "Renault 5", "Alpine", "Clio", "Twingo",
+  ],
+  Simca: ["Simca Chambord", "Simca Présidence", "Simca Esplanada", "Simca Tufão", "Simca Rallye"],
+  GM: ["Veraneio C10", "C14", "C15"],
+  Toyota: ["Bandeirante", "Bandeirante Curto", "Bandeirante Longo", "Corolla"],
+  Mercedes: ["180", "190", "220", "280 SL", "L-1113", "LP-321"],
+  BMW: ["2002", "2002 Tii", "Série 3 E21", "Série 3 E30"],
+  Alfa: ["Alfa Romeo 2300", "Alfa Romeo JK", "Alfa Romeo Giulia", "Spider Duetto"],
+  Lada: ["Niva", "Laika", "Samara"],
 };
+
+const MODEL_NAO_LISTADO = "__nao_listado__";
 
 const COMBUSTIVEIS = ["Gasolina", "Álcool", "Flex", "Diesel", "GNV"];
 const CAMBIOS = ["Manual", "Automático", "Semi-automático"];
