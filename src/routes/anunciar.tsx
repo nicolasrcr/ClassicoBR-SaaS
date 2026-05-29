@@ -143,6 +143,36 @@ const defaultForm: FormData = {
   plano: "gratuito",
 };
 
+const testForm: FormData = {
+  category: "completo",
+  brand: "Chevrolet", model: "Opala", anoFab: "1979", anoMod: "1979",
+  motor: "4.1 6cc", combustivel: "Gasolina", cambio: "Manual", cor: "Preto", km: "85000",
+  carroceria: "Sedã", finalPlaca: "7",
+  unicoDono: true, ipvaPago: true, comManual: true,
+  chaveReserva: true, aceitaTroca: false,
+  docNome: "proprio", docTransferencias: "nenhuma", docIpva: "isentoAntiguidade",
+  docLicenciamento: "emDia", docChassi: "visivelLegivel", docMotor: "original",
+  docMultas: "nenhuma", docAjuda: "sim",
+  description:
+    "Opala Comodoro 1979 em excelente estado, motor 4.1 6cc original, lataria preservada, " +
+    "interior reformado mantendo características originais. Documentação 100% em dia, único dono " +
+    "nos últimos 12 anos. Manual e chave reserva inclusos. Aceito proposta para venda à vista.",
+  photos: [
+    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80",
+    "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&q=80",
+    "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
+  ],
+  price: "8500000", semPreco: false,
+  estadoConservacao: "bom",
+  originalidade: "totalmenteOriginal",
+  raridade: "raro",
+  justificativaPreco:
+    "Preço alinhado à tabela FIPE de colecionáveis. Opala 1979 Comodoro com motor original e documentação completa é raridade no mercado, valoriza ano a ano.",
+  cep: "01310-100", cidade: "São Paulo", estado: "SP", raio: "Todo Brasil",
+  whatsapp: "(11) 98765-4321", exibirWhatsapp: true,
+  plano: "gratuito",
+};
+
 // ─── Helpers UI ───────────────────────────────────────────────────────────────
 
 function ProgressBar({ step }: { step: Step }) {
