@@ -1176,13 +1176,18 @@ function Anunciar() {
                       key: "gratuito" as const,
                       name: "Gratuito",
                       price: "R$ 0",
-                      features: ["3 anúncios ativos", "5 fotos por anúncio", "Validade: 30 dias"],
+                      features: ["Anúncio publicado normalmente", "5 fotos por anúncio", "Validade: 30 dias"],
                     },
                     {
                       key: "premium" as const,
-                      name: "Premium",
-                      price: "R$ 29,90/mês",
-                      features: ["20 anúncios ativos", "15 fotos por anúncio", "Badge de destaque", "Validade: 60 dias"],
+                      name: "Premium — Sempre no topo",
+                      price: "R$ 59,90/mês",
+                      features: [
+                        "★ Seu anúncio sempre no topo da busca",
+                        "Selo dourado de destaque",
+                        "15 fotos por anúncio",
+                        "Validade: 60 dias",
+                      ],
                     },
                   ].map((plano) => (
                     <button
