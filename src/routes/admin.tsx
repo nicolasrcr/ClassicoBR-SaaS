@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation, useNavigate, createFileRoute } from "@tansta
 import { useEffect, useState } from "react";
 import {
   BarChart3, FileText, Flag, LogOut, MessageSquare, Newspaper,
-  Settings, Shield, Users, UserPlus, Wallet, Menu, X,
+  Settings, Shield, ShieldCheck, Users, UserPlus, Wallet, Menu, X,
 } from "lucide-react";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { mockReports, mockFlaggedListings } from "@/lib/mock-data";
@@ -26,6 +26,7 @@ function AdminLayout() {
     { to: "/admin/usuarios", label: "Usuários", icon: Users },
     { to: "/admin/cadastros-pendentes", label: "Cadastros Pendentes", icon: UserPlus },
     { to: "/admin/denuncias", label: "Denúncias", icon: Flag, badge: openReports },
+    { to: "/admin/moderacao", label: "Moderação", icon: ShieldCheck },
     { to: "/admin/chat", label: "Chat & Suporte", icon: MessageSquare },
     { to: "/admin/seguranca", label: "Segurança", icon: Shield, badge: activeFlags },
     { to: "/admin/planos", label: "Planos & Pagamentos", icon: Wallet },
