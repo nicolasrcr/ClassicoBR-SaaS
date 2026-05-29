@@ -123,6 +123,7 @@ interface FormData {
   category: Category | null;
   brand: string;
   model: string;
+  modelCustom: string;
   anoFab: string;
   anoMod: string;
   motor: string;
@@ -164,7 +165,7 @@ interface FormData {
 
 const defaultForm: FormData = {
   category: null,
-  brand: "", model: "", anoFab: "", anoMod: "",
+  brand: "", model: "", modelCustom: "", anoFab: "", anoMod: "",
   motor: "", combustivel: "", cambio: "", cor: "", km: "",
   carroceria: "", finalPlaca: "",
   unicoDono: false, ipvaPago: false, comManual: false,
@@ -183,7 +184,7 @@ const defaultForm: FormData = {
 
 const testForm: FormData = {
   category: "completo",
-  brand: "Chevrolet", model: "Opala", anoFab: "1979", anoMod: "1979",
+  brand: "Chevrolet", model: "Opala", modelCustom: "", anoFab: "1979", anoMod: "1979",
   motor: "4.1 6cc", combustivel: "Gasolina", cambio: "Manual", cor: "Preto", km: "85000",
   carroceria: "Sedã", finalPlaca: "7",
   unicoDono: true, ipvaPago: true, comManual: true,
@@ -565,14 +566,23 @@ function Anunciar() {
                   <FieldGroup label="Modelo" required>
                     <Select
                       value={form.model}
-                      onValueChange={(v) => upd("model", v)}
+                      onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); }}
                       disabled={!form.brand}
                     >
                       <SelectTrigger><SelectValue placeholder={form.brand ? "Selecione..." : "Selecione a marca primeiro"} /></SelectTrigger>
                       <SelectContent>
                         {availableModels.map((m) => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+                        <SelectItem value={MODEL_NAO_LISTADO}>Não listado — escrever manualmente</SelectItem>
                       </SelectContent>
                     </Select>
+                    {form.model === MODEL_NAO_LISTADO && (
+                      <Input
+                        className="mt-2"
+                        placeholder="Digite o nome exato do modelo"
+                        value={form.modelCustom}
+                        onChange={(e) => upd("modelCustom", e.target.value)}
+                      />
+                    )}
                   </FieldGroup>
 
                   <FieldGroup label="Ano de fabricação" required>
