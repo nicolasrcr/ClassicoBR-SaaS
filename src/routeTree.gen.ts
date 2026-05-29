@@ -9,10 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ServicosRouteImport } from './routes/servicos'
 import { Route as RegisterRouteImport } from './routes/register'
 import { Route as MinhaContaRouteImport } from './routes/minha-conta'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as EsqueciSenhaRouteImport } from './routes/esqueci-senha'
 import { Route as CriarRouteImport } from './routes/criar'
 import { Route as CompraSeguraRouteImport } from './routes/compra-segura'
@@ -25,7 +27,9 @@ import { Route as AnunciarRouteImport } from './routes/anunciar'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as ServicosIdRouteImport } from './routes/servicos.$id'
 import { Route as PerfilIdRouteImport } from './routes/perfil.$id'
+import { Route as EventosIdRouteImport } from './routes/eventos.$id'
 import { Route as CarIdRouteImport } from './routes/car.$id'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AnunciosIdRouteImport } from './routes/anuncios.$id'
@@ -42,6 +46,11 @@ import { Route as AdminCadastrosPendentesRouteImport } from './routes/admin.cada
 import { Route as AdminBlogRouteImport } from './routes/admin.blog'
 import { Route as AdminAnunciosRouteImport } from './routes/admin.anuncios'
 
+const ServicosRoute = ServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
@@ -60,6 +69,11 @@ const LoginRoute = LoginRouteImport.update({
 const FavoritosRoute = FavoritosRouteImport.update({
   id: '/favoritos',
   path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EventosRoute = EventosRouteImport.update({
+  id: '/eventos',
+  path: '/eventos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EsqueciSenhaRoute = EsqueciSenhaRouteImport.update({
@@ -122,10 +136,20 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const ServicosIdRoute = ServicosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => ServicosRoute,
+} as any)
 const PerfilIdRoute = PerfilIdRouteImport.update({
   id: '/perfil/$id',
   path: '/perfil/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const EventosIdRoute = EventosIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => EventosRoute,
 } as any)
 const CarIdRoute = CarIdRouteImport.update({
   id: '/car/$id',
@@ -215,10 +239,12 @@ export interface FileRoutesByFullPath {
   '/compra-segura': typeof CompraSeguraRoute
   '/criar': typeof CriarRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
+  '/eventos': typeof EventosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
   '/minha-conta': typeof MinhaContaRoute
   '/register': typeof RegisterRoute
+  '/servicos': typeof ServicosRouteWithChildren
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cadastros-pendentes': typeof AdminCadastrosPendentesRoute
@@ -234,7 +260,9 @@ export interface FileRoutesByFullPath {
   '/anuncios/$id': typeof AnunciosIdRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/car/$id': typeof CarIdRoute
+  '/eventos/$id': typeof EventosIdRoute
   '/perfil/$id': typeof PerfilIdRoute
+  '/servicos/$id': typeof ServicosIdRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
@@ -248,10 +276,12 @@ export interface FileRoutesByTo {
   '/compra-segura': typeof CompraSeguraRoute
   '/criar': typeof CriarRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
+  '/eventos': typeof EventosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
   '/minha-conta': typeof MinhaContaRoute
   '/register': typeof RegisterRoute
+  '/servicos': typeof ServicosRouteWithChildren
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cadastros-pendentes': typeof AdminCadastrosPendentesRoute
@@ -267,7 +297,9 @@ export interface FileRoutesByTo {
   '/anuncios/$id': typeof AnunciosIdRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/car/$id': typeof CarIdRoute
+  '/eventos/$id': typeof EventosIdRoute
   '/perfil/$id': typeof PerfilIdRoute
+  '/servicos/$id': typeof ServicosIdRoute
   '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
@@ -283,10 +315,12 @@ export interface FileRoutesById {
   '/compra-segura': typeof CompraSeguraRoute
   '/criar': typeof CriarRoute
   '/esqueci-senha': typeof EsqueciSenhaRoute
+  '/eventos': typeof EventosRouteWithChildren
   '/favoritos': typeof FavoritosRoute
   '/login': typeof LoginRoute
   '/minha-conta': typeof MinhaContaRoute
   '/register': typeof RegisterRoute
+  '/servicos': typeof ServicosRouteWithChildren
   '/admin/anuncios': typeof AdminAnunciosRoute
   '/admin/blog': typeof AdminBlogRoute
   '/admin/cadastros-pendentes': typeof AdminCadastrosPendentesRoute
@@ -302,7 +336,9 @@ export interface FileRoutesById {
   '/anuncios/$id': typeof AnunciosIdRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/car/$id': typeof CarIdRoute
+  '/eventos/$id': typeof EventosIdRoute
   '/perfil/$id': typeof PerfilIdRoute
+  '/servicos/$id': typeof ServicosIdRoute
   '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
@@ -319,10 +355,12 @@ export interface FileRouteTypes {
     | '/compra-segura'
     | '/criar'
     | '/esqueci-senha'
+    | '/eventos'
     | '/favoritos'
     | '/login'
     | '/minha-conta'
     | '/register'
+    | '/servicos'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cadastros-pendentes'
@@ -338,7 +376,9 @@ export interface FileRouteTypes {
     | '/anuncios/$id'
     | '/blog/$slug'
     | '/car/$id'
+    | '/eventos/$id'
     | '/perfil/$id'
+    | '/servicos/$id'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -352,10 +392,12 @@ export interface FileRouteTypes {
     | '/compra-segura'
     | '/criar'
     | '/esqueci-senha'
+    | '/eventos'
     | '/favoritos'
     | '/login'
     | '/minha-conta'
     | '/register'
+    | '/servicos'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cadastros-pendentes'
@@ -371,7 +413,9 @@ export interface FileRouteTypes {
     | '/anuncios/$id'
     | '/blog/$slug'
     | '/car/$id'
+    | '/eventos/$id'
     | '/perfil/$id'
+    | '/servicos/$id'
     | '/admin'
   id:
     | '__root__'
@@ -386,10 +430,12 @@ export interface FileRouteTypes {
     | '/compra-segura'
     | '/criar'
     | '/esqueci-senha'
+    | '/eventos'
     | '/favoritos'
     | '/login'
     | '/minha-conta'
     | '/register'
+    | '/servicos'
     | '/admin/anuncios'
     | '/admin/blog'
     | '/admin/cadastros-pendentes'
@@ -405,7 +451,9 @@ export interface FileRouteTypes {
     | '/anuncios/$id'
     | '/blog/$slug'
     | '/car/$id'
+    | '/eventos/$id'
     | '/perfil/$id'
+    | '/servicos/$id'
     | '/admin/'
   fileRoutesById: FileRoutesById
 }
@@ -421,16 +469,25 @@ export interface RootRouteChildren {
   CompraSeguraRoute: typeof CompraSeguraRoute
   CriarRoute: typeof CriarRoute
   EsqueciSenhaRoute: typeof EsqueciSenhaRoute
+  EventosRoute: typeof EventosRouteWithChildren
   FavoritosRoute: typeof FavoritosRoute
   LoginRoute: typeof LoginRoute
   MinhaContaRoute: typeof MinhaContaRoute
   RegisterRoute: typeof RegisterRoute
+  ServicosRoute: typeof ServicosRouteWithChildren
   CarIdRoute: typeof CarIdRoute
   PerfilIdRoute: typeof PerfilIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/servicos': {
+      id: '/servicos'
+      path: '/servicos'
+      fullPath: '/servicos'
+      preLoaderRoute: typeof ServicosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
@@ -457,6 +514,13 @@ declare module '@tanstack/react-router' {
       path: '/favoritos'
       fullPath: '/favoritos'
       preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/eventos': {
+      id: '/eventos'
+      path: '/eventos'
+      fullPath: '/eventos'
+      preLoaderRoute: typeof EventosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/esqueci-senha': {
@@ -543,12 +607,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/servicos/$id': {
+      id: '/servicos/$id'
+      path: '/$id'
+      fullPath: '/servicos/$id'
+      preLoaderRoute: typeof ServicosIdRouteImport
+      parentRoute: typeof ServicosRoute
+    }
     '/perfil/$id': {
       id: '/perfil/$id'
       path: '/perfil/$id'
       fullPath: '/perfil/$id'
       preLoaderRoute: typeof PerfilIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/eventos/$id': {
+      id: '/eventos/$id'
+      path: '/$id'
+      fullPath: '/eventos/$id'
+      preLoaderRoute: typeof EventosIdRouteImport
+      parentRoute: typeof EventosRoute
     }
     '/car/$id': {
       id: '/car/$id'
@@ -714,6 +792,29 @@ const BlogRouteChildren: BlogRouteChildren = {
 
 const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
+interface EventosRouteChildren {
+  EventosIdRoute: typeof EventosIdRoute
+}
+
+const EventosRouteChildren: EventosRouteChildren = {
+  EventosIdRoute: EventosIdRoute,
+}
+
+const EventosRouteWithChildren =
+  EventosRoute._addFileChildren(EventosRouteChildren)
+
+interface ServicosRouteChildren {
+  ServicosIdRoute: typeof ServicosIdRoute
+}
+
+const ServicosRouteChildren: ServicosRouteChildren = {
+  ServicosIdRoute: ServicosIdRoute,
+}
+
+const ServicosRouteWithChildren = ServicosRoute._addFileChildren(
+  ServicosRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
@@ -726,10 +827,12 @@ const rootRouteChildren: RootRouteChildren = {
   CompraSeguraRoute: CompraSeguraRoute,
   CriarRoute: CriarRoute,
   EsqueciSenhaRoute: EsqueciSenhaRoute,
+  EventosRoute: EventosRouteWithChildren,
   FavoritosRoute: FavoritosRoute,
   LoginRoute: LoginRoute,
   MinhaContaRoute: MinhaContaRoute,
   RegisterRoute: RegisterRoute,
+  ServicosRoute: ServicosRouteWithChildren,
   CarIdRoute: CarIdRoute,
   PerfilIdRoute: PerfilIdRoute,
 }

@@ -30,6 +30,12 @@ export function Header() {
           <Link to="/anuncios" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
             Explorar
           </Link>
+          <Link to="/eventos" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
+            Eventos
+          </Link>
+          <Link to="/servicos" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
+            Serviços & Peças
+          </Link>
           <Link to="/blog" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
             Blog
           </Link>
