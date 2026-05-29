@@ -163,7 +163,7 @@ const testForm: FormData = {
     "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80",
   ],
   price: "8500000", semPreco: false,
-  estadoConservacao: "bom",
+  estadoConservacao: "bomEstadoUso",
   originalidade: "totalmenteOriginal",
   raridade: "raro",
   justificativaPreco:
