@@ -28,11 +28,12 @@ async function sha256(data: ArrayBuffer): Promise<string> {
 }
 
 function browserFingerprint(): string {
-  if (typeof navigator === "undefined") return "fp_ssr";
+  if (typeof window === "undefined" || typeof navigator === "undefined") return "fp_ssr";
+  const scr = typeof screen !== "undefined" ? screen : undefined;
   const raw = [
     navigator.userAgent,
     navigator.language,
-    String(screen?.width ?? 0) + "x" + String(screen?.height ?? 0),
+    String(scr?.width ?? 0) + "x" + String(scr?.height ?? 0),
     String(new Date().getTimezoneOffset()),
   ].join("|");
   let h = 0;
