@@ -1056,7 +1056,7 @@ function Anunciar() {
                     />
                   </FieldGroup>
 
-                  <FieldGroup label="Raridade no mercado" required>
+                  <FieldGroup label="Raridade no mercado">
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <Gem className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Quão difícil é encontrar outro exemplar similar à venda no Brasil.</span>
@@ -1071,36 +1071,22 @@ function Anunciar() {
                     />
                   </FieldGroup>
 
-                  <FieldGroup label="Justificativa do valor pedido" required>
+                  <FieldGroup label="Justificativa do valor pedido">
                     <Textarea
                       rows={5}
                       maxLength={1000}
-                      placeholder="Explique por que esse valor faz sentido: histórico do carro, restauração recente, peças originais difíceis de encontrar, comparáveis vendidos, premiações, etc."
+                      placeholder="Opcional — explique por que esse valor faz sentido: histórico, restauração, originalidade, raridade, etc."
                       value={form.justificativaPreco}
                       onChange={(e) => upd("justificativaPreco", e.target.value)}
                       className="resize-none"
                     />
                     <div className="mt-1 flex items-center justify-between text-xs">
-                      <span className={cn(
-                        form.justificativaPreco.trim().length >= 40 ? "text-[#1D6E4E]" : "text-muted-foreground"
-                      )}>
-                        {form.justificativaPreco.trim().length >= 40
-                          ? "Justificativa pronta"
-                          : `Mínimo 40 caracteres (${form.justificativaPreco.trim().length}/40)`}
-                      </span>
+                      <span className="text-muted-foreground">Campo opcional</span>
                       <span className="text-muted-foreground">{form.justificativaPreco.length}/1000</span>
                     </div>
                   </FieldGroup>
                 </div>
 
-                {!precificacaoCompleta && (
-                  <div className="mt-4 flex items-start gap-2 rounded-md border border-amber-300/50 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-500" />
-                    <span>
-                      Complete todos os campos da precificação guiada — compradores de clássicos valorizam transparência sobre estado, originalidade e raridade.
-                    </span>
-                  </div>
-                )}
               </section>
 
               {/* Localização */}
