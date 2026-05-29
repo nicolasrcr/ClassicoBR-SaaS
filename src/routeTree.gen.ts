@@ -38,6 +38,7 @@ import { Route as AdminSegurancaRouteImport } from './routes/admin.seguranca'
 import { Route as AdminPlanosRouteImport } from './routes/admin.planos'
 import { Route as AdminPendentesRouteImport } from './routes/admin.pendentes'
 import { Route as AdminPagamentosRouteImport } from './routes/admin.pagamentos'
+import { Route as AdminModeracaoRouteImport } from './routes/admin.moderacao'
 import { Route as AdminDenunciasRouteImport } from './routes/admin.denuncias'
 import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 import { Route as AdminConfigRouteImport } from './routes/admin.config'
@@ -191,6 +192,11 @@ const AdminPagamentosRoute = AdminPagamentosRouteImport.update({
   path: '/pagamentos',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminModeracaoRoute = AdminModeracaoRouteImport.update({
+  id: '/moderacao',
+  path: '/moderacao',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminDenunciasRoute = AdminDenunciasRouteImport.update({
   id: '/denuncias',
   path: '/denuncias',
@@ -252,6 +258,7 @@ export interface FileRoutesByFullPath {
   '/admin/config': typeof AdminConfigRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/denuncias': typeof AdminDenunciasRoute
+  '/admin/moderacao': typeof AdminModeracaoRoute
   '/admin/pagamentos': typeof AdminPagamentosRoute
   '/admin/pendentes': typeof AdminPendentesRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -289,6 +296,7 @@ export interface FileRoutesByTo {
   '/admin/config': typeof AdminConfigRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/denuncias': typeof AdminDenunciasRoute
+  '/admin/moderacao': typeof AdminModeracaoRoute
   '/admin/pagamentos': typeof AdminPagamentosRoute
   '/admin/pendentes': typeof AdminPendentesRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -328,6 +336,7 @@ export interface FileRoutesById {
   '/admin/config': typeof AdminConfigRoute
   '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/denuncias': typeof AdminDenunciasRoute
+  '/admin/moderacao': typeof AdminModeracaoRoute
   '/admin/pagamentos': typeof AdminPagamentosRoute
   '/admin/pendentes': typeof AdminPendentesRoute
   '/admin/planos': typeof AdminPlanosRoute
@@ -368,6 +377,7 @@ export interface FileRouteTypes {
     | '/admin/config'
     | '/admin/configuracoes'
     | '/admin/denuncias'
+    | '/admin/moderacao'
     | '/admin/pagamentos'
     | '/admin/pendentes'
     | '/admin/planos'
@@ -405,6 +415,7 @@ export interface FileRouteTypes {
     | '/admin/config'
     | '/admin/configuracoes'
     | '/admin/denuncias'
+    | '/admin/moderacao'
     | '/admin/pagamentos'
     | '/admin/pendentes'
     | '/admin/planos'
@@ -443,6 +454,7 @@ export interface FileRouteTypes {
     | '/admin/config'
     | '/admin/configuracoes'
     | '/admin/denuncias'
+    | '/admin/moderacao'
     | '/admin/pagamentos'
     | '/admin/pendentes'
     | '/admin/planos'
@@ -684,6 +696,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagamentosRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/moderacao': {
+      id: '/admin/moderacao'
+      path: '/moderacao'
+      fullPath: '/admin/moderacao'
+      preLoaderRoute: typeof AdminModeracaoRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/denuncias': {
       id: '/admin/denuncias'
       path: '/denuncias'
@@ -744,6 +763,7 @@ interface AdminRouteChildren {
   AdminConfigRoute: typeof AdminConfigRoute
   AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminDenunciasRoute: typeof AdminDenunciasRoute
+  AdminModeracaoRoute: typeof AdminModeracaoRoute
   AdminPagamentosRoute: typeof AdminPagamentosRoute
   AdminPendentesRoute: typeof AdminPendentesRoute
   AdminPlanosRoute: typeof AdminPlanosRoute
@@ -760,6 +780,7 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminConfigRoute: AdminConfigRoute,
   AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminDenunciasRoute: AdminDenunciasRoute,
+  AdminModeracaoRoute: AdminModeracaoRoute,
   AdminPagamentosRoute: AdminPagamentosRoute,
   AdminPendentesRoute: AdminPendentesRoute,
   AdminPlanosRoute: AdminPlanosRoute,
