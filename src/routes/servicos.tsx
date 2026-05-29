@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Wrench, Package, Sparkles, ShoppingBag, MapPin, Plus, X, Upload, ShieldCheck } from "lucide-react";
+import { Wrench, Package, Sparkles, ShoppingBag, MapPin, Plus, X, Upload, ShieldCheck, Search } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { SERVICE_KIND_LABELS, type ServiceKind, type ServiceListing, type ImageTrace } from "@/lib/types";
 import { analyzeImageFile, buildTraceability } from "@/lib/traceability";
+import { scoreServiceRelevance, normalizeText } from "@/lib/search";
 import { BR_STATES } from "@/lib/mock-data";
 import { formatPrice } from "@/lib/format";
 import { toast } from "sonner";
@@ -37,16 +38,25 @@ function ServicosPage() {
   const services = useAppStore((s) => s.services);
   const addService = useAppStore((s) => s.addService);
   const user = useCurrentUser();
+  const isAdmin = user?.role === "admin";
+  const [search, setSearch] = useState("");
+  const [cidade, setCidade] = useState("");
   const [kindFilter, setKindFilter] = useState<ServiceKind | "all">("all");
   const [estadoFilter, setEstadoFilter] = useState<string>("all");
+  const [sort, setSort] = useState<"relevancia" | "recente">("relevancia");
   const [showForm, setShowForm] = useState(false);
 
   const filtered = useMemo(() => {
-    return services
+    const list = services
       .filter((s) => s.status === "ativo")
+      .filter((s) => isAdmin || (s.statusModeracao ?? "aprovado") === "aprovado")
       .filter((s) => kindFilter === "all" || s.kind === kindFilter)
-      .filter((s) => estadoFilter === "all" || s.estado === estadoFilter);
-  }, [services, kindFilter, estadoFilter]);
+      .filter((s) => estadoFilter === "all" || s.estado === estadoFilter)
+      .filter((s) => !cidade || normalizeText(s.cidade).includes(normalizeText(cidade)))
+      .filter((s) => !search.trim() || scoreServiceRelevance(s, search) > 0);
+    if (sort === "recente") return [...list].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+    return [...list].sort((a, b) => scoreServiceRelevance(b, search) - scoreServiceRelevance(a, search));
+  }, [services, isAdmin, kindFilter, estadoFilter, cidade, search, sort]);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -92,13 +102,27 @@ function ServicosPage() {
         </div>
 
         <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <Select value={estadoFilter} onValueChange={setEstadoFilter}>
-            <SelectTrigger className="h-9 w-44 bg-card"><SelectValue /></SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todo Brasil</SelectItem>
-              {BR_STATES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-            </SelectContent>
-          </Select>
+          <div className="flex flex-1 flex-col gap-2 sm:flex-row">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar oficinas, peças, especialidades…" className="pl-9 h-9 bg-card" />
+            </div>
+            <Input value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="Cidade" className="h-9 sm:w-40 bg-card" />
+            <Select value={estadoFilter} onValueChange={setEstadoFilter}>
+              <SelectTrigger className="h-9 sm:w-32 bg-card"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Todo Brasil</SelectItem>
+                {BR_STATES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={sort} onValueChange={(v) => setSort(v as typeof sort)}>
+              <SelectTrigger className="h-9 sm:w-36 bg-card"><SelectValue /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="relevancia">Relevância</SelectItem>
+                <SelectItem value="recente">Mais recentes</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <Button onClick={() => {
             if (!user) { toast.error("Faça login para publicar"); return; }
             setShowForm((v) => !v);
