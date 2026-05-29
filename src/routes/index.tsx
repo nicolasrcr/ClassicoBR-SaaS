@@ -427,6 +427,42 @@ function Index() {
         )}
       </main>
 
+      {/* ── Eventos & Serviços ── */}
+      <section className="border-t border-border bg-card/40 px-6 py-14">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex items-end justify-between">
+            <div>
+              <p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-terracotta)] font-semibold">Mais da comunidade</p>
+              <h2 className="font-serif text-3xl md:text-4xl mt-2">Vá além do anúncio</h2>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <Link to="/eventos" className="car-card group relative overflow-hidden rounded-xl border border-border bg-card">
+              <div className="aspect-[21/9] overflow-hidden bg-muted">
+                <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200" alt="Encontros de clássicos" className="car-card-img h-full w-full object-cover" />
+              </div>
+              <div className="p-6">
+                <p className="text-[10px] uppercase tracking-wider text-[color:var(--color-terracotta)] font-semibold">Agenda</p>
+                <h3 className="font-serif text-xl mt-1">Encontros, exposições e rallies</h3>
+                <p className="mt-2 text-sm text-muted-foreground">Veja os próximos eventos de clássicos perto de você — ou divulgue o seu.</p>
+                <span className="mt-3 inline-flex text-xs font-semibold text-[color:var(--color-terracotta)] group-hover:underline">Ver agenda completa →</span>
+              </div>
+            </Link>
+            <Link to="/servicos" className="car-card group relative overflow-hidden rounded-xl border border-border bg-card">
+              <div className="aspect-[21/9] overflow-hidden bg-muted">
+                <img src="https://images.unsplash.com/photo-1632823471565-1ecdf5c6dab1?w=1200" alt="Oficinas e auto-peças" className="car-card-img h-full w-full object-cover" />
+              </div>
+              <div className="p-6">
+                <p className="text-[10px] uppercase tracking-wider text-[color:var(--color-terracotta)] font-semibold">Serviços & Peças</p>
+                <h3 className="font-serif text-xl mt-1">Oficinas, auto-peças e classificados</h3>
+                <p className="mt-2 text-sm text-muted-foreground">Toda publicação com validação de IP, fingerprint e metadados das fotos.</p>
+                <span className="mt-3 inline-flex text-xs font-semibold text-[color:var(--color-terracotta)] group-hover:underline">Explorar →</span>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── Compare bar ── */}
       {compareIds.length >= 2 && (
         <div className="fixed bottom-20 left-1/2 z-30 -translate-x-1/2 flex items-center gap-3 rounded-full bg-[color:var(--color-charcoal)] px-5 py-3 shadow-2xl text-white text-sm border border-white/10">

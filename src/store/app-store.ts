@@ -3,11 +3,13 @@ import { persist } from "zustand/middleware";
 import type {
   Category, Listing, User, Report, Payment, Conversation, ChatMessage,
   Review, Favorite, BlogPost, FlaggedListing, PendingRegistration, BlockedAttempt,
+  ClassicEvent, ServiceListing,
 } from "@/lib/types";
 import {
   mockUsers, mockListings, mockConversations, mockMessages, mockReports,
   mockPendingRegistrations, mockPayments, mockBlogPosts, mockReviews,
   mockFavorites, mockFlaggedListings, mockBlockedAttempts,
+  mockEvents, mockServices,
 } from "@/lib/mock-data";
 
 
@@ -43,6 +45,8 @@ interface AppState {
   reviews: Review[];
   favorites: Favorite[];
   blockedAttempts: BlockedAttempt[];
+  events: ClassicEvent[];
+  services: ServiceListing[];
 
   // Filters
   setFilter: <K extends keyof Filters>(k: K, v: Filters[K]) => void;
@@ -95,6 +99,12 @@ interface AppState {
   // Favorites
   addFavorite: (userId: string, listingId: string) => void;
   removeFavorite: (userId: string, listingId: string) => void;
+
+  // Events / Services
+  addEvent: (e: ClassicEvent) => void;
+  removeEvent: (id: string) => void;
+  addService: (s: ServiceListing) => void;
+  removeService: (id: string) => void;
 }
 
 const defaultFilters: Filters = {
@@ -137,6 +147,8 @@ export const useAppStore = create<AppState>()(
       reviews: mockReviews,
       favorites: mockFavorites,
       blockedAttempts: mockBlockedAttempts,
+      events: mockEvents,
+      services: mockServices,
 
       // Filters
       setFilter: (k, v) => set((s) => ({ filters: { ...s.filters, [k]: v } })),
@@ -291,6 +303,12 @@ export const useAppStore = create<AppState>()(
         set((s) => ({
           favorites: s.favorites.filter((f) => !(f.usuarioId === userId && f.anuncioId === listingId)),
         })),
+
+      // Events / Services
+      addEvent: (e) => set((s) => ({ events: [e, ...s.events] })),
+      removeEvent: (id) => set((s) => ({ events: s.events.filter((e) => e.id !== id) })),
+      addService: (sv) => set((s) => ({ services: [sv, ...s.services] })),
+      removeService: (id) => set((s) => ({ services: s.services.filter((sv) => sv.id !== id) })),
     }),
     { name: "classicosbr-store" },
   ),
