@@ -2,7 +2,9 @@ import type {
   Listing, User, Report, Payment, Conversation, ChatMessage,
   Review, Favorite, BlogPost, FlaggedListing, SituacaoDocumental,
   VerificacaoLocalizacao, IpEntry, PendingRegistration, BlockedAttempt,
+  ClassicEvent, ServiceListing,
 } from "./types";
+import { mockTraceability } from "./traceability";
 
 // ============ CONSTANTES ============
 
