@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 import type {
   Category, Listing, User, Report, Payment, Conversation, ChatMessage,
   Review, Favorite, BlogPost, FlaggedListing, PendingRegistration, BlockedAttempt,
-  ClassicEvent, ServiceListing,
+  ClassicEvent, ServiceListing, AuditTrailEntry, StatusModeracao,
 } from "@/lib/types";
 import {
   mockUsers, mockListings, mockConversations, mockMessages, mockReports,
@@ -105,6 +105,13 @@ interface AppState {
   removeEvent: (id: string) => void;
   addService: (s: ServiceListing) => void;
   removeService: (id: string) => void;
+
+  // Moderação
+  setEventModeration: (id: string, status: StatusModeracao, motivo: string | undefined, autorId: string, autorNome?: string) => void;
+  setServiceModeration: (id: string, status: StatusModeracao, motivo: string | undefined, autorId: string, autorNome?: string) => void;
+
+  // Denúncias estendidas
+  appendReportAudit: (reportId: string, entry: AuditTrailEntry) => void;
 }
 
 const defaultFilters: Filters = {
@@ -309,6 +316,42 @@ export const useAppStore = create<AppState>()(
       removeEvent: (id) => set((s) => ({ events: s.events.filter((e) => e.id !== id) })),
       addService: (sv) => set((s) => ({ services: [sv, ...s.services] })),
       removeService: (id) => set((s) => ({ services: s.services.filter((sv) => sv.id !== id) })),
+
+      setEventModeration: (id, status, motivo, autorId, autorNome) =>
+        set((s) => ({
+          events: s.events.map((e) =>
+            e.id !== id ? e : {
+              ...e,
+              statusModeracao: status,
+              motivoReprovacao: status === "reprovado" ? motivo : e.motivoReprovacao,
+              trilhaAuditoria: [
+                ...(e.trilhaAuditoria ?? []),
+                { acao: `moderacao:${status}`, autorId, autorNome, em: new Date().toISOString(), meta: motivo ? { motivo } : undefined },
+              ],
+            },
+          ),
+        })),
+      setServiceModeration: (id, status, motivo, autorId, autorNome) =>
+        set((s) => ({
+          services: s.services.map((sv) =>
+            sv.id !== id ? sv : {
+              ...sv,
+              statusModeracao: status,
+              motivoReprovacao: status === "reprovado" ? motivo : sv.motivoReprovacao,
+              trilhaAuditoria: [
+                ...(sv.trilhaAuditoria ?? []),
+                { acao: `moderacao:${status}`, autorId, autorNome, em: new Date().toISOString(), meta: motivo ? { motivo } : undefined },
+              ],
+            },
+          ),
+        })),
+
+      appendReportAudit: (reportId, entry) =>
+        set((s) => ({
+          reports: s.reports.map((r) =>
+            r.id !== reportId ? r : { ...r, trilhaAuditoria: [...(r.trilhaAuditoria ?? []), entry] },
+          ),
+        })),
     }),
     { name: "classicosbr-store" },
   ),

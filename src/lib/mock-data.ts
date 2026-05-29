@@ -1362,6 +1362,7 @@ export const mockEvents: ClassicEvent[] = [
     contato: "(11) 99871-0001",
     status: "agendado",
     createdAt: "2026-04-10",
+    statusModeracao: "aprovado",
   },
   {
     id: "ev2",
@@ -1379,6 +1380,7 @@ export const mockEvents: ClassicEvent[] = [
     publicoEsperado: 4000,
     status: "agendado",
     createdAt: "2026-03-22",
+    statusModeracao: "aprovado",
   },
   {
     id: "ev3",
@@ -1397,6 +1399,7 @@ export const mockEvents: ClassicEvent[] = [
     publicoEsperado: 80,
     status: "agendado",
     createdAt: "2026-02-18",
+    statusModeracao: "aprovado",
   },
   {
     id: "ev4",
@@ -1414,6 +1417,7 @@ export const mockEvents: ClassicEvent[] = [
     publicoEsperado: 1200,
     status: "agendado",
     createdAt: "2026-05-01",
+    statusModeracao: "aprovado",
   },
 ];
 
@@ -1435,6 +1439,7 @@ export const mockServices: ServiceListing[] = [
     whatsapp: "(11) 99871-0001",
     status: "ativo",
     createdAt: "2026-01-15",
+    statusModeracao: "aprovado",
     rastreabilidade: mockTraceability("SP", 2),
     scoreConfianca: 92,
   },
@@ -1456,6 +1461,7 @@ export const mockServices: ServiceListing[] = [
     site: "https://garageold.exemplo.com.br",
     status: "ativo",
     createdAt: "2026-02-01",
+    statusModeracao: "aprovado",
     rastreabilidade: mockTraceability("PR", 3),
     scoreConfianca: 88,
   },
@@ -1476,6 +1482,7 @@ export const mockServices: ServiceListing[] = [
     whatsapp: "(31) 99700-3344",
     status: "ativo",
     createdAt: "2026-03-08",
+    statusModeracao: "aprovado",
     rastreabilidade: mockTraceability("MG", 2),
     scoreConfianca: 81,
   },
@@ -1495,6 +1502,7 @@ export const mockServices: ServiceListing[] = [
     whatsapp: "(62) 99811-2233",
     status: "ativo",
     createdAt: "2026-04-22",
+    statusModeracao: "aprovado",
     rastreabilidade: mockTraceability("GO", 4),
     scoreConfianca: 78,
   },
@@ -1514,6 +1522,7 @@ export const mockServices: ServiceListing[] = [
     whatsapp: "(51) 99700-4455",
     status: "ativo",
     createdAt: "2026-05-02",
+    statusModeracao: "aprovado",
     rastreabilidade: mockTraceability("RS", 3),
     scoreConfianca: 85,
   },
