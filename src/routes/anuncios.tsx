@@ -60,6 +60,7 @@ function Anuncios() {
     if (filters.sort === "preco-asc") l = [...l].sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
     else if (filters.sort === "preco-desc") l = [...l].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
     else if (filters.sort === "proximos") l = [...l].sort((a, b) => parseInt(a.distancia) - parseInt(b.distancia));
+    l = [...l].sort((a, b) => Number(!!b.destaquePremium) - Number(!!a.destaquePremium));
     return l;
   }, [listings, filters, localColor, localCity]);
 
