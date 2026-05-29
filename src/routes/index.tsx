@@ -66,68 +66,169 @@ function Index() {
     <div className="min-h-screen flex flex-col">
       <Header />
 
-      {/* ── Dark Hero ── */}
-      <section className="hero-dark relative overflow-hidden px-6 py-16 md:py-24">
+      {/* ── Premium Hero ── */}
+      <section className="hero-dark relative overflow-hidden px-6 pt-16 pb-20 md:pt-24 md:pb-28">
         <img
           src={heroImage}
           alt="Chevrolet Opala clássico em rua de paralelepípedos ao pôr do sol"
           width={1600}
           height={1100}
-          className="absolute inset-0 h-full w-full object-cover opacity-40 md:opacity-55"
+          className="absolute inset-0 h-full w-full object-cover opacity-45 md:opacity-60 scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0c0a09] via-[#0c0a09]/85 to-transparent md:from-[#0c0a09] md:via-[#0c0a09]/70" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0a09]/90 via-transparent to-transparent" />
+        {/* Layered overlays for depth */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0c0a09] via-[#0c0a09]/85 to-[#0c0a09]/20 md:via-[#0c0a09]/65" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0c0a09] via-[#0c0a09]/30 to-transparent" />
+        <div className="absolute -top-32 -right-32 h-96 w-96 rounded-full bg-[color:var(--color-terracotta)]/25 blur-[120px] pointer-events-none" />
+        <div className="absolute -bottom-32 -left-20 h-80 w-80 rounded-full bg-[color:var(--color-gold)]/15 blur-[110px] pointer-events-none" />
+
+        {/* Subtle grid texture */}
+        <div
+          className="absolute inset-0 opacity-[0.04] pointer-events-none"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+          }}
+        />
+
         <div className="mx-auto max-w-7xl relative z-10">
-          <div className="max-w-2xl">
-            {/* Eyebrow */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 backdrop-blur-sm px-3.5 py-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[color:var(--color-terracotta-light)] animate-pulse" />
-              <span className="text-[11px] font-medium tracking-[0.15em] uppercase text-white/80">O marketplace dos clássicos</span>
-            </div>
+          <div className="grid md:grid-cols-12 gap-10 items-center">
+            {/* Left: copy */}
+            <div className="md:col-span-7 lg:col-span-7">
+              {/* Eyebrow */}
+              <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-md pl-2 pr-4 py-1.5 animate-fade-up">
+                <span className="flex h-5 items-center gap-1.5 rounded-full bg-[color:var(--color-terracotta)]/90 px-2 text-[10px] font-bold uppercase tracking-wider text-white">
+                  <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" /> ao vivo
+                </span>
+                <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-white/80">O marketplace dos clássicos</span>
+              </div>
 
-            <h1 className="font-serif text-5xl font-semibold leading-[1.02] text-white md:text-7xl">
-              A história sobre <br className="hidden md:block" />
-              <span className="italic text-[color:var(--color-terracotta-light)]">quatro rodas</span>
-            </h1>
-            <p className="mt-5 max-w-xl text-base md:text-lg leading-relaxed text-white/70">
-              Compre e venda Opalas, Fuscas, Galaxies, Kombis e outras lendas brasileiras
-              com transparência, curadoria especializada e contato direto com o dono.
-            </p>
+              <h1 className="font-serif font-semibold text-white leading-[0.98] tracking-tight text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] animate-fade-up animate-fade-up-1">
+                A história
+                <br />
+                <span className="text-white/95">sobre </span>
+                <span className="italic bg-gradient-to-r from-[color:var(--color-terracotta-light)] via-[color:var(--color-gold-light)] to-[color:var(--color-terracotta-light)] bg-clip-text text-transparent">
+                  quatro rodas
+                </span>
+              </h1>
 
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                to="/anuncios"
-                className="inline-flex items-center gap-2 rounded-full btn-terra px-7 py-3 text-sm font-semibold text-white"
+              <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/70 animate-fade-up animate-fade-up-2">
+                Compre e venda Opalas, Fuscas, Galaxies, Mavericks e outras lendas
+                com <span className="text-white font-medium">documentação validada</span>,
+                curadoria especializada e contato direto com o dono.
+              </p>
+
+              {/* Inline glass search */}
+              <form
+                onSubmit={(e) => e.preventDefault()}
+                className="mt-8 flex items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.07] backdrop-blur-xl p-2 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] max-w-xl animate-fade-up animate-fade-up-2"
               >
-                <Search className="h-4 w-4" /> Explorar anúncios
-              </Link>
-              <Link
-                to="/anunciar"
-                className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/5 backdrop-blur-sm px-7 py-3 text-sm font-semibold text-white hover:bg-white/15 transition-colors"
-              >
-                <Plus className="h-4 w-4" />
-                Anunciar meu carro
-              </Link>
-            </div>
-          </div>
-
-          {/* Stats */}
-          <div className="mt-14 grid grid-cols-3 gap-6 md:gap-10 max-w-2xl border-t border-white/10 pt-8">
-            {[
-              { value: totals.total, label: "anúncios ativos", icon: TrendingUp },
-              { value: totals.cities, label: "cidades cobertas", icon: MapPin },
-              { value: totals.sellers, label: "vendedores ativos", icon: Shield },
-            ].map(({ value, label, icon: Icon }, i) => (
-              <div key={label} className={`animate-fade-up animate-fade-up-${i + 1} flex items-start gap-3`}>
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[color:var(--color-terracotta)]/15 border border-[color:var(--color-terracotta)]/30">
-                  <Icon className="h-4 w-4 text-[color:var(--color-terracotta-light)]" />
+                <div className="relative flex-1">
+                  <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+                  <input
+                    type="text"
+                    value={filters.search}
+                    onChange={(e) => setFilter("search", e.target.value)}
+                    placeholder="Busque por Opala, Maverick, Fusca…"
+                    className="w-full h-11 bg-transparent pl-10 pr-3 text-sm text-white placeholder:text-white/40 outline-none"
+                  />
                 </div>
-                <div>
-                  <p className="stat-number text-3xl text-white">{value}</p>
-                  <p className="text-[11px] uppercase tracking-wider text-white/50 mt-1">{label}</p>
+                <Link
+                  to="/anuncios"
+                  className="inline-flex h-11 items-center gap-2 rounded-xl btn-terra px-5 text-sm font-semibold text-white whitespace-nowrap"
+                >
+                  Buscar
+                </Link>
+              </form>
+
+              {/* CTAs */}
+              <div className="mt-5 flex flex-wrap items-center gap-4 animate-fade-up animate-fade-up-3">
+                <Link
+                  to="/anunciar"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/[0.04] backdrop-blur-sm px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10 hover:border-white/40 transition-all"
+                >
+                  <Plus className="h-4 w-4" /> Anunciar meu carro
+                </Link>
+                <Link
+                  to="/compra-segura"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors"
+                >
+                  <ShieldCheck className="h-4 w-4 text-[color:var(--color-terracotta-light)]" />
+                  Como funciona a compra segura
+                </Link>
+              </div>
+
+              {/* Inline trust avatars */}
+              <div className="mt-8 flex items-center gap-4 animate-fade-up animate-fade-up-3">
+                <div className="flex -space-x-2">
+                  {["#C4552A", "#C9943A", "#1d6e4e", "#185fa5"].map((c, i) => (
+                    <div
+                      key={i}
+                      className="h-8 w-8 rounded-full border-2 border-[#0c0a09] ring-1 ring-white/10"
+                      style={{ background: `linear-gradient(135deg, ${c}, ${c}cc)` }}
+                    />
+                  ))}
+                </div>
+                <div className="text-xs text-white/60">
+                  <div className="flex items-center gap-1 text-[color:var(--color-gold-light)]">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-3 w-3 fill-current" />
+                    ))}
+                    <span className="ml-1.5 text-white font-semibold">4.9</span>
+                  </div>
+                  <span>+{totals.sellers} vendedores verificados</span>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Right: floating premium stat card (desktop only) */}
+            <div className="hidden md:block md:col-span-5 lg:col-span-5 relative">
+              <div className="relative ml-auto max-w-sm">
+                {/* Glow */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-[color:var(--color-terracotta)]/30 via-transparent to-[color:var(--color-gold)]/20 blur-2xl rounded-3xl" />
+
+                {/* Card */}
+                <div className="relative rounded-2xl border border-white/15 bg-white/[0.07] backdrop-blur-2xl p-6 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)]">
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center gap-2">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[color:var(--color-terracotta)]/20 border border-[color:var(--color-terracotta)]/40">
+                        <Sparkles className="h-3.5 w-3.5 text-[color:var(--color-terracotta-light)]" />
+                      </div>
+                      <span className="text-[11px] uppercase tracking-wider text-white/60 font-medium">Marketplace ao vivo</span>
+                    </div>
+                    <span className="flex h-2 w-2 rounded-full bg-green-400 animate-pulse" />
+                  </div>
+
+                  <div className="space-y-4">
+                    {[
+                      { value: totals.total, label: "anúncios ativos", icon: TrendingUp, accent: "terracotta" },
+                      { value: totals.cities, label: "cidades cobertas", icon: MapPin, accent: "gold" },
+                      { value: totals.sellers, label: "vendedores", icon: Shield, accent: "terracotta" },
+                    ].map(({ value, label, icon: Icon }, i) => (
+                      <div
+                        key={label}
+                        className={`animate-fade-up animate-fade-up-${i + 1} flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.04] p-3.5 hover:bg-white/[0.07] hover:border-white/20 transition-all`}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-[color:var(--color-terracotta)]/15 border border-[color:var(--color-terracotta)]/25">
+                            <Icon className="h-4 w-4 text-[color:var(--color-terracotta-light)]" />
+                          </div>
+                          <span className="text-xs uppercase tracking-wider text-white/60">{label}</span>
+                        </div>
+                        <span className="stat-number text-2xl text-white tabular-nums">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
+                    <span className="text-[11px] text-white/50">Atualizado agora</span>
+                    <Link to="/anuncios" className="text-xs text-[color:var(--color-terracotta-light)] hover:text-white font-semibold transition-colors">
+                      Ver tudo →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
