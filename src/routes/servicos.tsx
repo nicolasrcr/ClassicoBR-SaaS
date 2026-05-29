@@ -235,6 +235,10 @@ function ServicoForm({ onClose, onSubmit, userId, userName }: {
       createdAt: new Date().toISOString().slice(0, 10),
       rastreabilidade: trace,
       scoreConfianca: trace.scoreOrigem,
+      statusModeracao: "pendente",
+      trilhaAuditoria: [
+        { acao: "servico_criado", autorId: userId, autorNome: userName, em: new Date().toISOString(), meta: { score: trace.scoreOrigem } },
+      ],
     });
   };
 
