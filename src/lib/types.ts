@@ -178,7 +178,35 @@ export interface Report {
   reporter: string;
   date: string;
   status: "aberta" | "analise" | "resolvida";
+  tipoAlvo?: "anuncio" | "evento" | "servico";
+  alvoId?: string;
+  descricao?: string;
+  evidencias?: ReportEvidence[];
+  trilhaAuditoria?: AuditTrailEntry[];
 }
+
+export interface ReportEvidence {
+  tipo: "url" | "texto" | "imagem";
+  valor: string;
+  hash?: string;
+}
+
+export interface AuditTrailEntry {
+  acao: string;
+  autorId: string;
+  autorNome?: string;
+  em: string;
+  meta?: Record<string, unknown>;
+}
+
+export type StatusModeracao = "pendente" | "aprovado" | "reprovado" | "novas-fotos";
+
+export const STATUS_MODERACAO_LABELS: Record<StatusModeracao, string> = {
+  pendente: "Aguardando análise",
+  aprovado: "Aprovado",
+  reprovado: "Reprovado",
+  "novas-fotos": "Novas fotos solicitadas",
+};
 
 export interface Payment {
   id: string;
@@ -328,6 +356,10 @@ export interface ClassicEvent {
   contato?: string;
   status: "agendado" | "encerrado" | "cancelado";
   createdAt: string;
+  statusModeracao?: StatusModeracao;
+  rastreabilidade?: TraceabilityRecord;
+  trilhaAuditoria?: AuditTrailEntry[];
+  motivoReprovacao?: string;
 }
 
 // ============ SERVIÇOS / OFICINAS / AUTO-PEÇAS / CLASSIFICADOS DE PEÇAS ============
@@ -362,4 +394,7 @@ export interface ServiceListing {
   createdAt: string;
   rastreabilidade: TraceabilityRecord;
   scoreConfianca: number;
+  statusModeracao?: StatusModeracao;
+  trilhaAuditoria?: AuditTrailEntry[];
+  motivoReprovacao?: string;
 }
