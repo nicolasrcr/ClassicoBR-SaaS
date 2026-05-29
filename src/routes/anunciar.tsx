@@ -449,11 +449,25 @@ function Anunciar() {
       <ProgressBar step={step} />
 
       <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
-        <div className="mb-8">
-          <h1 className="font-serif text-3xl">Anunciar veículo</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Preencha os dados do veículo para criar seu anúncio
-          </p>
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <h1 className="font-serif text-3xl">Anunciar veículo</h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Preencha os dados do veículo para criar seu anúncio
+            </p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              setForm(testForm);
+              setStep(1);
+              toast.success("Formulário preenchido com dados de teste");
+            }}
+          >
+            Preencher com dados de teste
+          </Button>
         </div>
 
         {/* ═══════════ STEP 1 ═══════════ */}
