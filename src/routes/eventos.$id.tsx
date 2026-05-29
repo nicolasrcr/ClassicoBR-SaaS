@@ -2,7 +2,10 @@ import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, MapPin, Ticket, Users, Phone } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { TraceabilityPanel } from "@/components/TraceabilityPanel";
+import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
 import { useAppStore } from "@/store/app-store";
+import { useCurrentUser } from "@/store/app-store";
 import { TIPO_EVENTO_LABELS } from "@/lib/types";
 
 export const Route = createFileRoute("/eventos/$id")({ component: EventoDetail });
@@ -10,6 +13,8 @@ export const Route = createFileRoute("/eventos/$id")({ component: EventoDetail }
 function EventoDetail() {
   const { id } = useParams({ from: "/eventos/$id" });
   const event = useAppStore((s) => s.events.find((e) => e.id === id));
+  const user = useCurrentUser();
+  const canSeeAudit = user && (user.role === "admin" || user.id === event?.organizadorId);
 
   if (!event) {
     return (
@@ -64,6 +69,17 @@ function EventoDetail() {
               <div className="mt-6 flex items-center gap-2 text-sm">
                 <Phone className="h-4 w-4 text-[color:var(--color-terracotta)]" />
                 <span className="font-semibold">Contato:</span> <span>{event.contato}</span>
+              </div>
+            )}
+
+            <div className="mt-6 flex flex-wrap gap-3 border-t border-border pt-4">
+              <ReportDialog tipoAlvo="evento" alvoId={event.id} />
+            </div>
+
+            {canSeeAudit && (
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+                {event.rastreabilidade && <TraceabilityPanel trace={event.rastreabilidade} />}
+                <AuditTrailCard entries={event.trilhaAuditoria} />
               </div>
             )}
           </div>

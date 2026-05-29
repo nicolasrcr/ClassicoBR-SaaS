@@ -3,7 +3,8 @@ import { ArrowLeft, MapPin, Phone, MessageCircle, Globe, Tag } from "lucide-reac
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
-import { useAppStore } from "@/store/app-store";
+import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
+import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { SERVICE_KIND_LABELS } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
 
@@ -12,6 +13,8 @@ export const Route = createFileRoute("/servicos/$id")({ component: ServicoDetail
 function ServicoDetail() {
   const { id } = useParams({ from: "/servicos/$id" });
   const s = useAppStore((st) => st.services.find((x) => x.id === id));
+  const user = useCurrentUser();
+  const canSeeAudit = user && (user.role === "admin" || user.id === s?.anuncianteId);
 
   if (!s) {
     return (
@@ -88,6 +91,7 @@ function ServicoDetail() {
                     <Globe className="h-4 w-4" /> Site
                   </a>
                 )}
+                <ReportDialog tipoAlvo="servico" alvoId={s.id} />
               </div>
             </div>
           </div>
@@ -99,6 +103,7 @@ function ServicoDetail() {
               <p className="text-xs text-muted-foreground mt-1">Publicado em {new Date(s.createdAt).toLocaleDateString("pt-BR")}</p>
             </div>
             <TraceabilityPanel trace={s.rastreabilidade} />
+            {canSeeAudit && <AuditTrailCard entries={s.trilhaAuditoria} />}
           </aside>
         </div>
       </main>
