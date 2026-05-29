@@ -269,3 +269,97 @@ export interface BlockedAttempt {
   motivo: string;
   timestamp: string;
 }
+
+// ============ TRACEABILIDADE DE CLASSIFICADOS ============
+
+export interface ImageTrace {
+  nome: string;
+  tamanhoBytes: number;
+  tipoMime: string;
+  hashSha256: string;
+  capturadoEm?: string;          // EXIF DateTimeOriginal (se disponível)
+  camera?: string;               // EXIF Make/Model
+  gpsLat?: number;
+  gpsLng?: number;
+  origemSuspeita: boolean;       // sem EXIF + hash já visto antes
+  reutilizadaDeAnuncioId?: string;
+}
+
+export interface TraceabilityRecord {
+  ip: string;
+  cidadeIp: string;
+  estadoIp: string;
+  userAgent: string;
+  fingerprint: string;
+  submetidoEm: string;
+  imagens: ImageTrace[];
+  divergenciaLocalizacao: boolean; // IP estado != anúncio estado
+  scoreOrigem: number;             // 0-100
+}
+
+// ============ EVENTOS / ENCONTROS / EXPOSIÇÕES ============
+
+export type TipoEvento = "encontro" | "exposicao" | "rally" | "leilao" | "feira";
+
+export const TIPO_EVENTO_LABELS: Record<TipoEvento, string> = {
+  encontro: "Encontro",
+  exposicao: "Exposição",
+  rally: "Rally / Passeio",
+  leilao: "Leilão",
+  feira: "Feira",
+};
+
+export interface ClassicEvent {
+  id: string;
+  titulo: string;
+  tipo: TipoEvento;
+  descricao: string;
+  dataInicio: string;            // ISO
+  dataFim?: string;
+  cidade: string;
+  estado: string;
+  endereco: string;
+  organizadorId: string;
+  organizadorNome: string;
+  capa: string;
+  ingressoUrl?: string;
+  precoEntrada?: number | null;  // null = gratuito
+  publicoEsperado?: number;
+  contato?: string;
+  status: "agendado" | "encerrado" | "cancelado";
+  createdAt: string;
+}
+
+// ============ SERVIÇOS / OFICINAS / AUTO-PEÇAS / CLASSIFICADOS DE PEÇAS ============
+
+export type ServiceKind = "oficina" | "autopeca" | "servico" | "pecaClassificado";
+
+export const SERVICE_KIND_LABELS: Record<ServiceKind, string> = {
+  oficina: "Oficina especializada",
+  autopeca: "Auto-peças",
+  servico: "Serviço",
+  pecaClassificado: "Peça à venda",
+};
+
+export interface ServiceListing {
+  id: string;
+  kind: ServiceKind;
+  titulo: string;
+  descricao: string;
+  especialidades: string[];      // ex.: ["Opala", "VW ar"]
+  preco?: number | null;         // null = sob consulta (oficinas/serviços), ou preço fixo (peças)
+  estoque?: number;              // só para autopeca / pecaClassificado
+  fotos: string[];
+  cidade: string;
+  estado: string;
+  endereco?: string;
+  anuncianteId: string;
+  anuncianteNome: string;
+  telefone?: string;
+  whatsapp?: string;
+  site?: string;
+  status: "ativo" | "pausado" | "removido" | "pendente";
+  createdAt: string;
+  rastreabilidade: TraceabilityRecord;
+  scoreConfianca: number;
+}
