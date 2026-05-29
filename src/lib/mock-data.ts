@@ -1363,6 +1363,7 @@ export const mockEvents: ClassicEvent[] = [
     status: "agendado",
     createdAt: "2026-04-10",
     statusModeracao: "aprovado",
+    rastreabilidade: mockTraceability("SP", 2),
   },
   {
     id: "ev2",
@@ -1381,6 +1382,7 @@ export const mockEvents: ClassicEvent[] = [
     status: "agendado",
     createdAt: "2026-03-22",
     statusModeracao: "aprovado",
+    rastreabilidade: mockTraceability("PR", 2),
   },
   {
     id: "ev3",
@@ -1400,6 +1402,7 @@ export const mockEvents: ClassicEvent[] = [
     status: "agendado",
     createdAt: "2026-02-18",
     statusModeracao: "aprovado",
+    rastreabilidade: mockTraceability("RS", 2),
   },
   {
     id: "ev4",
@@ -1418,6 +1421,7 @@ export const mockEvents: ClassicEvent[] = [
     status: "agendado",
     createdAt: "2026-05-01",
     statusModeracao: "aprovado",
+    rastreabilidade: mockTraceability("MG", 2),
   },
 ];
 
