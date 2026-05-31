@@ -9,11 +9,25 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAppStore } from "@/store/app-store";
 
-export const Route = createFileRoute("/login")({ component: Login });
+export const Route = createFileRoute("/login")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : "",
+  }),
+  component: Login,
+});
 
 function Login() {
   const navigate = useNavigate();
   const loginAs = useAppStore((s) => s.loginAs);
+  const { redirect } = Route.useSearch();
+
+  function goAfterAuth() {
+    if (redirect && redirect.startsWith("/")) {
+      navigate({ to: redirect });
+    } else {
+      navigate({ to: "/" });
+    }
+  }
 
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -49,14 +63,14 @@ function Login() {
       const userId = email.toLowerCase().includes("admin") ? "u1" : "u1";
       loginAs(userId);
       toast.success("Bem-vindo de volta!");
-      navigate({ to: "/" });
+      goAfterAuth();
     }, 700);
   }
 
   function handleGoogle() {
     loginAs("u1");
     toast.success("Login com Google realizado!");
-    navigate({ to: "/" });
+    goAfterAuth();
   }
 
   return (
@@ -158,7 +172,11 @@ function Login() {
 
           <p className="text-center text-xs text-muted-foreground pt-1">
             Não tem conta?{" "}
-            <Link to="/cadastro" className="text-[#B85A30] underline hover:opacity-80 font-medium">
+            <Link
+              to="/cadastro"
+              search={redirect ? { redirect } : undefined}
+              className="text-[#B85A30] underline hover:opacity-80 font-medium"
+            >
               Criar conta grátis
             </Link>
           </p>
