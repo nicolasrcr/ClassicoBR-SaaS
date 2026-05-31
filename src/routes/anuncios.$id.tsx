@@ -320,12 +320,7 @@ function AnuncioDetalhe() {
                     asChild
                     className="flex-1 bg-[#B85A30] text-white hover:bg-[#9a4a28]"
                   >
-                    <Link
-                      to="/login"
-                      search={{ redirect: `/anuncios/${listing.id}` }}
-                    >
-                      Entrar
-                    </Link>
+                    <Link to="/login">Entrar</Link>
                   </Button>
                   <Button asChild variant="outline" className="flex-1">
                     <Link to="/cadastro">Criar conta grátis</Link>
