@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useCallback } from "react";
 import {
   ArrowLeft, Car, ChevronDown, ChevronUp, Copy, ExternalLink, Flag,
-  Heart, Lock, MapPin, MessageCircle, Phone, Share2, Star, X,
+  ArrowRight, Heart, Lock, MapPin, MessageCircle, Phone, Share2, ShieldCheck, Star, UserPlus, X,
   ChevronLeft, ChevronRight, Maximize2,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -259,10 +259,11 @@ function AnuncioDetalhe() {
   // Gate: exige login para ver os detalhes completos do anúncio
   if (!user) {
     const previewPhoto = listing.photos[0];
+    const redirectTo = `/anuncios/${listing.id}`;
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
+        <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-10">
           <Link
             to="/anuncios"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -271,62 +272,86 @@ function AnuncioDetalhe() {
             Voltar para anúncios
           </Link>
 
-          <div className="mt-6 overflow-hidden rounded-[12px] border border-border bg-card">
+          <div className="mt-6 overflow-hidden rounded-[14px] border border-border bg-card shadow-sm">
+            {/* Prévia do anúncio */}
             <div className="relative aspect-[16/9] bg-secondary">
               {previewPhoto ? (
                 <img
                   src={previewPhoto}
                   alt={listing.title}
-                  className="h-full w-full object-cover blur-sm scale-105"
+                  className="h-full w-full object-cover"
                 />
               ) : (
                 <div className="flex h-full items-center justify-center">
                   <Car className="h-20 w-20 text-muted-foreground/30" strokeWidth={1} />
                 </div>
               )}
-              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 shadow-lg">
-                  <Lock className="h-6 w-6 text-[#B85A30]" />
-                </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-3 left-4 right-4 text-white">
+                <h1 className="font-serif text-xl font-semibold leading-tight line-clamp-1">
+                  {listing.title}
+                </h1>
+                <p className="mt-0.5 flex items-center gap-1 text-xs text-white/85">
+                  <MapPin className="h-3 w-3" />
+                  {listing.city}, {listing.state}
+                </p>
               </div>
             </div>
 
-            <div className="p-6 text-center">
-              <h1 className="font-serif text-2xl font-semibold leading-tight">
-                {listing.title}
-              </h1>
-              <p className="mt-1.5 flex items-center justify-center gap-1 text-sm text-muted-foreground">
-                <MapPin className="h-3.5 w-3.5" />
-                {listing.city}, {listing.state}
-              </p>
-
-              <div className="mt-6 rounded-[10px] bg-[#B85A30]/5 border border-[#B85A30]/20 p-5 text-left">
-                <h2 className="font-serif text-lg font-semibold flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-[#B85A30]" />
-                  Faça login para ver os detalhes
-                </h2>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  Para acessar fotos completas, especificações, dossiê documental, dados do vendedor e contato deste anúncio, entre na sua conta ou crie uma gratuitamente.
-                </p>
-                <ul className="mt-4 space-y-1.5 text-sm text-muted-foreground">
-                  <li>• Galeria completa de fotos</li>
-                  <li>• Dossiê documental e histórico</li>
-                  <li>• Contato direto com o vendedor</li>
-                  <li>• Salvar nos favoritos</li>
-                </ul>
-
-                <div className="mt-5 flex flex-col sm:flex-row gap-2">
-                  <Button
-                    asChild
-                    className="flex-1 bg-[#B85A30] text-white hover:bg-[#9a4a28]"
-                  >
-                    <Link to="/login">Entrar</Link>
-                  </Button>
-                  <Button asChild variant="outline" className="flex-1">
-                    <Link to="/cadastro">Criar conta grátis</Link>
-                  </Button>
+            {/* Bloco de acesso */}
+            <div className="p-6">
+              <div className="flex items-start gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#B85A30]/10">
+                  <Lock className="h-5 w-5 text-[#B85A30]" />
+                </div>
+                <div>
+                  <h2 className="font-serif text-xl font-semibold leading-tight">
+                    Acesso bloqueado
+                  </h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    Pedimos seu login para proteger vendedores contra spam e
+                    permitir contato direto e seguro. Leva menos de 1 minuto.
+                  </p>
                 </div>
               </div>
+
+              <ul className="mt-5 space-y-2 text-sm">
+                <li className="flex items-start gap-2">
+                  <ShieldCheck className="h-4 w-4 mt-0.5 text-[#1D6E4E] shrink-0" />
+                  <span>Galeria completa, ficha técnica e dossiê documental</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <ShieldCheck className="h-4 w-4 mt-0.5 text-[#1D6E4E] shrink-0" />
+                  <span>Contato direto com o vendedor por chat e telefone</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <ShieldCheck className="h-4 w-4 mt-0.5 text-[#1D6E4E] shrink-0" />
+                  <span>Salvar nos favoritos e acompanhar mudanças de preço</span>
+                </li>
+              </ul>
+
+              <div className="mt-6 space-y-2">
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full bg-[#B85A30] text-white hover:bg-[#9a4a28] h-12"
+                >
+                  <Link to="/login" search={{ redirect: redirectTo }}>
+                    Ver detalhes após entrar
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" className="w-full h-11">
+                  <Link to="/cadastro" search={{ redirect: redirectTo }}>
+                    <UserPlus className="mr-2 h-4 w-4" />
+                    Criar conta grátis
+                  </Link>
+                </Button>
+              </div>
+
+              <p className="mt-4 text-center text-[11px] text-muted-foreground">
+                Você voltará automaticamente para este anúncio após entrar.
+              </p>
             </div>
           </div>
         </main>
