@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useCallback } from "react";
 import {
   ArrowLeft, Car, ChevronDown, ChevronUp, Copy, ExternalLink, Flag,
-  Heart, MapPin, MessageCircle, Phone, Share2, Star, X,
+  Heart, Lock, MapPin, MessageCircle, Phone, Share2, Star, X,
   ChevronLeft, ChevronRight, Maximize2,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -251,6 +251,85 @@ function AnuncioDetalhe() {
             <Link to="/anuncios">Ver todos os anúncios</Link>
           </Button>
         </div>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Gate: exige login para ver os detalhes completos do anúncio
+  if (!user) {
+    const previewPhoto = listing.photos[0];
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-10">
+          <Link
+            to="/anuncios"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Voltar para anúncios
+          </Link>
+
+          <div className="mt-6 overflow-hidden rounded-[12px] border border-border bg-card">
+            <div className="relative aspect-[16/9] bg-secondary">
+              {previewPhoto ? (
+                <img
+                  src={previewPhoto}
+                  alt={listing.title}
+                  className="h-full w-full object-cover blur-sm scale-105"
+                />
+              ) : (
+                <div className="flex h-full items-center justify-center">
+                  <Car className="h-20 w-20 text-muted-foreground/30" strokeWidth={1} />
+                </div>
+              )}
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white/95 shadow-lg">
+                  <Lock className="h-6 w-6 text-[#B85A30]" />
+                </div>
+              </div>
+            </div>
+
+            <div className="p-6 text-center">
+              <h1 className="font-serif text-2xl font-semibold leading-tight">
+                {listing.title}
+              </h1>
+              <p className="mt-1.5 flex items-center justify-center gap-1 text-sm text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5" />
+                {listing.city}, {listing.state}
+              </p>
+
+              <div className="mt-6 rounded-[10px] bg-[#B85A30]/5 border border-[#B85A30]/20 p-5 text-left">
+                <h2 className="font-serif text-lg font-semibold flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-[#B85A30]" />
+                  Faça login para ver os detalhes
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Para acessar fotos completas, especificações, dossiê documental, dados do vendedor e contato deste anúncio, entre na sua conta ou crie uma gratuitamente.
+                </p>
+                <ul className="mt-4 space-y-1.5 text-sm text-muted-foreground">
+                  <li>• Galeria completa de fotos</li>
+                  <li>• Dossiê documental e histórico</li>
+                  <li>• Contato direto com o vendedor</li>
+                  <li>• Salvar nos favoritos</li>
+                </ul>
+
+                <div className="mt-5 flex flex-col sm:flex-row gap-2">
+                  <Button
+                    asChild
+                    className="flex-1 bg-[#B85A30] text-white hover:bg-[#9a4a28]"
+                  >
+                    <Link to="/login">Entrar</Link>
+                  </Button>
+                  <Button asChild variant="outline" className="flex-1">
+                    <Link to="/cadastro">Criar conta grátis</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
         <Footer />
       </div>
     );
