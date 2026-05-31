@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Eye, EyeOff, UserPlus } from "lucide-react";
+import { Eye, EyeOff, Loader2, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -57,6 +57,7 @@ function Cadastro() {
   const [showConfirmar, setShowConfirmar] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
 
   function clearError(key: string) {
     setErrors((prev) => ({ ...prev, [key]: "" }));
@@ -94,15 +95,41 @@ function Cadastro() {
     setTimeout(() => {
       loginAs("u1");
       toast.success("Conta criada! Bem-vindo ao ClassicosBR.");
-      if (redirect && redirect.startsWith("/")) {
-        navigate({ to: redirect });
-      } else {
-        navigate({ to: "/" });
-      }
+      setRedirecting(true);
+      setTimeout(() => {
+        if (redirect && redirect.startsWith("/")) {
+          navigate({ to: redirect });
+        } else {
+          navigate({ to: "/" });
+        }
+      }, 600);
     }, 800);
   }
 
   const senhaMatch = confirmar.length > 0 && confirmar === senha;
+
+  if (redirecting) {
+    return (
+      <div className="min-h-screen bg-[#FAF9F6]">
+        <Header />
+        <main className="mx-auto flex max-w-md flex-col items-center px-6 py-20 text-center">
+          <Loader2 className="h-10 w-10 animate-spin text-[#B85A30]" />
+          <h1 className="mt-6 font-serif text-2xl text-foreground">Criando sua conta…</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            {redirect
+              ? "Em instantes você verá os detalhes do anúncio."
+              : "Preparando sua área."}
+          </p>
+          <div className="mt-8 w-full space-y-3">
+            <div className="h-32 rounded-[10px] bg-[#E8E6E0] animate-pulse" />
+            <div className="h-4 w-2/3 mx-auto rounded-full bg-[#E8E6E0] animate-pulse" />
+            <div className="h-4 w-1/2 mx-auto rounded-full bg-[#E8E6E0] animate-pulse" />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#FAF9F6]">

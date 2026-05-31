@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState, useCallback } from "react";
 import {
   ArrowLeft, Car, ChevronDown, ChevronUp, Copy, ExternalLink, Flag,
@@ -228,6 +228,7 @@ function AnuncioDetalhe() {
   const user = useCurrentUser();
   const { toggle, isFavorited } = useFavoritesStore();
   const listing = listings.find((l) => l.id === id);
+  const router = useRouter();
 
   const [showEstimador, setShowEstimador] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
@@ -260,17 +261,25 @@ function AnuncioDetalhe() {
   if (!user) {
     const previewPhoto = listing.photos[0];
     const redirectTo = `/anuncios/${listing.id}`;
+    const goBack = () => {
+      if (typeof window !== "undefined" && window.history.length > 1) {
+        router.history.back();
+      } else {
+        router.navigate({ to: "/anuncios" });
+      }
+    };
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="mx-auto w-full max-w-2xl flex-1 px-6 py-10">
-          <Link
-            to="/anuncios"
+          <button
+            type="button"
+            onClick={goBack}
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-4 w-4" />
-            Voltar para anúncios
-          </Link>
+            Voltar para a busca
+          </button>
 
           <div className="mt-6 overflow-hidden rounded-[14px] border border-border bg-card shadow-sm">
             {/* Prévia do anúncio */}
@@ -346,6 +355,15 @@ function AnuncioDetalhe() {
                     <UserPlus className="mr-2 h-4 w-4" />
                     Criar conta grátis
                   </Link>
+                </Button>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="w-full h-10 text-muted-foreground"
+                  onClick={goBack}
+                >
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Voltar para a busca
                 </Button>
               </div>
 
