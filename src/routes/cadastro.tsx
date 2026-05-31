@@ -9,7 +9,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAppStore } from "@/store/app-store";
 
-export const Route = createFileRoute("/cadastro")({ component: Cadastro });
+export const Route = createFileRoute("/cadastro")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirect: typeof search.redirect === "string" ? search.redirect : "",
+  }),
+  component: Cadastro,
+});
 
 function PasswordStrength({ senha }: { senha: string }) {
   const hasLen = senha.length >= 8;
@@ -40,6 +45,7 @@ function PasswordStrength({ senha }: { senha: string }) {
 function Cadastro() {
   const navigate = useNavigate();
   const loginAs = useAppStore((s) => s.loginAs);
+  const { redirect } = Route.useSearch();
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -88,7 +94,11 @@ function Cadastro() {
     setTimeout(() => {
       loginAs("u1");
       toast.success("Conta criada! Bem-vindo ao ClassicosBR.");
-      navigate({ to: "/" });
+      if (redirect && redirect.startsWith("/")) {
+        navigate({ to: redirect });
+      } else {
+        navigate({ to: "/" });
+      }
     }, 800);
   }
 
