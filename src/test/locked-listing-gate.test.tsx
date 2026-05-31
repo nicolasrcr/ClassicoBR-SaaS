@@ -29,7 +29,7 @@ describe("LockedListingGate (tela de acesso bloqueado)", () => {
     render(<LockedListingGate listing={sampleListing} onBack={() => {}} />);
     expect(screen.getByText("Acesso bloqueado")).toBeInTheDocument();
     expect(screen.getByText(/Galeria completa/i)).toBeInTheDocument();
-    expect(screen.getByText(/Contato direto/i)).toBeInTheDocument();
+    expect(screen.getByText(/Contato direto com o vendedor/i)).toBeInTheDocument();
   });
 
   it("link 'Ver detalhes após entrar' aponta para /login com ?redirect=/anuncios/{id}", () => {
