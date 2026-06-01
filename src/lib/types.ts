@@ -356,6 +356,16 @@ export interface ClassicEvent {
   precoEntrada?: number | null;  // null = gratuito
   publicoEsperado?: number;
   contato?: string;
+  // Campos opcionais para divulgação rica
+  horario?: string;                                   // Ex.: "A partir das 9h" ou "8h30 - 15h30"
+  destaques?: string[];                               // Lista curta de atrações (premiações, espaço gastronômico, etc.)
+  programacao?: { hora: string; atividade: string }[]; // Cronograma do dia
+  atracoes?: string[];                                // Bandas, exposições, clubes convidados
+  patrocinadores?: string[];                          // Nomes dos patrocinadores / parceiros
+  instagram?: string;                                 // @handle ou URL
+  site?: string;                                      // URL externa do evento
+  regras?: string;                                    // Regras / requisitos para participantes
+  observacoes?: string;                               // Outras observações livres
   status: "agendado" | "encerrado" | "cancelado";
   createdAt: string;
   statusModeracao?: StatusModeracao;
