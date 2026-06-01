@@ -1,10 +1,12 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { ArrowLeft, Calendar, Clock, MapPin, Ticket, Users, Phone, Instagram, Globe, Star, ListOrdered, Sparkles, Handshake, FileText, Info as InfoIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
 import { ContactLeadDialog } from "@/components/ContactLeadDialog";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { TIPO_EVENTO_LABELS } from "@/lib/types";
 
@@ -15,6 +17,46 @@ function EventoDetail() {
   const event = useAppStore((s) => s.events.find((e) => e.id === id));
   const user = useCurrentUser();
   const canSeeAudit = user && (user.role === "admin" || user.id === event?.organizadorId);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 350);
+    return () => clearTimeout(timer);
+  }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
+          <Skeleton className="h-4 w-32 mb-4" />
+          <div className="overflow-hidden rounded-2xl border border-border bg-card">
+            <Skeleton className="aspect-[21/9] w-full" />
+            <div className="p-6 md:p-8 space-y-4">
+              <Skeleton className="h-5 w-24 rounded-full" />
+              <Skeleton className="h-10 w-3/4" />
+              <Skeleton className="h-4 w-48" />
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+                <Skeleton className="h-16 w-full rounded-lg" />
+                <Skeleton className="h-16 w-full rounded-lg" />
+                <Skeleton className="h-16 w-full rounded-lg" />
+                <Skeleton className="h-16 w-full rounded-lg" />
+              </div>
+              <Skeleton className="h-20 w-full rounded-lg" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-5/6" />
+              <Skeleton className="h-4 w-4/6" />
+              <div className="flex gap-3 pt-4">
+                <Skeleton className="h-10 w-32 rounded-lg" />
+                <Skeleton className="h-10 w-32 rounded-lg" />
+              </div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!event) {
     return (
