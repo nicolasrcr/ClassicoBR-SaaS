@@ -163,9 +163,9 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   getParentRoute: () => BlogRoute,
 } as any)
 const AnunciosIdRoute = AnunciosIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AnunciosRoute,
+  id: '/anuncios/$id',
+  path: '/anuncios/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
   id: '/usuarios',
@@ -486,6 +486,7 @@ export interface RootRouteChildren {
   MinhaContaRoute: typeof MinhaContaRoute
   RegisterRoute: typeof RegisterRoute
   ServicosRoute: typeof ServicosRouteWithChildren
+  AnunciosIdRoute: typeof AnunciosIdRoute
   CarIdRoute: typeof CarIdRoute
   PerfilIdRoute: typeof PerfilIdRoute
   AnunciosIndexRoute: typeof AnunciosIndexRoute
@@ -656,10 +657,10 @@ declare module '@tanstack/react-router' {
     }
     '/anuncios/$id': {
       id: '/anuncios/$id'
-      path: '/$id'
+      path: '/anuncios/$id'
       fullPath: '/anuncios/$id'
       preLoaderRoute: typeof AnunciosIdRouteImport
-      parentRoute: typeof AnunciosRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/usuarios': {
       id: '/admin/usuarios'
@@ -841,6 +842,7 @@ const rootRouteChildren: RootRouteChildren = {
   MinhaContaRoute: MinhaContaRoute,
   RegisterRoute: RegisterRoute,
   ServicosRoute: ServicosRouteWithChildren,
+  AnunciosIdRoute: AnunciosIdRoute,
   CarIdRoute: CarIdRoute,
   PerfilIdRoute: PerfilIdRoute,
   AnunciosIndexRoute: AnunciosIndexRoute,
