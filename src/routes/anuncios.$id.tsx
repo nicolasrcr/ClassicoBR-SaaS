@@ -643,60 +643,6 @@ function AnuncioDetalhe() {
                 )}
               </div>
 
-              {/* Simulador de Financiamento */}
-              <div className="rounded-[10px] border border-border bg-card p-5">
-                <h3 className="font-serif text-base font-semibold mb-4">Simulador de Financiamento</h3>
-                <div className="space-y-4 text-sm">
-                  <div>
-                    <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
-                      <span>Entrada: {entrada}%</span>
-                      <span className="font-medium text-foreground">{formatPrice(entradaVal)}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={0}
-                      max={50}
-                      value={entrada}
-                      onChange={(e) => setEntrada(Number(e.target.value))}
-                      className="w-full accent-[#B85A30]"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-muted-foreground mb-1.5 block">Parcelas</label>
-                    <div className="flex gap-1.5 flex-wrap">
-                      {[12, 24, 36, 48, 60].map((n) => (
-                        <button
-                          key={n}
-                          onClick={() => setParcelas(n)}
-                          className={cn(
-                            "rounded-full px-2.5 py-0.5 text-xs border transition-colors",
-                            parcelas === n
-                              ? "bg-[#B85A30] text-white border-transparent"
-                              : "border-border text-muted-foreground hover:border-foreground/40"
-                          )}
-                        >
-                          {n}×
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="rounded-[8px] bg-secondary p-3 text-center">
-                    <p className="text-xs text-muted-foreground">Parcela estimada (1,8%/mês)</p>
-                    <p className="font-serif text-2xl font-semibold mt-1">
-                      {formatPrice(parcela)}
-                      <span className="text-sm font-normal text-muted-foreground">/mês</span>
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="w-full text-xs"
-                    onClick={() => toast.info("Simulação completa em breve!")}
-                  >
-                    Simular financiamento completo
-                  </Button>
-                </div>
-              </div>
-
               {/* Seller card */}
               <div className="rounded-[10px] border border-border bg-card p-5">
                 {seller ? (
