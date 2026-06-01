@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, MapPin, Ticket, Users, Phone } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, MapPin, Ticket, Users, Phone, Instagram, Globe, Star, ListOrdered, Sparkles, Handshake, FileText, Info as InfoIcon } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
@@ -72,6 +72,84 @@ function EventoDetail() {
               </div>
             )}
 
+            {(event.horario || event.ingressoUrl || event.instagram || event.site) && (
+              <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                {event.horario && (
+                  <div className="flex items-center gap-2"><Clock className="h-4 w-4 text-[color:var(--color-terracotta)]" /><span>{event.horario}</span></div>
+                )}
+                {event.ingressoUrl && (
+                  <a href={event.ingressoUrl} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[color:var(--color-terracotta)] hover:underline">
+                    <Ticket className="h-4 w-4" /> Garantir ingresso
+                  </a>
+                )}
+                {event.instagram && (
+                  <a href={event.instagram.startsWith("http") ? event.instagram : `https://instagram.com/${event.instagram.replace(/^@/, "")}`} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:underline">
+                    <Instagram className="h-4 w-4 text-[color:var(--color-terracotta)]" /> {event.instagram}
+                  </a>
+                )}
+                {event.site && (
+                  <a href={event.site} target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:underline">
+                    <Globe className="h-4 w-4 text-[color:var(--color-terracotta)]" /> Site oficial
+                  </a>
+                )}
+              </div>
+            )}
+
+            {event.destaques && event.destaques.length > 0 && (
+              <Section icon={Sparkles} title="Destaques">
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                  {event.destaques.map((d) => (
+                    <li key={d} className="flex items-start gap-2"><Star className="h-3.5 w-3.5 mt-1 text-[color:var(--color-terracotta)] shrink-0" /><span>{d}</span></li>
+                  ))}
+                </ul>
+              </Section>
+            )}
+
+            {event.programacao && event.programacao.length > 0 && (
+              <Section icon={ListOrdered} title="Programação">
+                <ul className="divide-y divide-border rounded-lg border border-border overflow-hidden">
+                  {event.programacao.map((p, i) => (
+                    <li key={i} className="flex items-center gap-3 px-3 py-2 text-sm bg-background">
+                      {p.hora && <span className="font-mono text-xs px-2 py-0.5 rounded bg-[color:var(--color-terracotta)]/10 text-[color:var(--color-terracotta)] shrink-0">{p.hora}</span>}
+                      <span>{p.atividade}</span>
+                    </li>
+                  ))}
+                </ul>
+              </Section>
+            )}
+
+            {event.atracoes && event.atracoes.length > 0 && (
+              <Section icon={Users} title="Atrações / Clubes convidados">
+                <div className="flex flex-wrap gap-2">
+                  {event.atracoes.map((a) => (
+                    <span key={a} className="rounded-full bg-secondary px-3 py-1 text-xs">{a}</span>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {event.patrocinadores && event.patrocinadores.length > 0 && (
+              <Section icon={Handshake} title="Patrocinadores e parceiros">
+                <div className="flex flex-wrap gap-2">
+                  {event.patrocinadores.map((p) => (
+                    <span key={p} className="rounded-md border border-border bg-background px-3 py-1 text-xs">{p}</span>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {event.regras && (
+              <Section icon={FileText} title="Regras / Requisitos">
+                <p className="text-sm leading-relaxed whitespace-pre-line text-foreground/90">{event.regras}</p>
+              </Section>
+            )}
+
+            {event.observacoes && (
+              <Section icon={InfoIcon} title="Observações">
+                <p className="text-sm leading-relaxed whitespace-pre-line text-foreground/90">{event.observacoes}</p>
+              </Section>
+            )}
+
             <div className="mt-6 flex flex-wrap gap-3 border-t border-border pt-4">
               <ContactLeadDialog
                 kind="evento"
@@ -80,6 +158,12 @@ function EventoDetail() {
                 whatsapp={event.contato}
                 triggerLabel="Tenho interesse"
               />
+              {event.ingressoUrl && (
+                <a href={event.ingressoUrl} target="_blank" rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-2.5 text-sm font-semibold hover:bg-muted">
+                  <Ticket className="h-4 w-4" /> Comprar ingresso
+                </a>
+              )}
               <ReportDialog tipoAlvo="evento" alvoId={event.id} />
             </div>
 
@@ -108,6 +192,17 @@ function Info({ icon: Icon, label, value }: { icon: React.ElementType; label: st
         <p className="text-sm font-semibold">{value}</p>
       </div>
     </div>
+  );
+}
+
+function Section({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) {
+  return (
+    <section className="mt-6">
+      <h3 className="flex items-center gap-2 font-serif text-lg mb-2">
+        <Icon className="h-4 w-4 text-[color:var(--color-terracotta)]" /> {title}
+      </h3>
+      {children}
+    </section>
   );
 }
 
