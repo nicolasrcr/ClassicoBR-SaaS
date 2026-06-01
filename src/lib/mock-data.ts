@@ -53,6 +53,28 @@ const ipsRobertoMelo: IpEntry[] = [
 // ============ USUÁRIOS (10 total) ============
 
 export const mockUsers: User[] = [
+  // user_admin — Nicolas (admin total)
+  {
+    id: "u_admin_nicolas",
+    name: "Nicolas",
+    email: "nicolasrcr@gmail.com",
+    phone: "(11) 99999-0000",
+    city: "São Paulo",
+    state: "SP",
+    plan: "premium",
+    status: "ativo",
+    memberSince: "2024-01-01",
+    responseRate: 100,
+    role: "admin",
+    approved: true,
+    verificacoes: { email: true, telefone: true, cpf: true, kyc: true },
+    fingerprints: ["FP_admin_nicolas"],
+    ipsRecentes: makeIps("São Paulo", "SP"),
+    taxaResposta: 100,
+    tempoMedioResposta: "~5min",
+    carrosVendidos: 0,
+    sellerScore: 100,
+  },
   // user_01 — João Carvalho
   {
     id: "u1",
