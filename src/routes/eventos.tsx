@@ -342,3 +342,20 @@ function formatDateRange(ini: string, fim?: string) {
   const f = (s: string) => new Date(s + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "short" });
   return fim ? `${f(ini)} → ${f(fim)}` : f(ini);
 }
+
+function parseLines(txt: string): string[] | undefined {
+  const arr = txt.split("\n").map((l) => l.trim()).filter(Boolean);
+  return arr.length ? arr : undefined;
+}
+
+function parseProgramacao(txt: string): { hora: string; atividade: string }[] | undefined {
+  const arr = txt
+    .split("\n")
+    .map((l) => l.trim())
+    .filter(Boolean)
+    .map((l) => {
+      const m = l.match(/^(\S+)\s*[-–—]\s*(.+)$/);
+      return m ? { hora: m[1], atividade: m[2] } : { hora: "", atividade: l };
+    });
+  return arr.length ? arr : undefined;
+}
