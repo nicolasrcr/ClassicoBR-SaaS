@@ -59,8 +59,6 @@ function CarDetail() {
   const [reportReason, setReportReason] = useState("");
   const [reportNote, setReportNote] = useState("");
   const [showPhone, setShowPhone] = useState(false);
-  const [entrada, setEntrada] = useState(0);
-  const [parcelas, setParcelas] = useState(24);
 
   if (!listing) {
     return (
@@ -86,13 +84,6 @@ function CarDetail() {
     ? Math.round((listing.price ?? 30000) * 0.04 * sit.ipvaAnosAtraso)
     : 0;
   const totalEstimado = ipvaCusto + 400 + 180 + 250;
-
-  // Financiamento
-  const precoBase = listing.price ?? 0;
-  const entradaVal = Math.round((entrada / 100) * precoBase);
-  const financiado = precoBase - entradaVal;
-  const taxa = 0.018;
-  const parcela = financiado > 0 ? Math.round(financiado * taxa / (1 - Math.pow(1 + taxa, -parcelas))) : 0;
 
   return (
     <div className="min-h-screen">
@@ -322,36 +313,6 @@ function CarDetail() {
                 </div>
               </div>
 
-              {/* Simulador de Financiamento */}
-              <div className="rounded-[10px] border border-border bg-card p-5">
-                <h3 className="font-serif text-base mb-4">Simulador de Financiamento</h3>
-                <div className="space-y-4 text-sm">
-                  <div>
-                    <label className="text-xs text-muted-foreground">Entrada: {entrada}% — {formatPrice(entradaVal)}</label>
-                    <input type="range" min={0} max={50} value={entrada} onChange={(e) => setEntrada(Number(e.target.value))}
-                      className="w-full accent-[color:var(--color-terracotta)] mt-1" />
-                  </div>
-                  <div>
-                    <label className="text-xs text-muted-foreground mb-1 block">Parcelas</label>
-                    <div className="flex gap-2 flex-wrap">
-                      {[12, 24, 36, 48, 60].map((n) => (
-                        <button key={n} onClick={() => setParcelas(n)}
-                          className={cn("rounded-full px-2.5 py-0.5 text-xs border transition-colors",
-                            parcelas === n ? "bg-[color:var(--color-terracotta)] text-white border-transparent" : "border-border text-muted-foreground hover:border-foreground/40")}>
-                          {n}×
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="rounded-[8px] bg-secondary p-3 text-center">
-                    <p className="text-xs text-muted-foreground">Parcela estimada (1,8%/mês)</p>
-                    <p className="font-serif text-2xl mt-1">{formatPrice(parcela)}<span className="text-sm font-normal text-muted-foreground">/mês</span></p>
-                  </div>
-                  <Button variant="outline" className="w-full text-xs" onClick={() => toast.info("Simulação completa em breve!")}>
-                    Simular financiamento
-                  </Button>
-                </div>
-              </div>
             </div>
           </aside>
         </div>

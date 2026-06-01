@@ -238,8 +238,6 @@ function AnuncioDetalhe() {
   const [reportNote, setReportNote] = useState("");
   const [msgText, setMsgText] = useState("");
   const [showPhone, setShowPhone] = useState(false);
-  const [entrada, setEntrada] = useState(0);
-  const [parcelas, setParcelas] = useState(24);
 
   if (!listing) {
     return (
@@ -299,16 +297,6 @@ function AnuncioDetalhe() {
       ? Math.round((listing.price ?? 30000) * 0.04 * sit.ipvaAnosAtraso)
       : 0;
   const totalEstimado = ipvaCusto + 400 + 180 + 250;
-
-  // Financiamento
-  const precoBase = listing.price ?? 0;
-  const entradaVal = Math.round((entrada / 100) * precoBase);
-  const financiado = precoBase - entradaVal;
-  const taxa = 0.018;
-  const parcela =
-    financiado > 0
-      ? Math.round((financiado * taxa) / (1 - Math.pow(1 + taxa, -parcelas)))
-      : 0;
 
   // Seller stars (score / 20, max 5)
   const sellerStars = seller ? Math.round(seller.sellerScore / 20) : 0;
@@ -653,60 +641,6 @@ function AnuncioDetalhe() {
                     {favorited ? "Salvo nos favoritos" : "Salvar nos favoritos"}
                   </button>
                 )}
-              </div>
-
-              {/* Simulador de Financiamento */}
-              <div className="rounded-[10px] border border-border bg-card p-5">
-                <h3 className="font-serif text-base font-semibold mb-4">Simulador de Financiamento</h3>
-                <div className="space-y-4 text-sm">
-                  <div>
-                    <div className="flex justify-between text-xs text-muted-foreground mb-1.5">
-                      <span>Entrada: {entrada}%</span>
-                      <span className="font-medium text-foreground">{formatPrice(entradaVal)}</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={0}
-                      max={50}
-                      value={entrada}
-                      onChange={(e) => setEntrada(Number(e.target.value))}
-                      className="w-full accent-[#B85A30]"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-xs text-muted-foreground mb-1.5 block">Parcelas</label>
-                    <div className="flex gap-1.5 flex-wrap">
-                      {[12, 24, 36, 48, 60].map((n) => (
-                        <button
-                          key={n}
-                          onClick={() => setParcelas(n)}
-                          className={cn(
-                            "rounded-full px-2.5 py-0.5 text-xs border transition-colors",
-                            parcelas === n
-                              ? "bg-[#B85A30] text-white border-transparent"
-                              : "border-border text-muted-foreground hover:border-foreground/40"
-                          )}
-                        >
-                          {n}×
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  <div className="rounded-[8px] bg-secondary p-3 text-center">
-                    <p className="text-xs text-muted-foreground">Parcela estimada (1,8%/mês)</p>
-                    <p className="font-serif text-2xl font-semibold mt-1">
-                      {formatPrice(parcela)}
-                      <span className="text-sm font-normal text-muted-foreground">/mês</span>
-                    </p>
-                  </div>
-                  <Button
-                    variant="outline"
-                    className="w-full text-xs"
-                    onClick={() => toast.info("Simulação completa em breve!")}
-                  >
-                    Simular financiamento completo
-                  </Button>
-                </div>
               </div>
 
               {/* Seller card */}

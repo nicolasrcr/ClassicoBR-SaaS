@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
+import { ContactLeadDialog } from "@/components/ContactLeadDialog";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { TIPO_EVENTO_LABELS } from "@/lib/types";
 
@@ -72,6 +73,13 @@ function EventoDetail() {
             )}
 
             <div className="mt-6 flex flex-wrap gap-3 border-t border-border pt-4">
+              <ContactLeadDialog
+                kind="evento"
+                contextTitle={event.titulo}
+                recipientName={event.organizadorNome}
+                whatsapp={event.contato}
+                triggerLabel="Tenho interesse"
+              />
               <ReportDialog tipoAlvo="evento" alvoId={event.id} />
             </div>
 

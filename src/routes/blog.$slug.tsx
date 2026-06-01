@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Clock, BookOpen, ArrowRight, ChevronRight } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { ContactLeadDialog } from "@/components/ContactLeadDialog";
 import { useAppStore } from "@/store/app-store";
 import { formatDate, formatPrice } from "@/lib/format";
 import { CATEGORY_LABELS } from "@/lib/types";
@@ -122,12 +123,20 @@ function BlogPostPage() {
                 <p className="text-white/60 text-sm mb-5">
                   Navegue por anúncios verificados com histórico documental transparente.
                 </p>
-                <Link
-                  to="/anuncios"
-                  className="inline-flex items-center gap-2 rounded-lg bg-[color:var(--color-terracotta)] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[color:var(--color-terracotta)]/90 transition-colors"
-                >
-                  Ver anúncios <ArrowRight className="h-4 w-4" />
-                </Link>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <Link
+                    to="/anuncios"
+                    className="inline-flex items-center gap-2 rounded-lg bg-[color:var(--color-terracotta)] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[color:var(--color-terracotta)]/90 transition-colors"
+                  >
+                    Ver anúncios <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <ContactLeadDialog
+                    kind="artigo"
+                    contextTitle={post.titulo}
+                    triggerLabel="Falar com um especialista"
+                    variant="outline"
+                  />
+                </div>
               </div>
             </article>
 
