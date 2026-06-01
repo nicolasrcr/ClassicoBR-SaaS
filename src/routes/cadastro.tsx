@@ -1,9 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { Eye, EyeOff, Loader2, UserPlus } from "lucide-react";
+import { Eye, EyeOff, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { PostAuthSkeleton } from "@/components/PostAuthSkeleton";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -112,20 +113,11 @@ function Cadastro() {
     return (
       <div className="min-h-screen bg-[#FAF9F6]">
         <Header />
-        <main className="mx-auto flex max-w-md flex-col items-center px-6 py-20 text-center">
-          <Loader2 className="h-10 w-10 animate-spin text-[#B85A30]" />
-          <h1 className="mt-6 font-serif text-2xl text-foreground">Criando sua conta…</h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {redirect
-              ? "Em instantes você verá os detalhes do anúncio."
-              : "Preparando sua área."}
-          </p>
-          <div className="mt-8 w-full space-y-3">
-            <div className="h-32 rounded-[10px] bg-[#E8E6E0] animate-pulse" />
-            <div className="h-4 w-2/3 mx-auto rounded-full bg-[#E8E6E0] animate-pulse" />
-            <div className="h-4 w-1/2 mx-auto rounded-full bg-[#E8E6E0] animate-pulse" />
-          </div>
-        </main>
+        <PostAuthSkeleton
+          redirect={redirect}
+          title="Criando sua conta…"
+          subtitle="Preparando sua área."
+        />
         <Footer />
       </div>
     );
