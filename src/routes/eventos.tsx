@@ -189,6 +189,16 @@ function EventoForm({ onClose, onSubmit, userId, userName }: {
   const [endereco, setEndereco] = useState("");
   const [precoEntrada, setPrecoEntrada] = useState("");
   const [contato, setContato] = useState("");
+  const [horario, setHorario] = useState("");
+  const [ingressoUrl, setIngressoUrl] = useState("");
+  const [instagram, setInstagram] = useState("");
+  const [site, setSite] = useState("");
+  const [destaquesTxt, setDestaquesTxt] = useState("");          // 1 por linha
+  const [programacaoTxt, setProgramacaoTxt] = useState("");      // "HH:MM - atividade" por linha
+  const [atracoesTxt, setAtracoesTxt] = useState("");
+  const [patrocinadoresTxt, setPatrocinadoresTxt] = useState("");
+  const [regras, setRegras] = useState("");
+  const [observacoes, setObservacoes] = useState("");
   const [imagens, setImagens] = useState<ImageTrace[]>([]);
   const [analyzing, setAnalyzing] = useState(false);
 
@@ -224,6 +234,16 @@ function EventoForm({ onClose, onSubmit, userId, userName }: {
       capa: "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=1200",
       precoEntrada: precoEntrada ? Number(precoEntrada) : null,
       contato: contato || undefined,
+      horario: horario || undefined,
+      ingressoUrl: ingressoUrl || undefined,
+      instagram: instagram || undefined,
+      site: site || undefined,
+      destaques: parseLines(destaquesTxt),
+      atracoes: parseLines(atracoesTxt),
+      patrocinadores: parseLines(patrocinadoresTxt),
+      programacao: parseProgramacao(programacaoTxt),
+      regras: regras || undefined,
+      observacoes: observacoes || undefined,
       status: "agendado",
       createdAt: new Date().toISOString().slice(0, 10),
       statusModeracao: "pendente",
