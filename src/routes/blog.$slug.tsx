@@ -1,9 +1,8 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Clock, BookOpen, ArrowRight, ChevronRight } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { LockedContentGate } from "@/components/LockedContentGate";
-import { useAppStore, useCurrentUser } from "@/store/app-store";
+import { useAppStore } from "@/store/app-store";
 import { formatDate, formatPrice } from "@/lib/format";
 import { CATEGORY_LABELS } from "@/lib/types";
 
@@ -31,8 +30,6 @@ function CategoryChip({ categoria }: { categoria: string }) {
 function BlogPostPage() {
   const { slug } = Route.useParams();
   const { blogPosts, listings } = useAppStore();
-  const user = useCurrentUser();
-  const router = useRouter();
 
   const post = blogPosts.find((p) => p.slug === slug && p.status === "Publicado");
 
@@ -53,35 +50,6 @@ function BlogPostPage() {
             <ArrowLeft className="h-4 w-4" /> Voltar ao Blog
           </Link>
         </div>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (!user) {
-    const goBack = () => {
-      if (typeof window !== "undefined" && window.history.length > 1) {
-        router.history.back();
-      } else {
-        router.navigate({ to: "/blog" });
-      }
-    };
-    return (
-      <div className="min-h-screen bg-[#FAF9F6] flex flex-col">
-        <Header />
-        <LockedContentGate
-          title={post.titulo}
-          subtitle={`${post.categoria} • ${post.tempoLeitura}`}
-          photo={post.imagemCapa}
-          redirectTo={`/blog/${post.slug}`}
-          kind="artigo"
-          benefits={[
-            "Artigo completo com imagens em alta resolução",
-            "Anúncios relacionados desbloqueados",
-            "Favoritar artigos e receber novos conteúdos",
-          ]}
-          onBack={goBack}
-        />
         <Footer />
       </div>
     );

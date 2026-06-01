@@ -1,10 +1,9 @@
-import { createFileRoute, Link, useParams, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, MapPin, Phone, MessageCircle, Globe, Tag } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
-import { LockedContentGate } from "@/components/LockedContentGate";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { SERVICE_KIND_LABELS } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
@@ -15,7 +14,6 @@ function ServicoDetail() {
   const { id } = useParams({ from: "/servicos/$id" });
   const s = useAppStore((st) => st.services.find((x) => x.id === id));
   const user = useCurrentUser();
-  const router = useRouter();
   const canSeeAudit = user && (user.role === "admin" || user.id === s?.anuncianteId);
 
   if (!s) {
@@ -26,30 +24,6 @@ function ServicoDetail() {
           <h1 className="font-serif text-2xl">Anúncio não encontrado</h1>
           <Link to="/servicos" className="mt-4 inline-block text-sm text-[color:var(--color-terracotta)] hover:underline">← Voltar</Link>
         </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  if (!user) {
-    const goBack = () => {
-      if (typeof window !== "undefined" && window.history.length > 1) {
-        router.history.back();
-      } else {
-        router.navigate({ to: "/servicos" });
-      }
-    };
-    return (
-      <div className="min-h-screen flex flex-col">
-        <Header />
-        <LockedContentGate
-          title={s.titulo}
-          subtitle={`${s.cidade}/${s.estado}`}
-          photo={s.fotos[0]}
-          redirectTo={`/servicos/${s.id}`}
-          kind="serviço"
-          onBack={goBack}
-        />
         <Footer />
       </div>
     );
