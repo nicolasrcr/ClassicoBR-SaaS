@@ -1,12 +1,10 @@
-import { createFileRoute, Link, useParams, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, MapPin, Ticket, Users, Phone } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
-import { LockedContentGate } from "@/components/LockedContentGate";
-import { useAppStore } from "@/store/app-store";
-import { useCurrentUser } from "@/store/app-store";
+import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { TIPO_EVENTO_LABELS } from "@/lib/types";
 
 export const Route = createFileRoute("/eventos/$id")({ component: EventoDetail });

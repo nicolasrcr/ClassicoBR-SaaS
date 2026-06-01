@@ -1,10 +1,9 @@
-import { createFileRoute, Link, useParams, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, MapPin, Phone, MessageCircle, Globe, Tag } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
-import { LockedContentGate } from "@/components/LockedContentGate";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { SERVICE_KIND_LABELS } from "@/lib/types";
 import { formatPrice } from "@/lib/format";

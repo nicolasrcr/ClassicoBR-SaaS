@@ -1,9 +1,8 @@
-import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft, Clock, BookOpen, ArrowRight, ChevronRight } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { LockedContentGate } from "@/components/LockedContentGate";
-import { useAppStore, useCurrentUser } from "@/store/app-store";
+import { useAppStore } from "@/store/app-store";
 import { formatDate, formatPrice } from "@/lib/format";
 import { CATEGORY_LABELS } from "@/lib/types";
 
