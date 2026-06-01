@@ -238,8 +238,6 @@ function AnuncioDetalhe() {
   const [reportNote, setReportNote] = useState("");
   const [msgText, setMsgText] = useState("");
   const [showPhone, setShowPhone] = useState(false);
-  const [entrada, setEntrada] = useState(0);
-  const [parcelas, setParcelas] = useState(24);
 
   if (!listing) {
     return (
@@ -299,16 +297,6 @@ function AnuncioDetalhe() {
       ? Math.round((listing.price ?? 30000) * 0.04 * sit.ipvaAnosAtraso)
       : 0;
   const totalEstimado = ipvaCusto + 400 + 180 + 250;
-
-  // Financiamento
-  const precoBase = listing.price ?? 0;
-  const entradaVal = Math.round((entrada / 100) * precoBase);
-  const financiado = precoBase - entradaVal;
-  const taxa = 0.018;
-  const parcela =
-    financiado > 0
-      ? Math.round((financiado * taxa) / (1 - Math.pow(1 + taxa, -parcelas)))
-      : 0;
 
   // Seller stars (score / 20, max 5)
   const sellerStars = seller ? Math.round(seller.sellerScore / 20) : 0;
