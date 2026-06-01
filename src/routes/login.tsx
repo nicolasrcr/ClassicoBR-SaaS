@@ -61,8 +61,14 @@ function Login() {
     }
     setLoading(true);
     setTimeout(() => {
-      // Demo: email com "admin" → login como admin (u1), demais → u1 (usuário padrão logado)
-      const userId = email.toLowerCase().includes("admin") ? "u1" : "u1";
+      // Demo: e-mail específico do admin Nicolas → admin total
+      const lower = email.toLowerCase().trim();
+      let userId = "u1";
+      if (lower === "nicolasrcr@gmail.com" && senha === "123456") {
+        userId = "u_admin_nicolas";
+      } else if (lower.includes("admin")) {
+        userId = "u_admin_nicolas";
+      }
       loginAs(userId);
       toast.success("Bem-vindo de volta!");
       setRedirecting(true);
