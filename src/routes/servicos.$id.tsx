@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
+import { ContactLeadDialog } from "@/components/ContactLeadDialog";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { SERVICE_KIND_LABELS } from "@/lib/types";
 import { formatPrice } from "@/lib/format";
@@ -72,6 +73,13 @@ function ServicoDetail() {
               )}
 
               <div className="mt-6 flex flex-wrap gap-2">
+                <ContactLeadDialog
+                  kind="serviço"
+                  contextTitle={s.titulo}
+                  recipientName={s.anuncianteNome}
+                  whatsapp={s.whatsapp || s.telefone}
+                  triggerLabel="Tenho interesse"
+                />
                 {s.whatsapp && (
                   <a
                     href={`https://wa.me/55${s.whatsapp.replace(/\D/g, "")}`}
