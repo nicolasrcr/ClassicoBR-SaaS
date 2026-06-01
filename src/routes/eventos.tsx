@@ -310,6 +310,50 @@ function EventoForm({ onClose, onSubmit, userId, userName }: {
             <Label>Contato (telefone/WhatsApp)</Label>
             <Input value={contato} onChange={(e) => setContato(e.target.value)} />
           </div>
+          <div>
+            <Label>Horário</Label>
+            <Input value={horario} onChange={(e) => setHorario(e.target.value)} placeholder="Ex.: A partir das 9h" />
+          </div>
+          <div>
+            <Label>Link de ingresso (Sympla, etc.)</Label>
+            <Input value={ingressoUrl} onChange={(e) => setIngressoUrl(e.target.value)} placeholder="https://www.sympla.com.br/..." />
+          </div>
+          <div>
+            <Label>Instagram</Label>
+            <Input value={instagram} onChange={(e) => setInstagram(e.target.value)} placeholder="@clubedoopala ou URL" />
+          </div>
+          <div>
+            <Label>Site oficial</Label>
+            <Input value={site} onChange={(e) => setSite(e.target.value)} placeholder="https://..." />
+          </div>
+          <div className="md:col-span-2">
+            <Label>Destaques (1 por linha)</Label>
+            <Textarea value={destaquesTxt} onChange={(e) => setDestaquesTxt(e.target.value)} rows={3}
+              placeholder={"Premiações\nEspaço gastronômico\nMuita nostalgia"} />
+          </div>
+          <div className="md:col-span-2">
+            <Label>Programação (uma por linha — formato: "Horário - atividade")</Label>
+            <Textarea value={programacaoTxt} onChange={(e) => setProgramacaoTxt(e.target.value)} rows={4}
+              placeholder={"09:00 - Abertura dos portões\n10:30 - Desfile dos clássicos\n13:00 - Premiação"} />
+          </div>
+          <div className="md:col-span-2">
+            <Label>Atrações / Clubes convidados (1 por linha)</Label>
+            <Textarea value={atracoesTxt} onChange={(e) => setAtracoesTxt(e.target.value)} rows={2}
+              placeholder={"Clube do Opala de Brasília\nVeteran Car Brasília"} />
+          </div>
+          <div className="md:col-span-2">
+            <Label>Patrocinadores / Parceiros (1 por linha)</Label>
+            <Textarea value={patrocinadoresTxt} onChange={(e) => setPatrocinadoresTxt(e.target.value)} rows={2} />
+          </div>
+          <div className="md:col-span-2">
+            <Label>Regras / Requisitos</Label>
+            <Textarea value={regras} onChange={(e) => setRegras(e.target.value)} rows={2}
+              placeholder="Ex.: carros até 1990, documentação em dia..." />
+          </div>
+          <div className="md:col-span-2">
+            <Label>Observações</Label>
+            <Textarea value={observacoes} onChange={(e) => setObservacoes(e.target.value)} rows={2} />
+          </div>
           <div className="md:col-span-2">
             <Label className="mb-1.5 block">Fotos (validamos metadados e origem)</Label>
             <label className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border bg-background px-4 py-6 text-sm text-muted-foreground hover:border-[color:var(--color-terracotta)] hover:text-foreground transition-colors">
