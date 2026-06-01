@@ -30,8 +30,6 @@ function CategoryChip({ categoria }: { categoria: string }) {
 function BlogPostPage() {
   const { slug } = Route.useParams();
   const { blogPosts, listings } = useAppStore();
-  const user = useCurrentUser();
-  const router = useRouter();
 
   const post = blogPosts.find((p) => p.slug === slug && p.status === "Publicado");
 
