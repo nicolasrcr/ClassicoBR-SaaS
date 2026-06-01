@@ -56,4 +56,16 @@ describe("PostAuthSkeleton (loader após login/cadastro)", () => {
     expect(screen.queryByText(/Especificações/i)).not.toBeInTheDocument();
     expect(screen.queryByText(/Contato/i)).not.toBeInTheDocument();
   });
+
+  it("some do DOM quando o componente pai deixa de renderizá-lo (simula carregamento completo)", () => {
+    const { unmount } = render(<PostAuthSkeleton redirect="/anuncios/l1" />);
+
+    expect(screen.getByTestId("post-auth-skeleton")).toBeInTheDocument();
+
+    unmount();
+
+    expect(screen.queryByTestId("post-auth-skeleton")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("post-auth-spinner")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("post-auth-bars")).not.toBeInTheDocument();
+  });
 });
