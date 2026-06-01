@@ -22,7 +22,7 @@ import { formatKm, formatPrice } from "@/lib/format";
 import { BR_STATES, BRANDS } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/anuncios")({ component: Anuncios });
+export const Route = createFileRoute("/anuncios/")({ component: Anuncios });
 
 const CORES = ["Branco", "Preto", "Prata", "Cinza", "Vermelho", "Azul", "Verde", "Amarelo", "Laranja", "Bege", "Marrom", "Roxo"];
 const CARROCERIAS = ["Sedan", "Coupe", "Hatch", "Perua/Station", "Pickup", "Conversível", "Van/Kombi", "Buggy"];

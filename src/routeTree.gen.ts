@@ -22,10 +22,10 @@ import { Route as CompararRouteImport } from './routes/comparar'
 import { Route as ChatRouteImport } from './routes/chat'
 import { Route as CadastroRouteImport } from './routes/cadastro'
 import { Route as BlogRouteImport } from './routes/blog'
-import { Route as AnunciosRouteImport } from './routes/anuncios'
 import { Route as AnunciarRouteImport } from './routes/anunciar'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AnunciosIndexRouteImport } from './routes/anuncios.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ServicosIdRouteImport } from './routes/servicos.$id'
 import { Route as PerfilIdRouteImport } from './routes/perfil.$id'
@@ -112,11 +112,6 @@ const BlogRoute = BlogRouteImport.update({
   path: '/blog',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AnunciosRoute = AnunciosRouteImport.update({
-  id: '/anuncios',
-  path: '/anuncios',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AnunciarRoute = AnunciarRouteImport.update({
   id: '/anunciar',
   path: '/anunciar',
@@ -130,6 +125,11 @@ const AdminRoute = AdminRouteImport.update({
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnunciosIndexRoute = AnunciosIndexRouteImport.update({
+  id: '/anuncios/',
+  path: '/anuncios/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -163,9 +163,9 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   getParentRoute: () => BlogRoute,
 } as any)
 const AnunciosIdRoute = AnunciosIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AnunciosRoute,
+  id: '/anuncios/$id',
+  path: '/anuncios/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminUsuariosRoute = AdminUsuariosRouteImport.update({
   id: '/usuarios',
@@ -237,7 +237,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/anunciar': typeof AnunciarRoute
-  '/anuncios': typeof AnunciosRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/chat': typeof ChatRoute
@@ -271,11 +270,11 @@ export interface FileRoutesByFullPath {
   '/perfil/$id': typeof PerfilIdRoute
   '/servicos/$id': typeof ServicosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/anuncios/': typeof AnunciosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/anunciar': typeof AnunciarRoute
-  '/anuncios': typeof AnunciosRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/chat': typeof ChatRoute
@@ -309,13 +308,13 @@ export interface FileRoutesByTo {
   '/perfil/$id': typeof PerfilIdRoute
   '/servicos/$id': typeof ServicosIdRoute
   '/admin': typeof AdminIndexRoute
+  '/anuncios': typeof AnunciosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/anunciar': typeof AnunciarRoute
-  '/anuncios': typeof AnunciosRouteWithChildren
   '/blog': typeof BlogRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/chat': typeof ChatRoute
@@ -349,6 +348,7 @@ export interface FileRoutesById {
   '/perfil/$id': typeof PerfilIdRoute
   '/servicos/$id': typeof ServicosIdRoute
   '/admin/': typeof AdminIndexRoute
+  '/anuncios/': typeof AnunciosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -356,7 +356,6 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/anunciar'
-    | '/anuncios'
     | '/blog'
     | '/cadastro'
     | '/chat'
@@ -390,11 +389,11 @@ export interface FileRouteTypes {
     | '/perfil/$id'
     | '/servicos/$id'
     | '/admin/'
+    | '/anuncios/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/anunciar'
-    | '/anuncios'
     | '/blog'
     | '/cadastro'
     | '/chat'
@@ -428,12 +427,12 @@ export interface FileRouteTypes {
     | '/perfil/$id'
     | '/servicos/$id'
     | '/admin'
+    | '/anuncios'
   id:
     | '__root__'
     | '/'
     | '/admin'
     | '/anunciar'
-    | '/anuncios'
     | '/blog'
     | '/cadastro'
     | '/chat'
@@ -467,13 +466,13 @@ export interface FileRouteTypes {
     | '/perfil/$id'
     | '/servicos/$id'
     | '/admin/'
+    | '/anuncios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AnunciarRoute: typeof AnunciarRoute
-  AnunciosRoute: typeof AnunciosRouteWithChildren
   BlogRoute: typeof BlogRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   ChatRoute: typeof ChatRoute
@@ -487,8 +486,10 @@ export interface RootRouteChildren {
   MinhaContaRoute: typeof MinhaContaRoute
   RegisterRoute: typeof RegisterRoute
   ServicosRoute: typeof ServicosRouteWithChildren
+  AnunciosIdRoute: typeof AnunciosIdRoute
   CarIdRoute: typeof CarIdRoute
   PerfilIdRoute: typeof PerfilIdRoute
+  AnunciosIndexRoute: typeof AnunciosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -584,13 +585,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/anuncios': {
-      id: '/anuncios'
-      path: '/anuncios'
-      fullPath: '/anuncios'
-      preLoaderRoute: typeof AnunciosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/anunciar': {
       id: '/anunciar'
       path: '/anunciar'
@@ -610,6 +604,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/anuncios/': {
+      id: '/anuncios/'
+      path: '/anuncios'
+      fullPath: '/anuncios/'
+      preLoaderRoute: typeof AnunciosIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -656,10 +657,10 @@ declare module '@tanstack/react-router' {
     }
     '/anuncios/$id': {
       id: '/anuncios/$id'
-      path: '/$id'
+      path: '/anuncios/$id'
       fullPath: '/anuncios/$id'
       preLoaderRoute: typeof AnunciosIdRouteImport
-      parentRoute: typeof AnunciosRoute
+      parentRoute: typeof rootRouteImport
     }
     '/admin/usuarios': {
       id: '/admin/usuarios'
@@ -791,18 +792,6 @@ const AdminRouteChildren: AdminRouteChildren = {
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
-interface AnunciosRouteChildren {
-  AnunciosIdRoute: typeof AnunciosIdRoute
-}
-
-const AnunciosRouteChildren: AnunciosRouteChildren = {
-  AnunciosIdRoute: AnunciosIdRoute,
-}
-
-const AnunciosRouteWithChildren = AnunciosRoute._addFileChildren(
-  AnunciosRouteChildren,
-)
-
 interface BlogRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
 }
@@ -840,7 +829,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AnunciarRoute: AnunciarRoute,
-  AnunciosRoute: AnunciosRouteWithChildren,
   BlogRoute: BlogRouteWithChildren,
   CadastroRoute: CadastroRoute,
   ChatRoute: ChatRoute,
@@ -854,9 +842,21 @@ const rootRouteChildren: RootRouteChildren = {
   MinhaContaRoute: MinhaContaRoute,
   RegisterRoute: RegisterRoute,
   ServicosRoute: ServicosRouteWithChildren,
+  AnunciosIdRoute: AnunciosIdRoute,
   CarIdRoute: CarIdRoute,
   PerfilIdRoute: PerfilIdRoute,
+  AnunciosIndexRoute: AnunciosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
