@@ -1,9 +1,10 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { createFileRoute, Link, useParams, useRouter } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, MapPin, Ticket, Users, Phone } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { TraceabilityPanel } from "@/components/TraceabilityPanel";
 import { ReportDialog, AuditTrailCard } from "@/components/ReportDialog";
+import { LockedContentGate } from "@/components/LockedContentGate";
 import { useAppStore } from "@/store/app-store";
 import { useCurrentUser } from "@/store/app-store";
 import { TIPO_EVENTO_LABELS } from "@/lib/types";
@@ -14,6 +15,7 @@ function EventoDetail() {
   const { id } = useParams({ from: "/eventos/$id" });
   const event = useAppStore((s) => s.events.find((e) => e.id === id));
   const user = useCurrentUser();
+  const router = useRouter();
   const canSeeAudit = user && (user.role === "admin" || user.id === event?.organizadorId);
 
   if (!event) {
@@ -24,6 +26,30 @@ function EventoDetail() {
           <h1 className="font-serif text-2xl">Evento não encontrado</h1>
           <Link to="/eventos" className="mt-4 inline-block text-sm text-[color:var(--color-terracotta)] hover:underline">← Voltar para a agenda</Link>
         </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!user) {
+    const goBack = () => {
+      if (typeof window !== "undefined" && window.history.length > 1) {
+        router.history.back();
+      } else {
+        router.navigate({ to: "/eventos" });
+      }
+    };
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <LockedContentGate
+          title={event.titulo}
+          subtitle={`${event.cidade}/${event.estado}`}
+          photo={event.capa}
+          redirectTo={`/eventos/${event.id}`}
+          kind="evento"
+          onBack={goBack}
+        />
         <Footer />
       </div>
     );
