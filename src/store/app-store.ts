@@ -353,7 +353,7 @@ export const useAppStore = create<AppState>()(
           ),
         })),
     }),
-    { name: "classicosbr-store-v2" },
+    { name: "classicosbr-store-v3" },
   ),
 );
 
