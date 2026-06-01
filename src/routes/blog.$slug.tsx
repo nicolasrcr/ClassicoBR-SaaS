@@ -57,35 +57,6 @@ function BlogPostPage() {
     );
   }
 
-  if (!user) {
-    const goBack = () => {
-      if (typeof window !== "undefined" && window.history.length > 1) {
-        router.history.back();
-      } else {
-        router.navigate({ to: "/blog" });
-      }
-    };
-    return (
-      <div className="min-h-screen bg-[#FAF9F6] flex flex-col">
-        <Header />
-        <LockedContentGate
-          title={post.titulo}
-          subtitle={`${post.categoria} • ${post.tempoLeitura}`}
-          photo={post.imagemCapa}
-          redirectTo={`/blog/${post.slug}`}
-          kind="artigo"
-          benefits={[
-            "Artigo completo com imagens em alta resolução",
-            "Anúncios relacionados desbloqueados",
-            "Favoritar artigos e receber novos conteúdos",
-          ]}
-          onBack={goBack}
-        />
-        <Footer />
-      </div>
-    );
-  }
-
   // Related listings
   const relatedListings = post.anunciosRelacionados
     .map((id) => listings.find((l) => l.id === id && l.status === "ativo"))
