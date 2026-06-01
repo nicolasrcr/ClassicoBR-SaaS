@@ -27,21 +27,29 @@ export function Header() {
 
         {/* Nav links (desktop) */}
         <nav className="hidden md:flex items-center gap-1">
-          <Link to="/anuncios" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
-            Explorar
-          </Link>
-          <Link to="/eventos" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
-            Eventos
-          </Link>
-          <Link to="/servicos" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
-            Serviços & Peças
-          </Link>
-          <Link to="/blog" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
-            Blog
-          </Link>
-          <Link to="/compra-segura" className="px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8">
-            Compra segura
-          </Link>
+          {[
+            { to: "/anuncios", label: "Explorar" },
+            { to: "/eventos", label: "Eventos" },
+            { to: "/servicos", label: "Serviços & Peças" },
+            { to: "/blog", label: "Blog" },
+            { to: "/compra-segura", label: "Compra segura" },
+          ].map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: false }}
+              activeProps={{
+                className:
+                  "px-3 py-1.5 text-sm text-white bg-white/10 rounded-md font-medium border-b-2 border-[color:var(--color-terracotta)]",
+              }}
+              inactiveProps={{
+                className:
+                  "px-3 py-1.5 text-sm text-white/70 hover:text-white transition-colors rounded-md hover:bg-white/8",
+              }}
+            >
+              {item.label}
+            </Link>
+          ))}
         </nav>
 
         {/* Right side */}
