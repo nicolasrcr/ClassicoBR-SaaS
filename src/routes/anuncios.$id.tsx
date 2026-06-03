@@ -172,7 +172,7 @@ function Gallery({ photos, title }: { photos: string[]; title: string }) {
             onClick={() => setActive(i)}
             className={cn(
               "relative flex-shrink-0 h-16 w-24 overflow-hidden rounded-[6px] border-2 transition-all",
-              active === i ? "border-[#B85A30]" : "border-border opacity-60 hover:opacity-100"
+              active === i ? "border-[color:var(--color-terracotta-soft)]" : "border-border opacity-60 hover:opacity-100"
             )}
           >
             {src ? (
@@ -247,7 +247,7 @@ function AnuncioDetalhe() {
           <Car className="mx-auto h-16 w-16 text-muted-foreground/30 mb-6" strokeWidth={1} />
           <h2 className="font-serif text-2xl font-semibold">Anúncio não encontrado</h2>
           <p className="mt-2 text-muted-foreground text-sm">Este anúncio pode ter sido removido ou o link está incorreto.</p>
-          <Button asChild className="mt-6 bg-[#B85A30] text-white hover:bg-[#9a4a28]">
+          <Button asChild className="mt-6 bg-[color:var(--color-terracotta-soft)] text-white hover:bg-[color:var(--color-terracotta-dark)]">
             <Link to="/anuncios">Ver todos os anúncios</Link>
           </Button>
         </div>
@@ -341,7 +341,7 @@ function AnuncioDetalhe() {
                     <Heart
                       className={cn(
                         "h-4 w-4",
-                        favorited && "fill-[#B85A30] text-[#B85A30]"
+                        favorited && "fill-[color:var(--color-terracotta-soft)] text-[color:var(--color-terracotta-soft)]"
                       )}
                     />
                     {favorited ? "Salvo" : "Salvar"}
@@ -408,10 +408,10 @@ function AnuncioDetalhe() {
             </div>
 
             {/* Dossiê Documental */}
-            <div className="rounded-[10px] border-2 border-[#B85A30]/40 p-5">
+            <div className="rounded-[10px] border-2 border-[color:var(--color-terracotta-soft)]/40 p-5">
               <div className="flex items-center gap-2 mb-4">
                 <h2 className="font-serif text-xl font-semibold">Dossiê Documental</h2>
-                <span className="rounded-full bg-[#B85A30]/10 px-2 py-0.5 text-[10px] font-semibold text-[#B85A30] uppercase tracking-wide">
+                <span className="rounded-full bg-[color:var(--color-terracotta-soft)]/10 px-2 py-0.5 text-[10px] font-semibold text-[color:var(--color-terracotta-soft)] uppercase tracking-wide">
                   Declarado
                 </span>
               </div>
@@ -497,7 +497,7 @@ function AnuncioDetalhe() {
                     <span>Vistoria cautelar</span>
                     <span>~R$ 250</span>
                   </div>
-                  <div className="flex justify-between border-t border-border pt-2 font-semibold text-[#B85A30]">
+                  <div className="flex justify-between border-t border-border pt-2 font-semibold text-[color:var(--color-terracotta-soft)]">
                     <span>Total estimado</span>
                     <span>~{formatPrice(totalEstimado)}</span>
                   </div>
@@ -516,7 +516,7 @@ function AnuncioDetalhe() {
               </p>
               <Link
                 to="/compra-segura"
-                className="mt-4 inline-flex items-center gap-1 text-xs text-[#B85A30] hover:underline"
+                className="mt-4 inline-flex items-center gap-1 text-xs text-[color:var(--color-terracotta-soft)] hover:underline"
               >
                 🔒 Guia de compra segura <ExternalLink className="h-3 w-3" />
               </Link>
@@ -548,7 +548,7 @@ function AnuncioDetalhe() {
                       key={s.id}
                       to="/anuncios/$id"
                       params={{ id: s.id }}
-                      className="flex-shrink-0 w-48 rounded-[10px] border border-border bg-card overflow-hidden hover:border-[#B85A30]/40 transition-colors"
+                      className="flex-shrink-0 w-48 rounded-[10px] border border-border bg-card overflow-hidden hover:border-[color:var(--color-terracotta-soft)]/40 transition-colors"
                     >
                       <div className="flex aspect-[4/3] items-center justify-center bg-secondary overflow-hidden">
                         {s.photos.length > 0 ? (
@@ -561,7 +561,7 @@ function AnuncioDetalhe() {
                         <p className="font-serif text-sm font-semibold leading-tight line-clamp-2">
                           {s.title}
                         </p>
-                        <p className="mt-1 text-xs font-semibold text-[#B85A30]">
+                        <p className="mt-1 text-xs font-semibold text-[color:var(--color-terracotta-soft)]">
                           {formatPrice(s.price)}
                         </p>
                       </div>
@@ -631,12 +631,12 @@ function AnuncioDetalhe() {
                     className={cn(
                       "mt-2 w-full flex items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium transition-all border",
                       favorited
-                        ? "border-[#B85A30] bg-[#B85A30]/8 text-[#B85A30]"
-                        : "border-border text-muted-foreground hover:border-[#B85A30]/40 hover:text-[#B85A30]"
+                        ? "border-[color:var(--color-terracotta-soft)] bg-[color:var(--color-terracotta-soft)]/8 text-[color:var(--color-terracotta-soft)]"
+                        : "border-border text-muted-foreground hover:border-[color:var(--color-terracotta-soft)]/40 hover:text-[color:var(--color-terracotta-soft)]"
                     )}
                   >
                     <Heart
-                      className={cn("h-4 w-4", favorited && "fill-[#B85A30]")}
+                      className={cn("h-4 w-4", favorited && "fill-[color:var(--color-terracotta-soft)]")}
                     />
                     {favorited ? "Salvo nos favoritos" : "Salvar nos favoritos"}
                   </button>
@@ -648,8 +648,8 @@ function AnuncioDetalhe() {
                 {seller ? (
                   <>
                     <div className="flex items-center gap-3 mb-3">
-                      <Avatar className="h-12 w-12 ring-2 ring-[#B85A30]/20">
-                        <AvatarFallback className="bg-[#B85A30]/10 font-serif text-[#B85A30] font-semibold">
+                      <Avatar className="h-12 w-12 ring-2 ring-[color:var(--color-terracotta-soft)]/20">
+                        <AvatarFallback className="bg-[color:var(--color-terracotta-soft)]/10 font-serif text-[color:var(--color-terracotta-soft)] font-semibold">
                           {seller.name[0]}
                         </AvatarFallback>
                       </Avatar>
@@ -657,7 +657,7 @@ function AnuncioDetalhe() {
                         <Link
                           to="/perfil/$id"
                           params={{ id: seller.id }}
-                          className="font-serif text-base font-semibold hover:text-[#B85A30] hover:underline transition-colors"
+                          className="font-serif text-base font-semibold hover:text-[color:var(--color-terracotta-soft)] hover:underline transition-colors"
                         >
                           {seller.name}
                         </Link>
@@ -731,7 +731,7 @@ function AnuncioDetalhe() {
                     <div className="flex flex-col gap-2">
                       {/* Ver telefone — locked if < 3 messages */}
                       <Button
-                        className="bg-[#B85A30] text-white hover:bg-[#9a4a28] w-full"
+                        className="bg-[color:var(--color-terracotta-soft)] text-white hover:bg-[color:var(--color-terracotta-dark)] w-full"
                         onClick={() => {
                           if (!seller.verificacoes.telefone) {
                             toast.warning("Vendedor sem telefone verificado");
@@ -761,7 +761,7 @@ function AnuncioDetalhe() {
                       {/* Enviar mensagem */}
                       <Button
                         variant="outline"
-                        className="border-[#B85A30] text-[#B85A30] hover:bg-[#B85A30]/5 w-full"
+                        className="border-[color:var(--color-terracotta-soft)] text-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-soft)]/5 w-full"
                         onClick={() => {
                           if (!user) {
                             toast.error("Faça login para enviar mensagem");
@@ -814,7 +814,7 @@ function AnuncioDetalhe() {
                   value={r}
                   checked={reportReason === r}
                   onChange={() => setReportReason(r)}
-                  className="accent-[#B85A30]"
+                  className="accent-[color:var(--color-terracotta-soft)]"
                 />
                 <span className="text-sm">{r}</span>
               </label>
@@ -826,7 +826,7 @@ function AnuncioDetalhe() {
               onChange={(e) => setReportNote(e.target.value)}
             />
             <Button
-              className="w-full bg-[#B85A30] text-white hover:bg-[#9a4a28]"
+              className="w-full bg-[color:var(--color-terracotta-soft)] text-white hover:bg-[color:var(--color-terracotta-dark)]"
               disabled={!reportReason}
               onClick={() => {
                 toast.success("Denúncia enviada. Obrigado!");
@@ -860,7 +860,7 @@ function AnuncioDetalhe() {
               onChange={(e) => setMsgText(e.target.value)}
             />
             <Button
-              className="w-full bg-[#B85A30] text-white hover:bg-[#9a4a28]"
+              className="w-full bg-[color:var(--color-terracotta-soft)] text-white hover:bg-[color:var(--color-terracotta-dark)]"
               disabled={!msgText.trim()}
               onClick={() => {
                 toast.success("Mensagem enviada!");

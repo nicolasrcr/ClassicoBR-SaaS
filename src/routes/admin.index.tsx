@@ -38,7 +38,7 @@ interface DeltaProps {
 function Delta({ value, positive = true, neutral = false }: DeltaProps) {
   if (neutral) return <p className="mt-1 text-xs text-muted-foreground">{value}</p>;
   return (
-    <p className={`mt-1 inline-flex items-center gap-0.5 text-xs font-medium ${positive ? "text-[#1D6E4E]" : "text-[#993C1D]"}`}>
+    <p className={`mt-1 inline-flex items-center gap-0.5 text-xs font-medium ${positive ? "text-[color:var(--color-cat-complete)]" : "text-[color:var(--color-terracotta-deep)]"}`}>
       {positive
         ? <ArrowUpRight className="h-3 w-3" />
         : <ArrowDownRight className="h-3 w-3" />}
@@ -58,7 +58,7 @@ function StatCard({
   icon: React.ComponentType<{ className?: string }>;
 }) {
   return (
-    <div className="rounded-[10px] border border-[#E8E6E0] bg-card p-5">
+    <div className="rounded-[10px] border border-[color:var(--color-border-cream)] bg-card p-5">
       <div className="flex items-center justify-between text-muted-foreground">
         <span className="text-xs uppercase tracking-wide">{label}</span>
         <Icon className="h-4 w-4" />
@@ -75,9 +75,9 @@ function Dashboard() {
   const { listings } = useAppStore();
 
   const barData = [
-    { name: "Completo", value: listings.filter((l) => l.category === "completo").length, color: "#1D6E4E" },
-    { name: "Para fazer", value: listings.filter((l) => l.category === "fazer").length, color: "#185FA5" },
-    { name: "Para peças", value: listings.filter((l) => l.category === "pecas").length, color: "#993C1D" },
+    { name: "Completo", value: listings.filter((l) => l.category === "completo").length, color: "var(--color-cat-complete)" },
+    { name: "Para fazer", value: listings.filter((l) => l.category === "fazer").length, color: "var(--color-cat-todo)" },
+    { name: "Para peças", value: listings.filter((l) => l.category === "pecas").length, color: "var(--color-terracotta-deep)" },
   ];
 
   return (
@@ -97,12 +97,12 @@ function Dashboard() {
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
-        <div className="rounded-[10px] border border-[#E8E6E0] bg-card p-5">
+        <div className="rounded-[10px] border border-[color:var(--color-border-cream)] bg-card p-5">
           <h3 className="font-serif text-lg">Anúncios por categoria</h3>
           <div className="mt-4 h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e8e6e0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-cream)" />
                 <XAxis dataKey="name" tick={{ fontSize: 12 }} stroke="#6b6b6b" />
                 <YAxis tick={{ fontSize: 12 }} stroke="#6b6b6b" />
                 <Tooltip cursor={{ fill: "#f0ede5" }} />
@@ -116,21 +116,21 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="rounded-[10px] border border-[#E8E6E0] bg-card p-5">
+        <div className="rounded-[10px] border border-[color:var(--color-border-cream)] bg-card p-5">
           <h3 className="font-serif text-lg">Novos cadastros (8 semanas)</h3>
           <div className="mt-4 h-64">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={WEEKLY_SIGNUPS}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e8e6e0" />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border-cream)" />
                 <XAxis dataKey="week" tick={{ fontSize: 12 }} stroke="#6b6b6b" />
                 <YAxis tick={{ fontSize: 12 }} stroke="#6b6b6b" />
                 <Tooltip />
                 <Line
                   type="monotone"
                   dataKey="count"
-                  stroke="#B85A30"
+                  stroke="var(--color-terracotta-soft)"
                   strokeWidth={2.5}
-                  dot={{ fill: "#B85A30", r: 4 }}
+                  dot={{ fill: "var(--color-terracotta-soft)", r: 4 }}
                   activeDot={{ r: 6 }}
                 />
               </LineChart>
@@ -139,9 +139,9 @@ function Dashboard() {
         </div>
       </div>
 
-      <div className="mt-8 rounded-[10px] border border-[#E8E6E0] bg-card p-5">
+      <div className="mt-8 rounded-[10px] border border-[color:var(--color-border-cream)] bg-card p-5">
         <h3 className="font-serif text-lg">Atividade recente</h3>
-        <ul className="mt-4 divide-y divide-[#E8E6E0]">
+        <ul className="mt-4 divide-y divide-[color:var(--color-border-cream)]">
           {ACTIVITY.map((a) => (
             <li key={a.id} className="flex items-center justify-between py-3 text-sm">
               <span>

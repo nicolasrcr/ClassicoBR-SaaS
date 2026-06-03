@@ -31,7 +31,7 @@ const costTable = [
 
 function CompraSegura() {
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
       <main id="main-content">
         {/* Hero */}
@@ -54,7 +54,7 @@ function CompraSegura() {
           {/* Seção 1: Checklist */}
           <section>
             <div className="flex items-center gap-3 mb-2">
-              <CheckCircle2 className="h-6 w-6 text-[#1D6E4E]" />
+              <CheckCircle2 className="h-6 w-6 text-[color:var(--color-cat-complete)]" />
               <h2 className="font-serif text-2xl">Checklist do comprador</h2>
             </div>
             <p className="text-muted-foreground text-sm mb-7 pl-9">
@@ -62,9 +62,9 @@ function CompraSegura() {
             </p>
             <div className="space-y-3">
               {checklist.map((item, i) => (
-                <div key={i} className="flex items-start gap-3 rounded-xl border border-[#E8E6E0] bg-white p-4 shadow-sm hover:border-[#1D6E4E]/30 transition-colors">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#1D6E4E]/10 mt-0.5">
-                    <span className="text-[10px] font-bold text-[#1D6E4E]">{i + 1}</span>
+                <div key={i} className="flex items-start gap-3 rounded-xl border border-[color:var(--color-border-cream)] bg-white p-4 shadow-sm hover:border-[color:var(--color-cat-complete)]/30 transition-colors">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-cat-complete)]/10 mt-0.5">
+                    <span className="text-[10px] font-bold text-[color:var(--color-cat-complete)]">{i + 1}</span>
                   </div>
                   <p className="text-sm leading-relaxed">{item}</p>
                 </div>
@@ -75,10 +75,10 @@ function CompraSegura() {
           {/* Seção 2: Por que clássicos têm pendências documentais */}
           <section>
             <div className="flex items-center gap-3 mb-4">
-              <FileText className="h-6 w-6 text-[#185FA5]" />
+              <FileText className="h-6 w-6 text-[color:var(--color-cat-todo)]" />
               <h2 className="font-serif text-2xl">Por que clássicos têm pendências documentais?</h2>
             </div>
-            <div className="rounded-xl border border-[#E8E6E0] bg-white p-6 shadow-sm space-y-4">
+            <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white p-6 shadow-sm space-y-4">
               <p className="text-sm text-foreground/80 leading-relaxed">
                 É completamente normal — e muito comum — que veículos com 30, 40 ou 50 anos acumulem
                 irregularidades documentais ao longo de sua história. Isso <strong>não significa, automaticamente,
@@ -108,20 +108,20 @@ function CompraSegura() {
               Valores médios para uso como referência na negociação. Consulte um despachante especializado
               para orçamento preciso para o seu caso.
             </p>
-            <div className="overflow-x-auto rounded-xl border border-[#E8E6E0] shadow-sm">
+            <div className="overflow-x-auto rounded-xl border border-[color:var(--color-border-cream)] shadow-sm">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-[#E8E6E0] bg-secondary/50">
+                  <tr className="border-b border-[color:var(--color-border-cream)] bg-secondary/50">
                     <th className="text-left px-4 py-3 font-semibold text-foreground/80">Pendência</th>
                     <th className="text-left px-4 py-3 font-semibold text-foreground/80">Custo estimado</th>
                     <th className="text-left px-4 py-3 font-semibold text-foreground/80 hidden sm:table-cell">Observação</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#E8E6E0] bg-white">
+                <tbody className="divide-y divide-[color:var(--color-border-cream)] bg-white">
                   {costTable.map((row, i) => (
                     <tr key={i} className="hover:bg-secondary/30 transition-colors">
                       <td className="px-4 py-3 font-medium">{row.pendencia}</td>
-                      <td className="px-4 py-3 text-[#1D6E4E] font-semibold">{row.estimativa}</td>
+                      <td className="px-4 py-3 text-[color:var(--color-cat-complete)] font-semibold">{row.estimativa}</td>
                       <td className="px-4 py-3 text-muted-foreground hidden sm:table-cell">{row.obs}</td>
                     </tr>
                   ))}
@@ -173,11 +173,11 @@ function CompraSegura() {
               Ver anúncios com segurança <ArrowRight className="h-4 w-4" />
             </Link>
 
-            <div className="rounded-xl border border-[#185FA5]/20 bg-[#185FA5]/5 px-6 py-4 text-sm text-[#185FA5] flex items-center justify-center gap-2">
+            <div className="rounded-xl border border-[color:var(--color-cat-todo)]/20 bg-[color:var(--color-cat-todo)]/5 px-6 py-4 text-sm text-[color:var(--color-cat-todo)] flex items-center justify-center gap-2">
               <MessageCircle className="h-4 w-4 shrink-0" />
               <span>
                 <strong>🔒 Sempre negocie pelo chat da plataforma</strong> — o histórico é preservado e serve como prova.{" "}
-                <Link to="/compra-segura" className="underline underline-offset-2 hover:text-[#185FA5]/80">
+                <Link to="/compra-segura" className="underline underline-offset-2 hover:text-[color:var(--color-cat-todo)]/80">
                   Guia de compra segura
                 </Link>
               </span>

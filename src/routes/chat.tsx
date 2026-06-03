@@ -55,7 +55,7 @@ function OfferModal({ onSend, onClose }: { onSend: (v: string) => void; onClose:
   const [value, setValue] = useState("");
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm" onClick={onClose}>
-      <div className="w-full max-w-sm mx-4 rounded-xl bg-white border border-[#E8E6E0] shadow-xl p-6" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-sm mx-4 rounded-xl bg-white border border-[color:var(--color-border-cream)] shadow-xl p-6" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-serif text-lg">Fazer oferta</h3>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground">
@@ -151,7 +151,7 @@ function Chat() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
         <Header />
         <div className="mx-auto max-w-3xl px-6 py-24 text-center">
           <MessageCircle className="h-14 w-14 mx-auto mb-6 text-muted-foreground/30" />
@@ -332,7 +332,7 @@ function Chat() {
             )}
 
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-[#FAF9F6]">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-[color:var(--color-surface-cream)]">
               {Object.entries(grouped).map(([date, msgs]) => (
                 <div key={date}>
                   {/* Date separator */}
@@ -356,7 +356,7 @@ function Chat() {
                               "rounded-2xl px-4 py-2.5 text-sm",
                               mine
                                 ? "bg-[color:var(--color-terracotta)] text-white rounded-br-sm"
-                                : "bg-white border border-[#E8E6E0] text-foreground rounded-bl-sm shadow-sm",
+                                : "bg-white border border-[color:var(--color-border-cream)] text-foreground rounded-bl-sm shadow-sm",
                             )}
                           >
                             {mod.texto}

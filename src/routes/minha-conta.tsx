@@ -49,9 +49,9 @@ function validaCPF(cpf: string) {
 
 // status badge color
 function statusColor(status: string) {
-  if (status === "ativo") return "bg-[#1D6E4E]/10 text-[#1D6E4E]";
+  if (status === "ativo") return "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)]";
   if (status === "pausado") return "bg-amber-100 text-amber-700";
-  if (status === "pendente") return "bg-[#185FA5]/10 text-[#185FA5]";
+  if (status === "pendente") return "bg-[color:var(--color-cat-todo)]/10 text-[color:var(--color-cat-todo)]";
   return "bg-muted text-muted-foreground";
 }
 
@@ -94,7 +94,7 @@ function EditListingModal({ listing, onClose }: { listing: Listing; onClose: () 
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>Cancelar</Button>
-          <Button onClick={save} className="bg-[#B85A30] hover:bg-[#993C1D] text-white">Salvar alterações</Button>
+          <Button onClick={save} className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">Salvar alterações</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -116,7 +116,7 @@ function AbaAnuncios({ myListings }: { myListings: Listing[] }) {
         <div className="text-center py-16 rounded-[12px] border border-dashed border-border">
           <p className="font-serif text-lg text-muted-foreground mb-2">Nenhum anúncio ainda</p>
           <p className="text-sm text-muted-foreground mb-6">Publique seu primeiro clássico e alcance colecionadores em todo o Brasil.</p>
-          <Button asChild className="bg-[#B85A30] hover:bg-[#993C1D] text-white">
+          <Button asChild className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">
             <Link to="/criar">Anunciar meu clássico</Link>
           </Button>
         </div>
@@ -124,14 +124,14 @@ function AbaAnuncios({ myListings }: { myListings: Listing[] }) {
         <>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-muted-foreground">{myListings.length} anúncio{myListings.length !== 1 ? "s" : ""}</p>
-            <Button asChild size="sm" className="bg-[#B85A30] hover:bg-[#993C1D] text-white">
+            <Button asChild size="sm" className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">
               <Link to="/criar">+ Novo anúncio</Link>
             </Button>
           </div>
           <div className="overflow-x-auto rounded-[10px] border border-border">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border bg-[#FAF9F6]">
+                <tr className="border-b border-border bg-[color:var(--color-surface-cream)]">
                   <th className="text-left p-3 font-medium text-muted-foreground">Veículo</th>
                   <th className="text-left p-3 font-medium text-muted-foreground hidden sm:table-cell">Condição</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Status</th>
@@ -142,7 +142,7 @@ function AbaAnuncios({ myListings }: { myListings: Listing[] }) {
               </thead>
               <tbody className="divide-y divide-border">
                 {myListings.map((l) => (
-                  <tr key={l.id} className="bg-card hover:bg-[#FAF9F6]/60 transition-colors">
+                  <tr key={l.id} className="bg-card hover:bg-[color:var(--color-surface-cream)]/60 transition-colors">
                     <td className="p-3">
                       <div className="flex items-center gap-3">
                         {l.photos[0] && (
@@ -287,12 +287,12 @@ function AbaDados() {
         <div className="flex items-center gap-4">
           <div className="relative">
             <Avatar className="h-20 w-20">
-              <AvatarFallback className="bg-[#B85A30]/10 font-serif text-2xl text-[#B85A30]">
+              <AvatarFallback className="bg-[color:var(--color-terracotta-soft)]/10 font-serif text-2xl text-[color:var(--color-terracotta-soft)]">
                 {user.name[0]}
               </AvatarFallback>
             </Avatar>
             <button
-              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#B85A30] text-white shadow hover:bg-[#993C1D] transition-colors"
+              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-[color:var(--color-terracotta-soft)] text-white shadow hover:bg-[color:var(--color-terracotta-deep)] transition-colors"
               onClick={() => toast.info("Upload de avatar em breve!")}
             >
               <Upload className="h-3.5 w-3.5" />
@@ -334,7 +334,7 @@ function AbaDados() {
           />
         </div>
 
-        <Button onClick={saveData} className="bg-[#B85A30] hover:bg-[#993C1D] text-white">
+        <Button onClick={saveData} className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">
           Salvar dados
         </Button>
       </div>
@@ -353,14 +353,14 @@ function AbaDados() {
         <div className="space-y-3">
           {/* Nível 1 — Email */}
           <div className="flex items-start gap-4 rounded-[10px] border border-border bg-card p-4">
-            <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${user.verificacoes.email ? "bg-[#1D6E4E]/10 text-[#1D6E4E]" : "bg-muted text-muted-foreground"}`}>
+            <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${user.verificacoes.email ? "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)]" : "bg-muted text-muted-foreground"}`}>
               {user.verificacoes.email ? <Check className="h-4 w-4" /> : "1"}
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="font-medium text-sm">Nível 1 — E-mail</p>
                 {user.verificacoes.email
-                  ? <span className="text-xs text-[#1D6E4E] font-medium">Verificado ✅</span>
+                  ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium">Verificado ✅</span>
                   : <span className="text-xs text-amber-600">Pendente</span>}
               </div>
               <p className="text-xs text-muted-foreground mt-0.5">Necessário para visualizar contatos dos vendedores</p>
@@ -378,14 +378,14 @@ function AbaDados() {
           {/* Nível 2 — Telefone */}
           <div className="rounded-[10px] border border-border bg-card p-4">
             <div className="flex items-start gap-4">
-              <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${user.verificacoes.telefone ? "bg-[#1D6E4E]/10 text-[#1D6E4E]" : "bg-muted text-muted-foreground"}`}>
+              <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${user.verificacoes.telefone ? "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)]" : "bg-muted text-muted-foreground"}`}>
                 {user.verificacoes.telefone ? <Check className="h-4 w-4" /> : "2"}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="font-medium text-sm">Nível 2 — Telefone</p>
                   {user.verificacoes.telefone
-                    ? <span className="text-xs text-[#1D6E4E] font-medium">Verificado ✅</span>
+                    ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium">Verificado ✅</span>
                     : <span className="text-xs text-amber-600">Pendente</span>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -414,7 +414,7 @@ function AbaDados() {
                     }
                   }}>Confirmar</Button>
                 </div>
-                <button className="mt-2 text-xs text-[#185FA5] hover:underline" onClick={() => toast.info("Código reenviado!")}>
+                <button className="mt-2 text-xs text-[color:var(--color-cat-todo)] hover:underline" onClick={() => toast.info("Código reenviado!")}>
                   Reenviar código
                 </button>
               </div>
@@ -424,14 +424,14 @@ function AbaDados() {
           {/* Nível 3 — CPF */}
           <div className="rounded-[10px] border border-border bg-card p-4">
             <div className="flex items-start gap-4">
-              <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${user.verificacoes.cpf ? "bg-[#1D6E4E]/10 text-[#1D6E4E]" : "bg-muted text-muted-foreground"}`}>
+              <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${user.verificacoes.cpf ? "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)]" : "bg-muted text-muted-foreground"}`}>
                 {user.verificacoes.cpf ? <Check className="h-4 w-4" /> : "3"}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="font-medium text-sm">Nível 3 — CPF</p>
                   {user.verificacoes.cpf
-                    ? <span className="text-xs text-[#1D6E4E] font-medium">Verificado ✅</span>
+                    ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium">Verificado ✅</span>
                     : <span className="text-xs text-amber-600">Pendente</span>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -447,7 +447,7 @@ function AbaDados() {
                     placeholder="000.000.000-00"
                     value={cpfVal}
                     onChange={(e) => { setCpfVal(e.target.value); setCpfError(""); }}
-                    className={`max-w-[180px] ${cpfError ? "border-[#993C1D]" : ""}`}
+                    className={`max-w-[180px] ${cpfError ? "border-[color:var(--color-terracotta-deep)]" : ""}`}
                   />
                   <Button size="sm" onClick={() => {
                     if (!validaCPF(cpfVal)) {
@@ -458,7 +458,7 @@ function AbaDados() {
                     toast.success("CPF verificado! Você pode publicar até 5 anúncios.");
                   }}>Validar</Button>
                 </div>
-                {cpfError && <p className="mt-1 text-xs text-[#993C1D]">{cpfError}</p>}
+                {cpfError && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{cpfError}</p>}
               </div>
             )}
           </div>
@@ -475,7 +475,7 @@ function AbaDados() {
                   {user.verificacoes.kyc
                     ? <span className="text-xs text-amber-600 font-medium">Confirmado 🏅</span>
                     : kycStatus === "pending"
-                    ? <span className="text-xs text-[#185FA5] font-medium">Em revisão…</span>
+                    ? <span className="text-xs text-[color:var(--color-cat-todo)] font-medium">Em revisão…</span>
                     : <span className="text-xs text-amber-600">Pendente</span>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -491,7 +491,7 @@ function AbaDados() {
                     <button
                       key={label}
                       onClick={() => toast.info(`Seleção de arquivo: ${label} (demo)`)}
-                      className="flex items-center gap-2 rounded-[8px] border border-dashed border-border p-3 text-xs text-muted-foreground hover:border-foreground/30 hover:bg-[#FAF9F6] transition-colors"
+                      className="flex items-center gap-2 rounded-[8px] border border-dashed border-border p-3 text-xs text-muted-foreground hover:border-foreground/30 hover:bg-[color:var(--color-surface-cream)] transition-colors"
                     >
                       <Upload className="h-3.5 w-3.5 shrink-0" />
                       {label}
@@ -500,7 +500,7 @@ function AbaDados() {
                 </div>
                 <Button
                   size="sm"
-                  className="bg-[#B85A30] hover:bg-[#993C1D] text-white"
+                  className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white"
                   onClick={() => { setKycStatus("pending"); toast.success("Documentos enviados! Revisão em até 48h."); }}
                 >
                   Enviar para revisão
@@ -508,8 +508,8 @@ function AbaDados() {
               </div>
             )}
             {!user.verificacoes.kyc && kycStatus === "pending" && (
-              <div className="mt-3 ml-12 rounded-[8px] bg-[#185FA5]/5 border border-[#185FA5]/20 p-3">
-                <p className="text-xs text-[#185FA5]">
+              <div className="mt-3 ml-12 rounded-[8px] bg-[color:var(--color-cat-todo)]/5 border border-[color:var(--color-cat-todo)]/20 p-3">
+                <p className="text-xs text-[color:var(--color-cat-todo)]">
                   Seus documentos estão sendo analisados pela nossa equipe. Você será notificado por e-mail em até 48 horas úteis.
                 </p>
               </div>
@@ -550,7 +550,7 @@ function AbaSeguranca() {
       {/* Troca de senha */}
       <div className="rounded-[12px] border border-border bg-card p-6">
         <h2 className="font-serif text-xl mb-5 flex items-center gap-2">
-          <Shield className="h-5 w-5 text-[#B85A30]" />
+          <Shield className="h-5 w-5 text-[color:var(--color-terracotta-soft)]" />
           Trocar senha
         </h2>
         <div className="space-y-4 max-w-sm">
@@ -560,9 +560,9 @@ function AbaSeguranca() {
               type="password"
               value={currentPass}
               onChange={(e) => { setCurrentPass(e.target.value); setPassErrors((p) => ({ ...p, current: "" })); }}
-              className={passErrors.current ? "border-[#993C1D]" : ""}
+              className={passErrors.current ? "border-[color:var(--color-terracotta-deep)]" : ""}
             />
-            {passErrors.current && <p className="mt-1 text-xs text-[#993C1D]">{passErrors.current}</p>}
+            {passErrors.current && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{passErrors.current}</p>}
           </div>
           <div>
             <Label className="mb-1.5 block text-sm">Nova senha</Label>
@@ -571,9 +571,9 @@ function AbaSeguranca() {
               value={newPass}
               onChange={(e) => { setNewPass(e.target.value); setPassErrors((p) => ({ ...p, new: "" })); }}
               placeholder="Mínimo 8 caracteres"
-              className={passErrors.new ? "border-[#993C1D]" : ""}
+              className={passErrors.new ? "border-[color:var(--color-terracotta-deep)]" : ""}
             />
-            {passErrors.new && <p className="mt-1 text-xs text-[#993C1D]">{passErrors.new}</p>}
+            {passErrors.new && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{passErrors.new}</p>}
           </div>
           <div>
             <Label className="mb-1.5 block text-sm">Confirmar nova senha</Label>
@@ -581,11 +581,11 @@ function AbaSeguranca() {
               type="password"
               value={confirmPass}
               onChange={(e) => { setConfirmPass(e.target.value); setPassErrors((p) => ({ ...p, confirm: "" })); }}
-              className={passErrors.confirm ? "border-[#993C1D]" : ""}
+              className={passErrors.confirm ? "border-[color:var(--color-terracotta-deep)]" : ""}
             />
-            {passErrors.confirm && <p className="mt-1 text-xs text-[#993C1D]">{passErrors.confirm}</p>}
+            {passErrors.confirm && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{passErrors.confirm}</p>}
           </div>
-          <Button onClick={handleChangePass} className="bg-[#B85A30] hover:bg-[#993C1D] text-white">
+          <Button onClick={handleChangePass} className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">
             Alterar senha
           </Button>
         </div>
@@ -600,14 +600,14 @@ function AbaSeguranca() {
             return (
               <div key={i} className="flex items-center justify-between rounded-[8px] border border-border p-3">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FAF9F6]">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[color:var(--color-surface-cream)]">
                     <Icon className="h-4 w-4 text-muted-foreground" />
                   </div>
                   <div>
                     <p className="text-sm font-medium flex items-center gap-2">
                       {s.device}
                       {s.current && (
-                        <span className="text-[10px] font-semibold text-[#1D6E4E] bg-[#1D6E4E]/10 px-1.5 py-0.5 rounded-full">
+                        <span className="text-[10px] font-semibold text-[color:var(--color-cat-complete)] bg-[color:var(--color-cat-complete)]/10 px-1.5 py-0.5 rounded-full">
                           Esta sessão
                         </span>
                       )}
@@ -678,13 +678,13 @@ function AbaPlano({ myListings }: { myListings: Listing[] }) {
   return (
     <div className="mt-6 space-y-8">
       {/* Status atual */}
-      <div className="rounded-[12px] border-2 border-[#B85A30] bg-card p-6">
+      <div className="rounded-[12px] border-2 border-[color:var(--color-terracotta-soft)] bg-card p-6">
         <div className="flex items-center justify-between mb-4">
           <div>
             <Badge
               className={user.plan === "premium"
                 ? "bg-amber-500 text-white mb-2"
-                : "bg-[#B85A30] text-white mb-2"}
+                : "bg-[color:var(--color-terracotta-soft)] text-white mb-2"}
             >
               {user.plan === "premium" ? "⭐ Premium" : "Gratuito"}
             </Badge>
@@ -696,7 +696,7 @@ function AbaPlano({ myListings }: { myListings: Listing[] }) {
         </div>
         <Progress value={(activeListings / maxListings) * 100} className="h-2" />
         {activeListings >= maxListings && (
-          <p className="mt-2 text-xs text-[#993C1D] font-medium">
+          <p className="mt-2 text-xs text-[color:var(--color-terracotta-deep)] font-medium">
             Você atingiu o limite de anúncios. Faça upgrade para publicar mais.
           </p>
         )}
@@ -728,7 +728,7 @@ function AbaPlano({ myListings }: { myListings: Listing[] }) {
                 {plano.features.map((f) => (
                   <li key={f.label} className="flex items-center gap-2 text-sm">
                     {f.ok
-                      ? <Check className="h-4 w-4 text-[#1D6E4E] shrink-0" />
+                      ? <Check className="h-4 w-4 text-[color:var(--color-cat-complete)] shrink-0" />
                       : <X className="h-4 w-4 text-muted-foreground/40 shrink-0" />}
                     <span className={f.ok ? "text-foreground" : "text-muted-foreground"}>{f.label}</span>
                   </li>
@@ -759,7 +759,7 @@ function AbaPlano({ myListings }: { myListings: Listing[] }) {
           <div className="rounded-[10px] border border-border overflow-hidden">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-border bg-[#FAF9F6]">
+                <tr className="border-b border-border bg-[color:var(--color-surface-cream)]">
                   <th className="text-left p-3 font-medium text-muted-foreground">Plano</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Data</th>
                   <th className="text-left p-3 font-medium text-muted-foreground">Valor</th>
@@ -776,9 +776,9 @@ function AbaPlano({ myListings }: { myListings: Listing[] }) {
                       <span
                         className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
                           p.status === "pago"
-                            ? "bg-[#1D6E4E]/10 text-[#1D6E4E]"
+                            ? "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)]"
                             : p.status === "falhou"
-                            ? "bg-[#993C1D]/10 text-[#993C1D]"
+                            ? "bg-[color:var(--color-terracotta-deep)]/10 text-[color:var(--color-terracotta-deep)]"
                             : "bg-amber-100 text-amber-700"
                         }`}
                       >
@@ -808,12 +808,12 @@ function MinhaConta() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
         <Header />
         <div className="mx-auto max-w-3xl px-6 py-20 text-center">
           <h2 className="font-serif text-2xl mb-3">Faça login para acessar sua conta</h2>
           <p className="text-muted-foreground mb-6">Você precisa estar logado para visualizar esta página.</p>
-          <Button asChild className="bg-[#B85A30] hover:bg-[#993C1D] text-white">
+          <Button asChild className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">
             <Link to="/login">Entrar</Link>
           </Button>
         </div>
@@ -831,7 +831,7 @@ function MinhaConta() {
   ].filter(Boolean).length;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
 
       {/* Banner de alerta */}
@@ -853,8 +853,8 @@ function MinhaConta() {
       <main id="main-content" className="mx-auto max-w-4xl px-6 py-10">
         {/* Profile header */}
         <div className="flex items-center gap-5 mb-8">
-          <Avatar className="h-16 w-16 ring-2 ring-[#B85A30]/20">
-            <AvatarFallback className="bg-[#B85A30]/10 font-serif text-2xl text-[#B85A30]">
+          <Avatar className="h-16 w-16 ring-2 ring-[color:var(--color-terracotta-soft)]/20">
+            <AvatarFallback className="bg-[color:var(--color-terracotta-soft)]/10 font-serif text-2xl text-[color:var(--color-terracotta-soft)]">
               {user.name[0]}
             </AvatarFallback>
           </Avatar>
@@ -895,7 +895,7 @@ function MinhaConta() {
               <p className="text-sm text-muted-foreground mb-6">
                 Todas as conversas ficam no chat integrado da plataforma.
               </p>
-              <Button asChild className="bg-[#B85A30] hover:bg-[#993C1D] text-white">
+              <Button asChild className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">
                 <Link to="/chat">
                   Ir para o chat <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
@@ -910,7 +910,7 @@ function MinhaConta() {
               <p className="text-sm text-muted-foreground mb-6">
                 Guarde os clássicos que chamaram sua atenção e compare quando quiser.
               </p>
-              <Button asChild className="bg-[#B85A30] hover:bg-[#993C1D] text-white">
+              <Button asChild className="bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white">
                 <Link to="/favoritos">
                   Ver meus favoritos <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>

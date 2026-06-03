@@ -22,7 +22,7 @@ function Favoritos() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
         <Header />
         <div className="mx-auto max-w-3xl px-6 py-24 text-center">
           <Heart className="h-14 w-14 mx-auto mb-6 text-muted-foreground/30" />
@@ -45,7 +45,7 @@ function Favoritos() {
     .filter((x) => x.listing !== undefined) as { fav: typeof myFavs[0]; listing: typeof listings[0] }[];
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
       <main id="main-content" className="mx-auto max-w-7xl px-6 py-10">
         {/* Page header */}
@@ -63,7 +63,7 @@ function Favoritos() {
 
         {myListings.length === 0 ? (
           /* Empty state */
-          <div className="rounded-xl border border-[#E8E6E0] bg-white py-24 px-6 text-center shadow-sm">
+          <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white py-24 px-6 text-center shadow-sm">
             <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-[color:var(--color-terracotta)]/10 mb-6">
               <Heart className="h-10 w-10 text-[color:var(--color-terracotta)]/60" />
             </div>
@@ -86,7 +86,7 @@ function Favoritos() {
               return (
                 <div
                   key={fav.id}
-                  className="flex flex-col overflow-hidden rounded-xl border border-[#E8E6E0] bg-white shadow-sm hover:shadow-md transition-shadow"
+                  className="flex flex-col overflow-hidden rounded-xl border border-[color:var(--color-border-cream)] bg-white shadow-sm hover:shadow-md transition-shadow"
                 >
                   {/* Photo */}
                   <div className="relative aspect-[16/9] overflow-hidden bg-secondary">

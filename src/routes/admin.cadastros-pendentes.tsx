@@ -68,7 +68,7 @@ function AdminCadastrosPendentes() {
               </Button>
               <Button
                 size="sm"
-                className="bg-[#1D6E4E] text-white hover:bg-[#1D6E4E]/90"
+                className="bg-[color:var(--color-cat-complete)] text-white hover:bg-[color:var(--color-cat-complete)]/90"
                 onClick={approveAll}
               >
                 <Check className="mr-1 h-3 w-3" /> Aprovar todos
@@ -107,7 +107,7 @@ function AdminCadastrosPendentes() {
                         </Button>
                         <Button
                           size="sm"
-                          className="bg-[#1D6E4E] text-white hover:bg-[#1D6E4E]/90"
+                          className="bg-[color:var(--color-cat-complete)] text-white hover:bg-[color:var(--color-cat-complete)]/90"
                           onClick={() => {
                             approveRegistration(reg.id);
                             toast.success(`Cadastro de ${reg.nome} aprovado`);

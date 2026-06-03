@@ -29,7 +29,7 @@ function Stars({ n, size = "sm" }: { n: number; size?: "sm" | "xs" }) {
 }
 
 function ScoreBar({ score }: { score: number }) {
-  let barColor = "bg-[#1D6E4E]";
+  let barColor = "bg-[color:var(--color-cat-complete)]";
   if (score < 60) barColor = "bg-red-500";
   else if (score < 75) barColor = "bg-amber-500";
   return (
@@ -60,7 +60,7 @@ function PerfilVendedor() {
 
   if (!seller) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
         <Header />
         <div className="mx-auto max-w-3xl px-6 py-24 text-center">
           <Car className="h-14 w-14 mx-auto mb-6 text-muted-foreground/30" />
@@ -92,7 +92,7 @@ function PerfilVendedor() {
   const memberSinceYear = seller.memberSince ? new Date(seller.memberSince).getFullYear() : null;
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
       <main id="main-content" className="mx-auto max-w-4xl px-6 py-10">
 
@@ -111,7 +111,7 @@ function PerfilVendedor() {
         )}
 
         {/* Profile header card */}
-        <div className="rounded-xl border border-[#E8E6E0] bg-white p-6 md:p-8 shadow-sm mb-8">
+        <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white p-6 md:p-8 shadow-sm mb-8">
           <div className="flex flex-col sm:flex-row items-start gap-6">
             {/* Avatar */}
             <Avatar className="h-24 w-24 shrink-0">
@@ -187,7 +187,7 @@ function PerfilVendedor() {
           </div>
 
           {/* Stats grid */}
-          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-[#E8E6E0]">
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-[color:var(--color-border-cream)]">
             <div className="text-center">
               <p className="text-2xl font-bold">{reviews.length}</p>
               <p className="text-xs text-muted-foreground mt-0.5">Avaliações</p>
@@ -221,7 +221,7 @@ function PerfilVendedor() {
           {/* Tab: Active listings */}
           <TabsContent value="anuncios" className="mt-6">
             {sellerListings.length === 0 ? (
-              <div className="rounded-xl border border-[#E8E6E0] bg-white py-16 text-center shadow-sm">
+              <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white py-16 text-center shadow-sm">
                 <Car className="h-10 w-10 mx-auto mb-4 text-muted-foreground/30" />
                 <p className="font-serif text-lg mb-1">Nenhum anúncio ativo</p>
                 <p className="text-muted-foreground text-sm">
@@ -240,7 +240,7 @@ function PerfilVendedor() {
           {/* Tab: Reviews */}
           <TabsContent value="avaliacoes" className="mt-6">
             {reviews.length === 0 ? (
-              <div className="rounded-xl border border-[#E8E6E0] bg-white py-16 text-center shadow-sm">
+              <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white py-16 text-center shadow-sm">
                 <Star className="h-10 w-10 mx-auto mb-4 text-muted-foreground/30" />
                 <p className="font-serif text-lg mb-1">Nenhuma avaliação ainda</p>
                 <p className="text-muted-foreground text-sm">
@@ -251,7 +251,7 @@ function PerfilVendedor() {
               <div className="space-y-4">
                 {/* Summary bar */}
                 {avgReview !== null && (
-                  <div className="rounded-xl border border-[#E8E6E0] bg-white p-5 shadow-sm flex items-center gap-4">
+                  <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white p-5 shadow-sm flex items-center gap-4">
                     <div className="text-center shrink-0">
                       <p className="text-3xl font-bold">{avgReview.toFixed(1)}</p>
                       <Stars n={Math.round(avgReview)} size="sm" />
@@ -282,7 +282,7 @@ function PerfilVendedor() {
                 {reviews.map((r) => {
                   const avg = (r.criterios.honestidade + r.criterios.comunicacao + r.criterios.veiculoComoDescrito) / 3;
                   return (
-                    <div key={r.id} className="rounded-xl border border-[#E8E6E0] bg-white p-5 shadow-sm space-y-4">
+                    <div key={r.id} className="rounded-xl border border-[color:var(--color-border-cream)] bg-white p-5 shadow-sm space-y-4">
                       {/* Reviewer info + rating */}
                       <div className="flex items-start justify-between gap-4">
                         <div>
@@ -341,10 +341,10 @@ function PerfilVendedor() {
         </Tabs>
 
         {/* Report user */}
-        <div className="mt-10 pt-6 border-t border-[#E8E6E0] flex justify-center">
+        <div className="mt-10 pt-6 border-t border-[color:var(--color-border-cream)] flex justify-center">
           {reportSent ? (
             <p className="text-xs text-muted-foreground flex items-center gap-1.5">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#1D6E4E]" />
+              <ShieldCheck className="h-3.5 w-3.5 text-[color:var(--color-cat-complete)]" />
               Denúncia enviada. Nossa equipe irá analisar em breve.
             </p>
           ) : (

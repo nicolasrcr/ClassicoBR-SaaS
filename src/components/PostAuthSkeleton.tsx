@@ -25,7 +25,7 @@ export function PostAuthSkeleton({
       data-testid="post-auth-skeleton"
     >
       <Loader2
-        className="h-10 w-10 animate-spin text-[#B85A30]"
+        className="h-10 w-10 animate-spin text-[color:var(--color-terracotta-soft)]"
         data-testid="post-auth-spinner"
       />
       <h1 className="mt-6 font-serif text-2xl text-foreground">{title}</h1>
@@ -33,9 +33,9 @@ export function PostAuthSkeleton({
         {message}
       </p>
       <div className="mt-8 w-full space-y-3" data-testid="post-auth-bars">
-        <div className="h-32 rounded-[10px] bg-[#E8E6E0] animate-pulse" />
-        <div className="h-4 w-2/3 mx-auto rounded-full bg-[#E8E6E0] animate-pulse" />
-        <div className="h-4 w-1/2 mx-auto rounded-full bg-[#E8E6E0] animate-pulse" />
+        <div className="h-32 rounded-[10px] bg-[color:var(--color-border-cream)] animate-pulse" />
+        <div className="h-4 w-2/3 mx-auto rounded-full bg-[color:var(--color-border-cream)] animate-pulse" />
+        <div className="h-4 w-1/2 mx-auto rounded-full bg-[color:var(--color-border-cream)] animate-pulse" />
       </div>
     </main>
   );

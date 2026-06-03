@@ -59,8 +59,8 @@ export function LockedListingGate({ listing, onBack }: LockedListingGateProps) {
 
         <div className="p-6">
           <div className="flex items-start gap-3">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#B85A30]/10">
-              <Lock className="h-5 w-5 text-[#B85A30]" />
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-terracotta-soft)]/10">
+              <Lock className="h-5 w-5 text-[color:var(--color-terracotta-soft)]" />
             </div>
             <div>
               <h2 className="font-serif text-xl font-semibold leading-tight">Acesso bloqueado</h2>
@@ -73,21 +73,21 @@ export function LockedListingGate({ listing, onBack }: LockedListingGateProps) {
 
           <ul className="mt-5 space-y-2 text-sm">
             <li className="flex items-start gap-2">
-              <ShieldCheck className="h-4 w-4 mt-0.5 text-[#1D6E4E] shrink-0" />
+              <ShieldCheck className="h-4 w-4 mt-0.5 text-[color:var(--color-cat-complete)] shrink-0" />
               <span>Galeria completa, ficha técnica e dossiê documental</span>
             </li>
             <li className="flex items-start gap-2">
-              <ShieldCheck className="h-4 w-4 mt-0.5 text-[#1D6E4E] shrink-0" />
+              <ShieldCheck className="h-4 w-4 mt-0.5 text-[color:var(--color-cat-complete)] shrink-0" />
               <span>Contato direto com o vendedor por chat e telefone</span>
             </li>
             <li className="flex items-start gap-2">
-              <ShieldCheck className="h-4 w-4 mt-0.5 text-[#1D6E4E] shrink-0" />
+              <ShieldCheck className="h-4 w-4 mt-0.5 text-[color:var(--color-cat-complete)] shrink-0" />
               <span>Salvar nos favoritos e acompanhar mudanças de preço</span>
             </li>
           </ul>
 
           <div className="mt-6 space-y-2">
-            <Button asChild size="lg" className="w-full bg-[#B85A30] text-white hover:bg-[#9a4a28] h-12">
+            <Button asChild size="lg" className="w-full bg-[color:var(--color-terracotta-soft)] text-white hover:bg-[color:var(--color-terracotta-dark)] h-12">
               <Link to="/login" search={{ redirect: redirectTo }} data-testid="gate-login-link">
                 Ver detalhes após entrar
                 <ArrowRight className="ml-2 h-4 w-4" />

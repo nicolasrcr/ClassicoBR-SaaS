@@ -12,8 +12,8 @@ const ALL_CATEGORIES = ["Todos", "Cultura", "Guias", "Mercado", "Restauração",
 
 const CATEGORY_CHIP_COLORS: Record<string, string> = {
   Cultura: "bg-purple-100 text-purple-700 border-purple-200",
-  Guias: "bg-[#1D6E4E]/10 text-[#1D6E4E] border-[#1D6E4E]/20",
-  Mercado: "bg-[#185FA5]/10 text-[#185FA5] border-[#185FA5]/20",
+  Guias: "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)] border-[color:var(--color-cat-complete)]/20",
+  Mercado: "bg-[color:var(--color-cat-todo)]/10 text-[color:var(--color-cat-todo)] border-[color:var(--color-cat-todo)]/20",
   Restauração: "bg-orange-100 text-orange-700 border-orange-200",
   Documentação: "bg-amber-100 text-amber-700 border-amber-200",
   Peças: "bg-red-100 text-red-700 border-red-200",
@@ -38,7 +38,7 @@ function Blog() {
   const filtered = cat === "Todos" ? published : published.filter((p) => p.categoria === cat);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
       <main id="main-content">
         {/* Hero */}
@@ -68,7 +68,7 @@ function Blog() {
                 className={`rounded-full px-4 py-1.5 text-xs font-medium border transition-colors ${
                   cat === c
                     ? "bg-[color:var(--color-terracotta)] text-white border-[color:var(--color-terracotta)]"
-                    : "border-[#E8E6E0] text-muted-foreground hover:border-foreground/30 hover:text-foreground bg-white"
+                    : "border-[color:var(--color-border-cream)] text-muted-foreground hover:border-foreground/30 hover:text-foreground bg-white"
                 }`}
               >
                 {c}
@@ -91,7 +91,7 @@ function Blog() {
                   key={post.id}
                   to="/blog/$slug"
                   params={{ slug: post.slug }}
-                  className="group flex flex-col overflow-hidden rounded-xl border border-[#E8E6E0] bg-white hover:border-foreground/25 transition-all hover:shadow-md"
+                  className="group flex flex-col overflow-hidden rounded-xl border border-[color:var(--color-border-cream)] bg-white hover:border-foreground/25 transition-all hover:shadow-md"
                 >
                   {/* Cover image */}
                   <div className="aspect-[16/9] overflow-hidden bg-secondary">
@@ -113,7 +113,7 @@ function Blog() {
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed line-clamp-2">
                       {post.excerpt}
                     </p>
-                    <div className="mt-auto pt-4 flex items-center gap-4 text-xs text-muted-foreground border-t border-[#E8E6E0] mt-4">
+                    <div className="mt-auto pt-4 flex items-center gap-4 text-xs text-muted-foreground border-t border-[color:var(--color-border-cream)] mt-4">
                       <span>{formatDate(post.dataPublicacao)}</span>
                       <span className="flex items-center gap-1">
                         <Clock className="h-3 w-3" />

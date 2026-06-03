@@ -37,11 +37,16 @@
   --color-terracotta: #C4552A;
   --color-terracotta-dark: #a03d1c;
   --color-terracotta-light: #e8795a;
+  --color-terracotta-soft: #B85A30;
+  --color-terracotta-deep: #993C1D;
   --color-charcoal: #111110;
   --color-charcoal-mid: #1e1e1c;
   --color-charcoal-light: #2e2e2b;
+  --color-charcoal-admin: #1a1a1a;
   --color-cream: #f5f1ea;
   --color-cream-dark: #ece7dd;
+  --color-surface-cream: #FAF9F6;
+  --color-border-cream: #E8E6E0;
   --color-gold: #C9943A;
   --color-gold-light: #e8b96a;
   --color-admin-bg: #f4f2ee;

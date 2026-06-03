@@ -142,7 +142,7 @@ function Index() {
               {/* Inline trust avatars */}
               <div className="mt-8 flex items-center gap-4 animate-fade-up animate-fade-up-3">
                 <div className="flex -space-x-2">
-                  {["#C4552A", "#C9943A", "#1d6e4e", "#185fa5"].map((c, i) => (
+                  {["#C4552A", "#C9943A", "var(--color-cat-complete)", "var(--color-cat-todo)"].map((c, i) => (
                     <div
                       key={i}
                       className="h-8 w-8 rounded-full border-2 border-[#0c0a09] ring-1 ring-white/10"

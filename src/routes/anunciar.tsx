@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
+import { useFormDraft } from "@/hooks/use-form-draft";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star } from "lucide-react";
+import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star, Save, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -226,7 +227,7 @@ function ProgressBar({ step }: { step: Step }) {
                 step === s
                   ? "bg-[color:var(--color-terracotta)] text-white"
                   : step > s
-                  ? "bg-[#1D6E4E] text-white"
+                  ? "bg-[color:var(--color-cat-complete)] text-white"
                   : "bg-muted text-muted-foreground",
               )}>
                 {step > s ? <CheckCircle className="h-4 w-4" /> : s}
@@ -237,7 +238,7 @@ function ProgressBar({ step }: { step: Step }) {
               )}>
                 {s === 1 ? "Dados do veículo" : s === 2 ? "Fotos & Descrição" : "Preço & Contato"}
               </span>
-              {i < 2 && <div className={cn("h-px flex-1", step > s ? "bg-[#1D6E4E]" : "bg-border")} />}
+              {i < 2 && <div className={cn("h-px flex-1", step > s ? "bg-[color:var(--color-cat-complete)]" : "bg-border")} />}
             </div>
           ))}
         </div>
@@ -304,7 +305,11 @@ function Anunciar() {
   const currentUser = useAppStore((s) => s.users.find((u) => u.id === s.currentUserId));
 
   const [step, setStep] = useState<Step>(1);
-  const [form, setForm] = useState<FormData>(defaultForm);
+  const { value: form, setValue: setForm, hasDraft, clearDraft } = useFormDraft<FormData>(
+    "anunciar-form",
+    defaultForm,
+  );
+  const [draftBannerVisible, setDraftBannerVisible] = useState(true);
   const [published, setPublished] = useState(false);
   const [newListingId, setNewListingId] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
@@ -430,6 +435,8 @@ function Anunciar() {
     addListing(listing);
     setNewListingId(id);
     setPublished(true);
+    // Successful publish → wipe the local draft
+    clearDraft();
   };
 
   // ─── Success state ──────────────────────────────────────────────────────────
@@ -447,7 +454,7 @@ function Anunciar() {
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 60}%`,
-                  backgroundColor: ["#B85A30", "#1D6E4E", "#C9A84C", "#185FA5", "#993C1D"][i % 5],
+                  backgroundColor: ["var(--color-terracotta-soft)", "var(--color-cat-complete)", "var(--color-gold)", "var(--color-cat-todo)", "var(--color-terracotta-deep)"][i % 5],
                   animationDelay: `${Math.random() * 2}s`,
                   animationDuration: `${0.8 + Math.random() * 1.2}s`,
                   transform: `rotate(${Math.random() * 360}deg)`,
@@ -457,8 +464,8 @@ function Anunciar() {
           </div>
 
           <div className="relative z-10 max-w-md">
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#1D6E4E]/10">
-              <CheckCircle className="h-10 w-10 text-[#1D6E4E]" />
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[color:var(--color-cat-complete)]/10">
+              <CheckCircle className="h-10 w-10 text-[color:var(--color-cat-complete)]" />
             </div>
             <h1 className="font-serif text-4xl">Anúncio publicado!</h1>
             <p className="mt-4 text-muted-foreground">
@@ -484,6 +491,39 @@ function Anunciar() {
     <>
       <Header />
       <ProgressBar step={step} />
+
+      {hasDraft && draftBannerVisible && (
+        <div
+          role="status"
+          className="mx-auto mt-4 flex max-w-5xl items-center justify-between gap-3 rounded-md border border-[color:var(--color-terracotta)]/30 bg-[color:var(--color-terracotta)]/5 px-4 py-3 text-sm"
+        >
+          <div className="flex items-center gap-2 text-foreground">
+            <Save className="h-4 w-4 text-[color:var(--color-terracotta)]" aria-hidden="true" />
+            <span>Rascunho restaurado automaticamente.</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setForm(defaultForm);
+                clearDraft();
+                setDraftBannerVisible(false);
+              }}
+              className="inline-flex items-center gap-1 rounded-md border border-border bg-card px-2.5 py-1 text-xs font-medium hover:bg-secondary transition-colors"
+            >
+              <RotateCcw className="h-3 w-3" /> Descartar rascunho
+            </button>
+            <button
+              type="button"
+              onClick={() => setDraftBannerVisible(false)}
+              aria-label="Fechar aviso"
+              className="rounded-md p-1 text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       <main id="main-content" className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
@@ -828,7 +868,7 @@ function Anunciar() {
                     "Selecione a condição do veículo para ver dicas específicas",
                   ]).map((tip, i) => (
                     <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                       {tip}
                     </li>
                   ))}
@@ -946,7 +986,7 @@ function Anunciar() {
                     "Mostre a documentação",
                   ]).map((tip, i) => (
                     <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                       {tip}
                     </li>
                   ))}
@@ -962,7 +1002,7 @@ function Anunciar() {
                       "Informe condições de pagamento",
                     ].map((tip, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                        <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                        <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                         {tip}
                       </li>
                     ))}
@@ -1210,7 +1250,7 @@ function Anunciar() {
                       <ul className="mt-3 space-y-1.5">
                         {plano.features.map((f, i) => (
                           <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckCircle className="h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                            <CheckCircle className="h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                             {f}
                           </li>
                         ))}

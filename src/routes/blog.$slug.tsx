@@ -11,8 +11,8 @@ export const Route = createFileRoute("/blog/$slug")({ component: BlogPostPage })
 
 const CATEGORY_CHIP_COLORS: Record<string, string> = {
   Cultura: "bg-purple-100 text-purple-700 border-purple-200",
-  Guias: "bg-[#1D6E4E]/10 text-[#1D6E4E] border-[#1D6E4E]/20",
-  Mercado: "bg-[#185FA5]/10 text-[#185FA5] border-[#185FA5]/20",
+  Guias: "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)] border-[color:var(--color-cat-complete)]/20",
+  Mercado: "bg-[color:var(--color-cat-todo)]/10 text-[color:var(--color-cat-todo)] border-[color:var(--color-cat-todo)]/20",
   Restauração: "bg-orange-100 text-orange-700 border-orange-200",
   Documentação: "bg-amber-100 text-amber-700 border-amber-200",
   Peças: "bg-red-100 text-red-700 border-red-200",
@@ -36,7 +36,7 @@ function BlogPostPage() {
 
   if (!post) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
         <Header />
         <div className="mx-auto max-w-3xl px-6 py-24 text-center">
           <BookOpen className="h-14 w-14 mx-auto mb-6 text-muted-foreground/30" />
@@ -69,7 +69,7 @@ function BlogPostPage() {
   const paragraphs = post.conteudo.trim().split(/\n\n+/);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
       <main id="main-content">
         <div className="mx-auto max-w-6xl px-6 py-10">
@@ -99,7 +99,7 @@ function BlogPostPage() {
                 <CategoryChip categoria={post.categoria} />
               </div>
               <h1 className="font-serif text-3xl md:text-4xl leading-tight mb-4">{post.titulo}</h1>
-              <div className="flex items-center gap-4 text-xs text-muted-foreground mb-8 pb-6 border-b border-[#E8E6E0]">
+              <div className="flex items-center gap-4 text-xs text-muted-foreground mb-8 pb-6 border-b border-[color:var(--color-border-cream)]">
                 <span>{formatDate(post.dataPublicacao)}</span>
                 <span className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />
@@ -144,7 +144,7 @@ function BlogPostPage() {
             <aside className="lg:w-80 shrink-0 space-y-8">
               {/* Related listings */}
               {relatedListings.length > 0 && (
-                <div className="rounded-xl border border-[#E8E6E0] bg-white p-5 shadow-sm">
+                <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white p-5 shadow-sm">
                   <h3 className="font-serif text-base mb-4">Anúncios relacionados</h3>
                   <div className="space-y-4">
                     {relatedListings.slice(0, 3).map((listing) => (
@@ -167,7 +167,7 @@ function BlogPostPage() {
                           <p className="text-sm font-medium leading-snug line-clamp-2 group-hover:text-[color:var(--color-terracotta)] transition-colors">
                             {listing.title}
                           </p>
-                          <p className="text-xs text-[#1D6E4E] font-semibold mt-1">
+                          <p className="text-xs text-[color:var(--color-cat-complete)] font-semibold mt-1">
                             {formatPrice(listing.price)}
                           </p>
                           <p className="text-xs text-muted-foreground">
@@ -182,7 +182,7 @@ function BlogPostPage() {
 
               {/* Other articles */}
               {otherPosts.length > 0 && (
-                <div className="rounded-xl border border-[#E8E6E0] bg-white p-5 shadow-sm">
+                <div className="rounded-xl border border-[color:var(--color-border-cream)] bg-white p-5 shadow-sm">
                   <h3 className="font-serif text-base mb-4">Outros artigos</h3>
                   <div className="space-y-3">
                     {otherPosts.map((p) => (
@@ -220,14 +220,14 @@ function BlogPostPage() {
               )}
 
               {/* Security promo */}
-              <div className="rounded-xl border border-[#185FA5]/20 bg-[#185FA5]/5 p-5">
-                <p className="text-sm font-semibold text-[#185FA5] mb-2">🔒 Compra segura</p>
-                <p className="text-xs text-[#185FA5]/80 leading-relaxed mb-3">
+              <div className="rounded-xl border border-[color:var(--color-cat-todo)]/20 bg-[color:var(--color-cat-todo)]/5 p-5">
+                <p className="text-sm font-semibold text-[color:var(--color-cat-todo)] mb-2">🔒 Compra segura</p>
+                <p className="text-xs text-[color:var(--color-cat-todo)]/80 leading-relaxed mb-3">
                   Negocie sempre pelo chat da plataforma. Nunca pague antes de ver o veículo.
                 </p>
                 <Link
                   to="/compra-segura"
-                  className="text-xs text-[#185FA5] underline underline-offset-2 hover:text-[#185FA5]/80"
+                  className="text-xs text-[color:var(--color-cat-todo)] underline underline-offset-2 hover:text-[color:var(--color-cat-todo)]/80"
                 >
                   Ver guia completo →
                 </Link>
