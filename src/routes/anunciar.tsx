@@ -664,7 +664,11 @@ function Anunciar() {
             <div className="space-y-8 lg:col-span-2">
 
               {/* Condição */}
-              <section className="rounded-[10px] border border-border bg-card p-6">
+              <section
+                data-field="category"
+                data-has-error={err("category") ? "true" : undefined}
+                className="rounded-[10px] border border-border bg-card p-6"
+              >
                 <SectionTitle>Condição do veículo</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   {(Object.keys(CATEGORY_INFO) as Category[]).map((cat) => {
@@ -708,7 +712,7 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Dados do veículo</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FieldGroup label="Marca" required error={err("brand")}>
+                  <FieldGroup label="Marca" required error={err("brand")} fieldId="brand">
                     <Select value={form.brand} onValueChange={(v) => { upd("brand", v); upd("model", ""); markTouched("brand"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
@@ -717,7 +721,7 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Modelo" required error={err("model") || err("modelCustom")}>
+                  <FieldGroup label="Modelo" required error={err("model") || err("modelCustom")} fieldId="model">
                     <Select
                       value={form.model}
                       onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); markTouched("model"); }}
@@ -740,7 +744,7 @@ function Anunciar() {
                     )}
                   </FieldGroup>
 
-                  <FieldGroup label="Ano de fabricação" required error={err("anoFab")}>
+                  <FieldGroup label="Ano de fabricação" required error={err("anoFab")} fieldId="anoFab">
                     <Select value={form.anoFab} onValueChange={(v) => { upd("anoFab", v); markTouched("anoFab"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
@@ -793,7 +797,7 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Quilometragem" error={err("km")}>
+                  <FieldGroup label="Quilometragem" error={err("km")} fieldId="km">
                     <Input
                       type="number"
                       placeholder="Ex: 87000"
