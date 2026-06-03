@@ -360,7 +360,7 @@ function AbaDados() {
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="font-medium text-sm">Nível 1 — E-mail</p>
                 {user.verificacoes.email
-                  ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium">Verificado ✅</span>
+                  ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium inline-flex items-center gap-1"><Check className="h-3 w-3" /> Verificado</span>
                   : <span className="text-xs text-amber-600">Pendente</span>}
               </div>
               <p className="text-xs text-muted-foreground mt-0.5">Necessário para visualizar contatos dos vendedores</p>
@@ -385,7 +385,7 @@ function AbaDados() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="font-medium text-sm">Nível 2 — Telefone</p>
                   {user.verificacoes.telefone
-                    ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium">Verificado ✅</span>
+                    ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium inline-flex items-center gap-1"><Check className="h-3 w-3" /> Verificado</span>
                     : <span className="text-xs text-amber-600">Pendente</span>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -431,7 +431,7 @@ function AbaDados() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="font-medium text-sm">Nível 3 — CPF</p>
                   {user.verificacoes.cpf
-                    ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium">Verificado ✅</span>
+                    ? <span className="text-xs text-[color:var(--color-cat-complete)] font-medium inline-flex items-center gap-1"><Check className="h-3 w-3" /> Verificado</span>
                     : <span className="text-xs text-amber-600">Pendente</span>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
@@ -686,7 +686,7 @@ function AbaPlano({ myListings }: { myListings: Listing[] }) {
                 ? "bg-amber-500 text-white mb-2"
                 : "bg-[color:var(--color-terracotta-soft)] text-white mb-2"}
             >
-              {user.plan === "premium" ? "⭐ Premium" : "Gratuito"}
+              {user.plan === "premium" ? <span className="inline-flex items-center gap-1"><Star className="h-3 w-3" /> Premium</span> : "Gratuito"}
             </Badge>
             <p className="text-sm text-muted-foreground">
               {activeListings} de {maxListings} anúncios ativos utilizados
