@@ -91,7 +91,7 @@ function Index() {
                 </span>
               </h1>
 
-              <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/70 animate-fade-up animate-fade-up-2">
+              <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/85 animate-fade-up animate-fade-up-2">
                 Compre e venda Opalas, Fuscas, Galaxies, Mavericks e outras lendas
                 com <span className="text-white font-medium">histórico declarado pelo vendedor</span>
                 e contato direto com o dono.
@@ -132,7 +132,7 @@ function Index() {
                 </Link>
                 <Link
                   to="/compra-segura"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-white/70 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-white/85 hover:text-white transition-colors"
                 >
                   <ShieldCheck className="h-4 w-4 text-[color:var(--color-terracotta-light)]" />
                   Como funciona a compra segura
@@ -150,7 +150,7 @@ function Index() {
                     />
                   ))}
                 </div>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white/80">
                   <div className="flex items-center gap-1 text-[color:var(--color-gold-light)]">
                     {Array.from({ length: 5 }).map((_, i) => (
                       <Star key={i} className="h-3 w-3 fill-current" />
@@ -411,14 +411,6 @@ function Index() {
           </button>
         </div>
       )}
-
-      {/* ── FAB Anunciar ── */}
-      <Link
-        to="/anunciar"
-        className="fixed bottom-6 right-6 z-30 inline-flex items-center gap-2 rounded-full btn-terra px-5 py-3 text-sm font-semibold text-white shadow-xl"
-      >
-        <Plus className="h-4 w-4" /> Anunciar
-      </Link>
 
       <Footer />
     </div>
