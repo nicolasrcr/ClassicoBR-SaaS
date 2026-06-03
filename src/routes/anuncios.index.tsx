@@ -562,6 +562,69 @@ function Anuncios() {
                 })}
               </div>
             )}
+
+            {/* Pagination */}
+            {filtered.length > PAGE_SIZE && (
+              <div className="mt-10 flex flex-col items-center gap-2">
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious
+                        aria-disabled={currentPage <= 1}
+                        className={cn(currentPage <= 1 && "pointer-events-none opacity-40")}
+                        asChild
+                      >
+                        <Link
+                          from="/anuncios"
+                          to="."
+                          search={(prev) => ({ ...prev, page: Math.max(1, currentPage - 1) })}
+                        >
+                          <span className="sr-only md:not-sr-only">Anterior</span>
+                        </Link>
+                      </PaginationPrevious>
+                    </PaginationItem>
+
+                    {pageNumbers.map((p, i) =>
+                      p === "ellipsis" ? (
+                        <PaginationItem key={`e-${i}`}><PaginationEllipsis /></PaginationItem>
+                      ) : (
+                        <PaginationItem key={p}>
+                          <PaginationLink isActive={p === currentPage} asChild>
+                            <Link
+                              from="/anuncios"
+                              to="."
+                              search={(prev) => ({ ...prev, page: p })}
+                              aria-label={`Ir para página ${p}`}
+                            >
+                              {p}
+                            </Link>
+                          </PaginationLink>
+                        </PaginationItem>
+                      ),
+                    )}
+
+                    <PaginationItem>
+                      <PaginationNext
+                        aria-disabled={currentPage >= totalPages}
+                        className={cn(currentPage >= totalPages && "pointer-events-none opacity-40")}
+                        asChild
+                      >
+                        <Link
+                          from="/anuncios"
+                          to="."
+                          search={(prev) => ({ ...prev, page: Math.min(totalPages, currentPage + 1) })}
+                        >
+                          <span className="sr-only md:not-sr-only">Próxima</span>
+                        </Link>
+                      </PaginationNext>
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+                <p className="text-xs text-muted-foreground">
+                  Página {currentPage} de {totalPages} · {filtered.length} resultados
+                </p>
+              </div>
+            )}
           </main>
         </div>
       </div>
