@@ -101,7 +101,7 @@ function PerfilVendedor() {
           <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 flex items-start gap-3">
             <TrendingUp className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold text-amber-800 text-sm">⚠️ Vendedor com baixa reputação</p>
+              <p className="font-semibold text-amber-800 text-sm flex items-center gap-1.5"><TrendingUp className="h-4 w-4" /> Vendedor com baixa reputação</p>
               <p className="text-amber-700 text-xs mt-0.5">
                 Este perfil apresenta pontuação abaixo de 60/100. Tome cuidado redobrado ao negociar e
                 siga nosso <Link to="/compra-segura" className="underline">guia de compra segura</Link>.
@@ -126,7 +126,7 @@ function PerfilVendedor() {
                 <h1 className="font-serif text-2xl md:text-3xl">{seller.name}</h1>
                 {isNewSeller && (
                   <Badge className="text-xs bg-amber-100 text-amber-700 border-amber-300">
-                    Vendedor novo ⚠️
+                    Vendedor novo
                   </Badge>
                 )}
                 {seller.status === "suspenso" && (
@@ -153,17 +153,17 @@ function PerfilVendedor() {
               <div className="flex flex-wrap gap-1.5 mb-4">
                 {seller.verificacoes.email && (
                   <Badge variant="secondary" className="text-xs gap-1">
-                    <span>📧</span> E-mail verificado
+                    <Mail className="h-3 w-3" /> E-mail verificado
                   </Badge>
                 )}
                 {seller.verificacoes.telefone && (
                   <Badge variant="secondary" className="text-xs gap-1">
-                    <span>📱</span> Telefone verificado
+                    <Phone className="h-3 w-3" /> Telefone verificado
                   </Badge>
                 )}
                 {seller.verificacoes.cpf && (
                   <Badge variant="secondary" className="text-xs gap-1">
-                    <span>🪪</span> CPF verificado
+                    <BadgeCheck className="h-3 w-3" /> CPF verificado
                   </Badge>
                 )}
                 {seller.verificacoes.kyc && (
