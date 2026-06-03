@@ -943,9 +943,10 @@ function Anunciar() {
                         <button
                           type="button"
                           onClick={() => removePhoto(i)}
-                          className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                          aria-label={`Remover foto ${i + 1}`}
+                          className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white opacity-100 transition-opacity sm:h-7 sm:w-7 sm:opacity-0 sm:group-hover:opacity-100"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-4 w-4" />
                         </button>
                         {i === 0 && (
                           <span className="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-white">Capa</span>
@@ -959,9 +960,9 @@ function Anunciar() {
                 <button
                   type="button"
                   disabled={form.photos.length >= 5}
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={() => { fileInputRef.current?.click(); markTouched("photos"); }}
                   className={cn(
-                    "flex w-full flex-col items-center gap-3 rounded-[8px] border-2 border-dashed px-6 py-10 transition-colors",
+                    "flex min-h-11 w-full flex-col items-center gap-3 rounded-[8px] border-2 border-dashed px-6 py-10 transition-colors",
                     form.photos.length >= 5
                       ? "cursor-not-allowed border-border opacity-50"
                       : "border-border hover:border-[color:var(--color-terracotta)] hover:bg-[color:var(--color-terracotta)]/5",
@@ -975,6 +976,11 @@ function Anunciar() {
                     <p className="mt-1 text-xs text-muted-foreground">JPG, PNG, WEBP — máx. 5 fotos</p>
                   </div>
                 </button>
+                {err("photos") && (
+                  <p role="alert" className="mt-2 flex items-center gap-1 text-xs text-destructive">
+                    <AlertCircle className="h-3 w-3" /> {err("photos")}
+                  </p>
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -1007,8 +1013,14 @@ function Anunciar() {
                   placeholder="Descreva o veículo com detalhes: estado de conservação, histórico de manutenção, documentação, diferenciais..."
                   value={form.description}
                   onChange={(e) => upd("description", e.target.value)}
+                  onBlur={() => markTouched("description")}
                   className="resize-none"
                 />
+                {err("description") && (
+                  <p role="alert" className="mt-2 flex items-center gap-1 text-xs text-destructive">
+                    <AlertCircle className="h-3 w-3" /> {err("description")}
+                  </p>
+                )}
               </section>
             </div>
 
