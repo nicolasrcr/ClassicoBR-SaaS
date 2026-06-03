@@ -436,10 +436,36 @@ function Anunciar() {
   // ─── Upload fotos ───────────────────────────────────────────────────────────
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    if (form.photos.length >= 5) return;
-    const slots = 5 - form.photos.length;
-    const toAdd = files.slice(0, slots).map((f) => URL.createObjectURL(f));
-    upd("photos", [...form.photos, ...toAdd]);
+    markTouched("photos");
+
+    const newErrors: string[] = [];
+    const accepted: File[] = [];
+
+    const remainingSlots = MAX_PHOTOS - form.photos.length;
+    if (files.length > remainingSlots) {
+      newErrors.push(
+        `Você selecionou ${files.length} arquivos, mas só restam ${remainingSlots} vaga(s). Os demais foram ignorados.`,
+      );
+    }
+
+    for (const file of files.slice(0, remainingSlots)) {
+      if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+        newErrors.push(`"${file.name}": formato não suportado (use JPG, PNG ou WEBP).`);
+        continue;
+      }
+      if (file.size > MAX_IMAGE_SIZE_BYTES) {
+        const mb = (file.size / 1024 / 1024).toFixed(1);
+        newErrors.push(`"${file.name}": ${mb} MB excede o limite de 8 MB.`);
+        continue;
+      }
+      accepted.push(file);
+    }
+
+    if (accepted.length > 0) {
+      const toAdd = accepted.map((f) => URL.createObjectURL(f));
+      upd("photos", [...form.photos, ...toAdd]);
+    }
+    setUploadErrors(newErrors);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -452,6 +478,7 @@ function Anunciar() {
     markStepTouched(STEP_FIELDS[s]);
     if (stepHasErrors(s)) {
       toast.error("Corrija os campos destacados antes de continuar");
+      focusFirstError(s);
       return false;
     }
     return true;
