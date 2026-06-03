@@ -601,7 +601,7 @@ function Anunciar() {
   return (
     <>
       <Header />
-      <ProgressBar step={step} />
+      <ProgressBar step={step} percent={progressPct} />
 
       {hasDraft && draftBannerVisible && (
         <div
