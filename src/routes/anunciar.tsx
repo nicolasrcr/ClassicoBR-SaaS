@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useFormDraft } from "@/hooks/use-form-draft";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star, Save, RotateCcw } from "lucide-react";
+import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star, Save, RotateCcw, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -251,13 +251,21 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h3 className="mb-3 font-serif text-lg font-medium">{children}</h3>;
 }
 
-function FieldGroup({ label, children, required }: { label: string; children: React.ReactNode; required?: boolean }) {
+function FieldGroup({
+  label, children, required, error,
+}: { label: string; children: React.ReactNode; required?: boolean; error?: string | null }) {
   return (
     <div>
       <Label className="mb-1 block text-sm font-medium">
         {label}{required && <span className="ml-0.5 text-destructive">*</span>}
       </Label>
       {children}
+      {error && (
+        <p role="alert" className="mt-1 flex items-center gap-1 text-xs text-destructive">
+          <AlertCircle className="h-3 w-3 shrink-0" />
+          <span>{error}</span>
+        </p>
+      )}
     </div>
   );
 }
