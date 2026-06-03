@@ -624,8 +624,8 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Dados do veículo</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FieldGroup label="Marca" required>
-                    <Select value={form.brand} onValueChange={(v) => { upd("brand", v); upd("model", ""); }}>
+                  <FieldGroup label="Marca" required error={err("brand")}>
+                    <Select value={form.brand} onValueChange={(v) => { upd("brand", v); upd("model", ""); markTouched("brand"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
                         {BRANDS.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
@@ -633,10 +633,10 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Modelo" required>
+                  <FieldGroup label="Modelo" required error={err("model") || err("modelCustom")}>
                     <Select
                       value={form.model}
-                      onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); }}
+                      onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); markTouched("model"); }}
                       disabled={!form.brand}
                     >
                       <SelectTrigger><SelectValue placeholder={form.brand ? "Selecione..." : "Selecione a marca primeiro"} /></SelectTrigger>
@@ -651,12 +651,13 @@ function Anunciar() {
                         placeholder="Digite o nome exato do modelo"
                         value={form.modelCustom}
                         onChange={(e) => upd("modelCustom", e.target.value)}
+                        onBlur={() => markTouched("modelCustom")}
                       />
                     )}
                   </FieldGroup>
 
-                  <FieldGroup label="Ano de fabricação" required>
-                    <Select value={form.anoFab} onValueChange={(v) => upd("anoFab", v)}>
+                  <FieldGroup label="Ano de fabricação" required error={err("anoFab")}>
+                    <Select value={form.anoFab} onValueChange={(v) => { upd("anoFab", v); markTouched("anoFab"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
                         {ANOS.map((a) => <SelectItem key={a} value={a}>{a}</SelectItem>)}
@@ -708,12 +709,13 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Quilometragem">
+                  <FieldGroup label="Quilometragem" error={err("km")}>
                     <Input
                       type="number"
                       placeholder="Ex: 87000"
                       value={form.km}
                       onChange={(e) => upd("km", e.target.value)}
+                      onBlur={() => markTouched("km")}
                     />
                   </FieldGroup>
 
