@@ -1232,7 +1232,7 @@ function Anunciar() {
                 </p>
 
                 <div className="space-y-5">
-                  <FieldGroup label="Estado de conservação" required error={err("estadoConservacao")}>
+                  <FieldGroup label="Estado de conservação" required error={err("estadoConservacao")} fieldId="estadoConservacao">
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <ShieldCheck className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Como está hoje o veículo, em termos de carroceria, mecânica e acabamento.</span>
@@ -1247,7 +1247,7 @@ function Anunciar() {
                     />
                   </FieldGroup>
 
-                  <FieldGroup label="Originalidade" required error={err("originalidade")}>
+                  <FieldGroup label="Originalidade" required error={err("originalidade")} fieldId="originalidade">
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <Star className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Quanto do veículo permanece original de fábrica (motor, câmbio, pintura, interior).</span>
@@ -1299,7 +1299,7 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Localização</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FieldGroup label="CEP" error={err("cep")}>
+                  <FieldGroup label="CEP" error={err("cep")} fieldId="cep">
                     <Input
                       placeholder="00000-000"
                       value={form.cep}
@@ -1311,7 +1311,7 @@ function Anunciar() {
                       maxLength={9}
                     />
                   </FieldGroup>
-                  <FieldGroup label="Cidade" required error={err("cidade")}>
+                  <FieldGroup label="Cidade" required error={err("cidade")} fieldId="cidade">
                     <Input
                       placeholder="Cidade"
                       value={form.cidade}
@@ -1356,7 +1356,7 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Contato</SectionTitle>
                 <div className="space-y-4">
-                  <FieldGroup label="WhatsApp" error={err("whatsapp")}>
+                  <FieldGroup label="WhatsApp" error={err("whatsapp")} fieldId="whatsapp">
                     <Input
                       placeholder="(11) 99999-9999"
                       value={form.whatsapp}
