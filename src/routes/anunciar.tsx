@@ -1185,6 +1185,7 @@ function Anunciar() {
 
                 <div className="flex items-end gap-4">
                   <div className="flex-1">
+                    <div data-field="price" data-has-error={err("price") ? "true" : undefined}>
                     <Label className="mb-1 block text-sm">Valor (R$)</Label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">R$</span>
@@ -1202,6 +1203,7 @@ function Anunciar() {
                         <AlertCircle className="h-3 w-3" /> {err("price")}
                       </p>
                     )}
+                    </div>
                   </div>
                   <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
                     <input
