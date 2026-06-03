@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
+import { useFormDraft } from "@/hooks/use-form-draft";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star } from "lucide-react";
+import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star, Save, RotateCcw } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -304,7 +305,11 @@ function Anunciar() {
   const currentUser = useAppStore((s) => s.users.find((u) => u.id === s.currentUserId));
 
   const [step, setStep] = useState<Step>(1);
-  const [form, setForm] = useState<FormData>(defaultForm);
+  const { value: form, setValue: setForm, hasDraft, clearDraft } = useFormDraft<FormData>(
+    "anunciar-form",
+    defaultForm,
+  );
+  const [draftBannerVisible, setDraftBannerVisible] = useState(true);
   const [published, setPublished] = useState(false);
   const [newListingId, setNewListingId] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
@@ -430,6 +435,8 @@ function Anunciar() {
     addListing(listing);
     setNewListingId(id);
     setPublished(true);
+    // Successful publish → wipe the local draft
+    clearDraft();
   };
 
   // ─── Success state ──────────────────────────────────────────────────────────
@@ -484,6 +491,39 @@ function Anunciar() {
     <>
       <Header />
       <ProgressBar step={step} />
+
+      {hasDraft && draftBannerVisible && (
+        <div
+          role="status"
+          className="mx-auto mt-4 flex max-w-5xl items-center justify-between gap-3 rounded-md border border-[color:var(--color-terracotta)]/30 bg-[color:var(--color-terracotta)]/5 px-4 py-3 text-sm"
+        >
+          <div className="flex items-center gap-2 text-foreground">
+            <Save className="h-4 w-4 text-[color:var(--color-terracotta)]" aria-hidden="true" />
+            <span>Rascunho restaurado automaticamente.</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                setForm(defaultForm);
+                clearDraft();
+                setDraftBannerVisible(false);
+              }}
+              className="inline-flex items-center gap-1 rounded-md border border-border bg-card px-2.5 py-1 text-xs font-medium hover:bg-secondary transition-colors"
+            >
+              <RotateCcw className="h-3 w-3" /> Descartar rascunho
+            </button>
+            <button
+              type="button"
+              onClick={() => setDraftBannerVisible(false)}
+              aria-label="Fechar aviso"
+              className="rounded-md p-1 text-muted-foreground hover:text-foreground"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
+      )}
 
       <main id="main-content" className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
