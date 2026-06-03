@@ -756,7 +756,7 @@ function Anunciar() {
                     { key: "chaveReserva" as const, label: "Chave reserva" },
                     { key: "aceitaTroca" as const, label: "Aceita troca" },
                   ]).map(({ key, label }) => (
-                    <label key={key} className="flex cursor-pointer items-center gap-2 text-sm">
+                    <label key={key} className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
                       <input
                         type="checkbox"
                         className="h-4 w-4 rounded border-border accent-[color:var(--color-terracotta)]"
