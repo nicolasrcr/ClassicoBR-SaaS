@@ -1,21 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ChevronDown, ChevronUp, Plus, Search, X, TrendingUp, Shield, MapPin, SlidersHorizontal, ShieldCheck, Sparkles, Award, Handshake } from "lucide-react";
+import { Plus, Search, X, TrendingUp, Shield, MapPin, ShieldCheck, Sparkles, Award, Handshake } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { CategoryChip } from "@/components/CategoryChip";
-import { EmptyState } from "@/components/EmptyState";
 import { ScoreBadge } from "@/components/ScoreBadge";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { useFavoritesStore } from "@/store/favorites-store";
 import { CATEGORY_COLORS, CATEGORY_LABELS } from "@/lib/types";
 import { formatKm, formatPrice } from "@/lib/format";
-import { BR_STATES, BRANDS } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 import { Heart, Car, Star } from "lucide-react";
 import heroImage from "@/assets/hero-classic-car.jpg";
@@ -23,33 +16,20 @@ import heroImage from "@/assets/hero-classic-car.jpg";
 export const Route = createFileRoute("/")({ component: Index });
 
 function Index() {
-  const { listings, filters, setFilter, toggleCategory, resetFilters, compareIds, toggleCompare, clearCompare } = useAppStore();
+  const { listings, compareIds, clearCompare } = useAppStore();
   const user = useCurrentUser();
   const { toggle, isFavorited } = useFavoritesStore();
-  const [showFilters, setShowFilters] = useState(false);
+  const navigate = useNavigate();
+  const [heroQuery, setHeroQuery] = useState("");
 
-  const filtered = useMemo(() => {
-    let l = listings.filter((x) => x.status === "ativo");
-    if (filters.search) {
-      const q = filters.search.toLowerCase();
-      l = l.filter((x) => [x.title, x.brand, x.model, String(x.year)].some((f) => f.toLowerCase().includes(q)));
-    }
-    if (filters.state !== "all") l = l.filter((x) => x.state === filters.state);
-    if (filters.category) l = l.filter((x) => x.category === filters.category);
-    if (filters.brand && filters.brand !== "all") l = l.filter((x) => x.brand === filters.brand);
-    if (filters.anoMin) l = l.filter((x) => x.year >= Number(filters.anoMin));
-    if (filters.anoMax) l = l.filter((x) => x.year <= Number(filters.anoMax));
-    if (filters.precoMin) l = l.filter((x) => x.price != null && x.price >= Number(filters.precoMin));
-    if (filters.precoMax) l = l.filter((x) => x.price != null && x.price <= Number(filters.precoMax));
-    if (filters.kmMax) l = l.filter((x) => x.km <= Number(filters.kmMax));
-    if (filters.aceitaTroca) l = l.filter((x) => x.situacaoDocumental.aceitaAjudarRegularizacao !== "nao");
-    if (filters.unicoDono) l = l.filter((x) => x.situacaoDocumental.transferenciasAcumuladas === "nenhuma");
-    if (filters.sort === "preco-asc") l = [...l].sort((a, b) => (a.price ?? Infinity) - (b.price ?? Infinity));
-    else if (filters.sort === "preco-desc") l = [...l].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
-    // Premium destacados sempre primeiro
-    l = [...l].sort((a, b) => Number(!!b.destaquePremium) - Number(!!a.destaquePremium));
-    return l;
-  }, [listings, filters]);
+  const destaques = useMemo(() => {
+    const active = listings.filter((x) => x.status === "ativo");
+    // Premium primeiro, depois mais recentes (por createdAt se existir, senão ordem original)
+    const sorted = [...active].sort(
+      (a, b) => Number(!!b.destaquePremium) - Number(!!a.destaquePremium)
+    );
+    return sorted.slice(0, 6);
+  }, [listings]);
 
   const totals = useMemo(() => {
     const active = listings.filter((l) => l.status === "ativo");
@@ -58,11 +38,11 @@ function Index() {
     return { total: active.length, cities: cities.size, sellers: sellers.size };
   }, [listings]);
 
-  const activeFiltersCount = [
-    filters.brand !== "all" && filters.brand,
-    filters.anoMin, filters.anoMax, filters.precoMin, filters.precoMax, filters.kmMax,
-    filters.aceitaTroca, filters.unicoDono,
-  ].filter(Boolean).length;
+  function submitHeroSearch(e: React.FormEvent) {
+    e.preventDefault();
+    const q = heroQuery.trim();
+    navigate({ to: "/anuncios", search: q ? { q, page: 1 } : { page: 1 } });
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
