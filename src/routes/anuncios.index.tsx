@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ChevronDown, ChevronUp, Grid2X2, List, MapPin, Search,
   SlidersHorizontal, Star, X, Heart, GitCompareArrows, Car,
@@ -22,15 +22,30 @@ import { formatKm, formatPrice } from "@/lib/format";
 import { BR_STATES, BRANDS } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/anuncios/")({ component: Anuncios });
+export const Route = createFileRoute("/anuncios/")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    q: typeof search.q === "string" ? search.q : undefined,
+    page: typeof search.page === "number" ? search.page : Number(search.page) || 1,
+  }),
+  component: Anuncios,
+});
 
 const CORES = ["Branco", "Preto", "Prata", "Cinza", "Vermelho", "Azul", "Verde", "Amarelo", "Laranja", "Bege", "Marrom", "Roxo"];
 const CARROCERIAS = ["Sedan", "Coupe", "Hatch", "Perua/Station", "Pickup", "Conversível", "Van/Kombi", "Buggy"];
 
 function Anuncios() {
   const { listings, filters, setFilter, toggleCategory, resetFilters, compareIds, toggleCompare, clearCompare } = useAppStore();
+  const { q } = Route.useSearch();
   const user = useCurrentUser();
   const { toggle, isFavorited } = useFavoritesStore();
+
+  // Sync ?q= URL param into filter on mount/change
+  useEffect(() => {
+    if (typeof q === "string" && q !== filters.search) {
+      setFilter("search", q);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [q]);
 
   const [view, setView] = useState<"grid" | "list">("grid");
   const [showSidebar, setShowSidebar] = useState(true);
