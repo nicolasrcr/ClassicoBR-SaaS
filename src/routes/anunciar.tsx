@@ -259,10 +259,16 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 function FieldGroup({
-  label, children, required, error,
-}: { label: string; children: React.ReactNode; required?: boolean; error?: string | null }) {
+  label, children, required, error, fieldId,
+}: {
+  label: string;
+  children: React.ReactNode;
+  required?: boolean;
+  error?: string | null;
+  fieldId?: string;
+}) {
   return (
-    <div>
+    <div data-field={fieldId} data-has-error={error ? "true" : undefined}>
       <Label className="mb-1 block text-sm font-medium">
         {label}{required && <span className="ml-0.5 text-destructive">*</span>}
       </Label>
