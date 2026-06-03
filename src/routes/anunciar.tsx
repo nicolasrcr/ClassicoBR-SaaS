@@ -81,6 +81,12 @@ const RAIOS = ["25km", "50km", "100km", "Todo Brasil"];
 
 const ANOS = Array.from({ length: 2024 - 1950 + 1 }, (_, i) => String(2024 - i));
 
+// ─── Limites de upload ────────────────────────────────────────────────────────
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024; // 8 MB
+const MIN_PHOTOS = 1;
+const MAX_PHOTOS = 5;
+
 const CATEGORY_INFO = {
   completo: {
     icon: Car,
