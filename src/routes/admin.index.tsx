@@ -4,7 +4,7 @@ import {
   ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
 import {
-  ArrowDownRight, ArrowUpRight, FileText, Flag, TrendingUp, UserPlus, Users, Wallet,
+  ArrowDownRight, ArrowUpRight, FilePlus2, FileText, Flag, MessageSquare, ShieldAlert, Ban, CheckCircle2, DollarSign, AlertTriangle, UserPlus, Users, Wallet, UserPlus2,
 } from "lucide-react";
 import { useAppStore } from "@/store/app-store";
 
@@ -17,16 +17,16 @@ const WEEKLY_SIGNUPS = [
 ];
 
 const ACTIVITY = [
-  { id: "a1", emoji: "🆕", text: "Novo anúncio: Opala 1979", time: "há 3 minutos" },
-  { id: "a2", emoji: "👤", text: "Novo usuário: Carlos M.", time: "há 12 minutos" },
-  { id: "a3", emoji: "🚨", text: "Denúncia recebida: listing_14", time: "há 1 hora" },
-  { id: "a4", emoji: "✅", text: "Anúncio aprovado: Galaxie 1968", time: "há 2 horas" },
-  { id: "a5", emoji: "💰", text: "Pagamento recebido: user_02 Premium", time: "há 3 horas" },
-  { id: "a6", emoji: "⚠️", text: "Flag de segurança: listing_11", time: "há 4 horas" },
-  { id: "a7", emoji: "🚫", text: "Conta suspensa: user_07", time: "há 5 horas" },
-  { id: "a8", emoji: "🆕", text: "Novo anúncio: Kombi 1985", time: "há 6 horas" },
-  { id: "a9", emoji: "👤", text: "Novo cadastro pendente: Roberto F.", time: "há 8 horas" },
-  { id: "a10", emoji: "📝", text: "Artigo publicado: História do Opala", time: "há 1 dia" },
+  { id: "a1", icon: FilePlus2, tone: "var(--color-terracotta-soft)", text: "Novo anúncio: Opala 1979", time: "há 3 minutos" },
+  { id: "a2", icon: UserPlus2, tone: "var(--color-cat-complete)", text: "Novo usuário: Carlos M.", time: "há 12 minutos" },
+  { id: "a3", icon: ShieldAlert, tone: "var(--color-terracotta-deep)", text: "Denúncia recebida: listing_14", time: "há 1 hora" },
+  { id: "a4", icon: CheckCircle2, tone: "var(--color-cat-complete)", text: "Anúncio aprovado: Galaxie 1968", time: "há 2 horas" },
+  { id: "a5", icon: DollarSign, tone: "var(--color-gold)", text: "Pagamento recebido: user_02 Premium", time: "há 3 horas" },
+  { id: "a6", icon: AlertTriangle, tone: "var(--color-cat-todo)", text: "Flag de segurança: listing_11", time: "há 4 horas" },
+  { id: "a7", icon: Ban, tone: "var(--color-terracotta-deep)", text: "Conta suspensa: user_07", time: "há 5 horas" },
+  { id: "a8", icon: FilePlus2, tone: "var(--color-terracotta-soft)", text: "Novo anúncio: Kombi 1985", time: "há 6 horas" },
+  { id: "a9", icon: UserPlus2, tone: "var(--color-cat-todo)", text: "Novo cadastro pendente: Roberto F.", time: "há 8 horas" },
+  { id: "a10", icon: MessageSquare, tone: "var(--color-terracotta-soft)", text: "Artigo publicado: História do Opala", time: "há 1 dia" },
 ];
 
 interface DeltaProps {
@@ -142,15 +142,18 @@ function Dashboard() {
       <div className="mt-8 rounded-[10px] border border-[color:var(--color-border-cream)] bg-card p-5">
         <h3 className="font-serif text-lg">Atividade recente</h3>
         <ul className="mt-4 divide-y divide-[color:var(--color-border-cream)]">
-          {ACTIVITY.map((a) => (
-            <li key={a.id} className="flex items-center justify-between py-3 text-sm">
-              <span>
-                <span className="mr-2">{a.emoji}</span>
-                {a.text}
-              </span>
-              <span className="ml-4 shrink-0 text-xs text-muted-foreground">{a.time}</span>
-            </li>
-          ))}
+          {ACTIVITY.map((a) => {
+            const Icon = a.icon;
+            return (
+              <li key={a.id} className="flex items-center justify-between py-3 text-sm">
+                <span className="flex items-center gap-2">
+                  <Icon className="h-4 w-4 shrink-0" style={{ color: a.tone }} aria-hidden="true" />
+                  {a.text}
+                </span>
+                <span className="ml-4 shrink-0 text-xs text-muted-foreground">{a.time}</span>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
