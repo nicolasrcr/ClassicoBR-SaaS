@@ -91,7 +91,7 @@ function Anuncios() {
   // If filters change and current page is out of range, snap back to page 1
   useEffect(() => {
     if (page > totalPages) {
-      navigate({ search: (prev) => ({ ...prev, page: 1 }), replace: true });
+      navigate({ search: (prev: { q?: string; page: number }) => ({ ...prev, page: 1 }), replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalPages]);
