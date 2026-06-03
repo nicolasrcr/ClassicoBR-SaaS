@@ -1002,14 +1002,18 @@ function Anunciar() {
             <div className="space-y-6 lg:col-span-2">
 
               {/* Upload fotos */}
-              <section className="rounded-[10px] border border-border bg-card p-6">
+              <section
+                data-field="photos"
+                data-has-error={err("photos") ? "true" : undefined}
+                className="rounded-[10px] border border-border bg-card p-6"
+              >
                 <div className="mb-1 flex items-center justify-between">
                   <SectionTitle>Fotos</SectionTitle>
                   <span className={cn(
                     "text-sm font-medium",
-                    form.photos.length >= 5 ? "text-[color:var(--color-terracotta)]" : "text-muted-foreground",
+                    form.photos.length >= MAX_PHOTOS ? "text-[color:var(--color-terracotta)]" : "text-muted-foreground",
                   )}>
-                    {form.photos.length} / 5
+                    {form.photos.length} / {MAX_PHOTOS}
                   </span>
                 </div>
 
@@ -1038,11 +1042,11 @@ function Anunciar() {
                 {/* Dropzone */}
                 <button
                   type="button"
-                  disabled={form.photos.length >= 5}
+                  disabled={form.photos.length >= MAX_PHOTOS}
                   onClick={() => { fileInputRef.current?.click(); markTouched("photos"); }}
                   className={cn(
                     "flex min-h-11 w-full flex-col items-center gap-3 rounded-[8px] border-2 border-dashed px-6 py-10 transition-colors",
-                    form.photos.length >= 5
+                    form.photos.length >= MAX_PHOTOS
                       ? "cursor-not-allowed border-border opacity-50"
                       : "border-border hover:border-[color:var(--color-terracotta)] hover:bg-[color:var(--color-terracotta)]/5",
                   )}
@@ -1050,9 +1054,11 @@ function Anunciar() {
                   <Upload className="h-8 w-8 text-muted-foreground" />
                   <div className="text-center">
                     <p className="text-sm font-medium">
-                      {form.photos.length >= 5 ? "Limite de 5 fotos atingido" : "Clique para adicionar fotos"}
+                      {form.photos.length >= MAX_PHOTOS
+                        ? `Limite de ${MAX_PHOTOS} fotos atingido`
+                        : `Clique para adicionar fotos (mín. ${MIN_PHOTOS}, máx. ${MAX_PHOTOS})`}
                     </p>
-                    <p className="mt-1 text-xs text-muted-foreground">JPG, PNG, WEBP — máx. 5 fotos</p>
+                    <p className="mt-1 text-xs text-muted-foreground">JPG, PNG ou WEBP — até 8 MB cada</p>
                   </div>
                 </button>
                 {err("photos") && (
@@ -1060,10 +1066,27 @@ function Anunciar() {
                     <AlertCircle className="h-3 w-3" /> {err("photos")}
                   </p>
                 )}
+                {uploadErrors.length > 0 && (
+                  <ul
+                    role="alert"
+                    aria-live="polite"
+                    className="mt-2 space-y-1 rounded-md border border-destructive/30 bg-destructive/5 p-2"
+                  >
+                    {uploadErrors.map((msg, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-1.5 text-xs text-destructive"
+                      >
+                        <AlertCircle className="mt-0.5 h-3 w-3 shrink-0" />
+                        <span>{msg}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/*"
+                  accept={ACCEPTED_IMAGE_TYPES.join(",")}
                   multiple
                   className="sr-only"
                   onChange={handleFileChange}
