@@ -15,10 +15,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import {
-  Pagination, PaginationContent, PaginationItem, PaginationLink,
-  PaginationNext, PaginationPrevious, PaginationEllipsis,
-} from "@/components/ui/pagination";
+import { buttonVariants } from "@/components/ui/button";
+import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { useFavoritesStore } from "@/store/favorites-store";
 import { CATEGORY_COLORS, CATEGORY_LABELS } from "@/lib/types";
@@ -565,65 +563,75 @@ function Anuncios() {
 
             {/* Pagination */}
             {filtered.length > PAGE_SIZE && (
-              <div className="mt-10 flex flex-col items-center gap-2">
-                <Pagination>
-                  <PaginationContent>
-                    <PaginationItem>
-                      <PaginationPrevious
-                        aria-disabled={currentPage <= 1}
-                        className={cn(currentPage <= 1 && "pointer-events-none opacity-40")}
-                        asChild
-                      >
+              <nav
+                aria-label="Paginação de anúncios"
+                className="mt-10 flex flex-col items-center gap-2"
+              >
+                <ul className="flex flex-row items-center gap-1">
+                  <li>
+                    <Link
+                      from="/anuncios"
+                      to="."
+                      search={(prev: { q?: string; page: number }) => ({ ...prev, page: Math.max(1, currentPage - 1) })}
+                      aria-label="Página anterior"
+                      aria-disabled={currentPage <= 1}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "default" }),
+                        "gap-1 pl-2.5",
+                        currentPage <= 1 && "pointer-events-none opacity-40",
+                      )}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                      <span>Anterior</span>
+                    </Link>
+                  </li>
+
+                  {pageNumbers.map((p, i) =>
+                    p === "ellipsis" ? (
+                      <li key={`e-${i}`} aria-hidden="true" className="flex h-9 w-9 items-center justify-center">
+                        <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+                      </li>
+                    ) : (
+                      <li key={p}>
                         <Link
                           from="/anuncios"
                           to="."
-                          search={(prev) => ({ ...prev, page: Math.max(1, currentPage - 1) })}
+                          search={(prev: { q?: string; page: number }) => ({ ...prev, page: p })}
+                          aria-label={`Ir para página ${p}`}
+                          aria-current={p === currentPage ? "page" : undefined}
+                          className={cn(
+                            buttonVariants({ variant: p === currentPage ? "outline" : "ghost", size: "icon" }),
+                            p === currentPage && "border-[color:var(--color-terracotta)] text-[color:var(--color-terracotta)] font-semibold",
+                          )}
                         >
-                          <span className="sr-only md:not-sr-only">Anterior</span>
+                          {p}
                         </Link>
-                      </PaginationPrevious>
-                    </PaginationItem>
+                      </li>
+                    ),
+                  )}
 
-                    {pageNumbers.map((p, i) =>
-                      p === "ellipsis" ? (
-                        <PaginationItem key={`e-${i}`}><PaginationEllipsis /></PaginationItem>
-                      ) : (
-                        <PaginationItem key={p}>
-                          <PaginationLink isActive={p === currentPage} asChild>
-                            <Link
-                              from="/anuncios"
-                              to="."
-                              search={(prev) => ({ ...prev, page: p })}
-                              aria-label={`Ir para página ${p}`}
-                            >
-                              {p}
-                            </Link>
-                          </PaginationLink>
-                        </PaginationItem>
-                      ),
-                    )}
-
-                    <PaginationItem>
-                      <PaginationNext
-                        aria-disabled={currentPage >= totalPages}
-                        className={cn(currentPage >= totalPages && "pointer-events-none opacity-40")}
-                        asChild
-                      >
-                        <Link
-                          from="/anuncios"
-                          to="."
-                          search={(prev) => ({ ...prev, page: Math.min(totalPages, currentPage + 1) })}
-                        >
-                          <span className="sr-only md:not-sr-only">Próxima</span>
-                        </Link>
-                      </PaginationNext>
-                    </PaginationItem>
-                  </PaginationContent>
-                </Pagination>
+                  <li>
+                    <Link
+                      from="/anuncios"
+                      to="."
+                      search={(prev: { q?: string; page: number }) => ({ ...prev, page: Math.min(totalPages, currentPage + 1) })}
+                      aria-label="Próxima página"
+                      aria-disabled={currentPage >= totalPages}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "default" }),
+                        "gap-1 pr-2.5",
+                        currentPage >= totalPages && "pointer-events-none opacity-40",
+                      )}
+                    >
+                      <span>Próxima</span>
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  </li>
+                </ul>
                 <p className="text-xs text-muted-foreground">
                   Página {currentPage} de {totalPages} · {filtered.length} resultados
                 </p>
-              </div>
+              </nav>
             )}
           </main>
         </div>
