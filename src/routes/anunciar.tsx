@@ -1334,7 +1334,7 @@ function Anunciar() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  if (!validateStep3()) return;
+                  if (!validateStepInline(3)) return;
                   setShowPreview(true);
                 }}
               >
@@ -1346,8 +1346,7 @@ function Anunciar() {
               <Button
                 className="bg-[color:var(--color-terracotta)] text-white hover:bg-[color:var(--color-terracotta-dark)]"
                 onClick={() => {
-                  if (step === 1 && !validateStep1()) return;
-                  if (step === 2 && !validateStep2()) return;
+                  if (!validateStepInline(step)) return;
                   setStep((s) => (s + 1) as Step);
                 }}
               >
@@ -1357,6 +1356,8 @@ function Anunciar() {
               <Button
                 className="bg-[color:var(--color-terracotta)] text-white hover:bg-[color:var(--color-terracotta-dark)]"
                 onClick={handlePublish}
+                disabled={stepHasErrors(3)}
+                aria-disabled={stepHasErrors(3)}
               >
                 Publicar anúncio
               </Button>
