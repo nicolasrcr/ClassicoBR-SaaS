@@ -126,7 +126,7 @@ function Cadastro() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      <main className="mx-auto flex max-w-md flex-col px-6 py-14">
+      <main id="main-content" className="mx-auto flex max-w-md flex-col px-6 py-14">
         {/* Header */}
         <div className="flex items-center gap-3 mb-2">
           <div className="h-10 w-10 rounded-full bg-[#B85A30]/10 flex items-center justify-center shrink-0">

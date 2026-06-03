@@ -203,7 +203,7 @@ function Create() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="mx-auto max-w-3xl px-6 py-10">
+      <main id="main-content" className="mx-auto max-w-3xl px-6 py-10">
         <h1 className="font-serif text-3xl">Criar anúncio</h1>
 
         {/* Steps */}

@@ -78,7 +78,7 @@ function ServicosPage() {
         </div>
       </section>
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
+      <main id="main-content" className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
         {/* tabs */}
         <div className="mb-6 flex flex-wrap gap-2 border-b border-border pb-3">
           {(["all", "oficina", "autopeca", "servico", "pecaClassificado"] as const).map((k) => {

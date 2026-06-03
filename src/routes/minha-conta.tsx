@@ -850,7 +850,7 @@ function MinhaConta() {
         </div>
       )}
 
-      <main className="mx-auto max-w-4xl px-6 py-10">
+      <main id="main-content" className="mx-auto max-w-4xl px-6 py-10">
         {/* Profile header */}
         <div className="flex items-center gap-5 mb-8">
           <Avatar className="h-16 w-16 ring-2 ring-[#B85A30]/20">

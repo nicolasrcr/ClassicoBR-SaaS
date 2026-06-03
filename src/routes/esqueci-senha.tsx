@@ -36,7 +36,7 @@ function EsqueciSenha() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      <main className="mx-auto flex max-w-md flex-col px-6 py-14">
+      <main id="main-content" className="mx-auto flex max-w-md flex-col px-6 py-14">
         <Link
           to="/login"
           className="mb-8 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"

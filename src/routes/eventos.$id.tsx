@@ -28,7 +28,7 @@ function EventoDetail() {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
+        <main id="main-content" className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
           <Skeleton className="h-4 w-32 mb-4" />
           <div className="overflow-hidden rounded-2xl border border-border bg-card">
             <Skeleton className="aspect-[21/9] w-full" />

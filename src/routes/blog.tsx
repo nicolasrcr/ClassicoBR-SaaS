@@ -40,7 +40,7 @@ function Blog() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      <main>
+      <main id="main-content">
         {/* Hero */}
         <section className="bg-[color:var(--color-charcoal)] text-white py-16">
           <div className="mx-auto max-w-6xl px-6">

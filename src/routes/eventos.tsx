@@ -75,7 +75,7 @@ function EventosPage() {
         </div>
       </section>
 
-      <main className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
+      <main id="main-content" className="mx-auto w-full max-w-7xl flex-1 px-6 py-10">
         <div className="mb-6 rounded-xl border border-border bg-card p-4">
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">

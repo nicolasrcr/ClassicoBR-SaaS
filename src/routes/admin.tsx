@@ -133,7 +133,7 @@ function AdminLayout() {
         </div>
       )}
 
-      <main className="flex-1 md:ml-64 overflow-auto">
+      <main id="main-content" className="flex-1 md:ml-64 overflow-auto">
         <Outlet />
       </main>
     </div>
