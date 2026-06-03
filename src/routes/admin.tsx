@@ -2,7 +2,7 @@ import { Link, Outlet, useLocation, useNavigate, createFileRoute } from "@tansta
 import { useEffect, useState } from "react";
 import {
   BarChart3, FileText, Flag, LogOut, MessageSquare, Newspaper,
-  Settings, Shield, ShieldCheck, Users, UserPlus, Wallet, Menu, X,
+  Settings, Shield, ShieldCheck, Users, UserPlus, Wallet, Menu, X, ChevronRight, Home,
 } from "lucide-react";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { mockReports, mockFlaggedListings } from "@/lib/mock-data";
@@ -33,6 +33,12 @@ function AdminLayout() {
     { to: "/admin/blog", label: "Blog", icon: Newspaper },
     { to: "/admin/configuracoes", label: "Configurações", icon: Settings },
   ];
+
+  const currentSection =
+    [...NAV].sort((a, b) => b.to.length - a.to.length).find((n) =>
+      n.exact ? loc.pathname === n.to : loc.pathname.startsWith(n.to)
+    ) ?? NAV[0];
+  const isRoot = loc.pathname === "/admin";
 
   useEffect(() => {
     if (!user || user.role !== "admin") navigate({ to: "/" });
@@ -134,6 +140,28 @@ function AdminLayout() {
       )}
 
       <main id="main-content" className="flex-1 md:ml-64 overflow-auto">
+        {/* Breadcrumbs */}
+        <nav
+          aria-label="Breadcrumb"
+          className="sticky top-0 z-20 border-b border-border bg-[#F4F2EE]/95 backdrop-blur px-4 md:px-6 py-3"
+        >
+          <ol className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <li className="flex items-center gap-1.5">
+              <Link to="/admin" className="flex items-center gap-1 hover:text-foreground transition-colors">
+                <Home className="h-3.5 w-3.5" />
+                <span>Admin</span>
+              </Link>
+            </li>
+            {!isRoot && (
+              <>
+                <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/50" aria-hidden="true" />
+                <li aria-current="page" className="font-semibold text-foreground">
+                  {currentSection.label}
+                </li>
+              </>
+            )}
+          </ol>
+        </nav>
         <Outlet />
       </main>
     </div>
