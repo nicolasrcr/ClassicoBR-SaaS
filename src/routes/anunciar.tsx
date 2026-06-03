@@ -596,9 +596,9 @@ function Anunciar() {
                       <button
                         key={cat}
                         type="button"
-                        onClick={() => upd("category", cat)}
+                        onClick={() => { upd("category", cat); markTouched("category"); }}
                         className={cn(
-                          "flex flex-col items-center gap-3 rounded-[8px] border p-5 text-center transition-all",
+                          "flex min-h-11 flex-col items-center gap-3 rounded-[8px] border p-5 text-center transition-all",
                           active
                             ? "border-[color:var(--color-terracotta)] bg-[color:var(--color-terracotta)]/8 ring-1 ring-[color:var(--color-terracotta)]"
                             : "border-border hover:border-muted-foreground",
@@ -618,6 +618,11 @@ function Anunciar() {
                     );
                   })}
                 </div>
+                {err("category") && (
+                  <p role="alert" className="mt-3 flex items-center gap-1 text-xs text-destructive">
+                    <AlertCircle className="h-3 w-3" /> {err("category")}
+                  </p>
+                )}
               </section>
 
               {/* Dados do veículo */}
