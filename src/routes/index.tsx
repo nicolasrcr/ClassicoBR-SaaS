@@ -99,25 +99,27 @@ function Index() {
 
               {/* Inline glass search */}
               <form
-                onSubmit={(e) => e.preventDefault()}
+                onSubmit={submitHeroSearch}
                 className="mt-8 flex items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.07] backdrop-blur-xl p-2 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)] max-w-xl animate-fade-up animate-fade-up-2"
+                role="search"
               >
                 <div className="relative flex-1">
-                  <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/50" />
+                  <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" aria-hidden="true" />
                   <input
                     type="text"
-                    value={filters.search}
-                    onChange={(e) => setFilter("search", e.target.value)}
+                    value={heroQuery}
+                    onChange={(e) => setHeroQuery(e.target.value)}
                     placeholder="Busque por Opala, Maverick, Fusca…"
-                    className="w-full h-11 bg-transparent pl-10 pr-3 text-sm text-white placeholder:text-white/40 outline-none"
+                    aria-label="Buscar carros clássicos"
+                    className="w-full h-11 bg-transparent pl-10 pr-3 text-sm text-white placeholder:text-white/55 outline-none"
                   />
                 </div>
-                <Link
-                  to="/anuncios"
+                <button
+                  type="submit"
                   className="inline-flex h-11 items-center gap-2 rounded-xl btn-terra px-5 text-sm font-semibold text-white whitespace-nowrap"
                 >
                   Buscar
-                </Link>
+                </button>
               </form>
 
               {/* CTAs */}
