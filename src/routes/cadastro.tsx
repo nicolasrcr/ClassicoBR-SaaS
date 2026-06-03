@@ -22,7 +22,7 @@ function PasswordStrength({ senha }: { senha: string }) {
   const hasUpper = /[A-Z]/.test(senha);
   const hasSpecial = /[0-9!@#$%^&*]/.test(senha);
   const score = [hasLen, hasUpper, hasSpecial].filter(Boolean).length;
-  const colors = ["bg-muted", "bg-[#993C1D]", "bg-[#B85A30]", "bg-[#1D6E4E]"];
+  const colors = ["bg-muted", "bg-[color:var(--color-terracotta-deep)]", "bg-[color:var(--color-terracotta-soft)]", "bg-[color:var(--color-cat-complete)]"];
   const labels = ["", "Fraca", "Média", "Forte"];
   if (!senha) return null;
   return (
@@ -36,7 +36,7 @@ function PasswordStrength({ senha }: { senha: string }) {
         ))}
       </div>
       <p className="text-[11px] text-muted-foreground">
-        Força: <span className={score === 3 ? "text-[#1D6E4E] font-medium" : score === 2 ? "text-[#B85A30] font-medium" : "text-[#993C1D] font-medium"}>{labels[score]}</span>
+        Força: <span className={score === 3 ? "text-[color:var(--color-cat-complete)] font-medium" : score === 2 ? "text-[color:var(--color-terracotta-soft)] font-medium" : "text-[color:var(--color-terracotta-deep)] font-medium"}>{labels[score]}</span>
         {" · "}mínimo 8 caracteres, uma maiúscula e um número ou símbolo.
       </p>
     </div>
@@ -111,7 +111,7 @@ function Cadastro() {
 
   if (redirecting) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
         <Header />
         <PostAuthSkeleton
           redirect={redirect}
@@ -124,13 +124,13 @@ function Cadastro() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
       <main id="main-content" className="mx-auto flex max-w-md flex-col px-6 py-14">
         {/* Header */}
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-10 w-10 rounded-full bg-[#B85A30]/10 flex items-center justify-center shrink-0">
-            <UserPlus className="h-5 w-5 text-[#B85A30]" />
+          <div className="h-10 w-10 rounded-full bg-[color:var(--color-terracotta-soft)]/10 flex items-center justify-center shrink-0">
+            <UserPlus className="h-5 w-5 text-[color:var(--color-terracotta-soft)]" />
           </div>
           <div>
             <h1 className="font-serif text-3xl text-foreground">Criar conta</h1>
@@ -138,7 +138,7 @@ function Cadastro() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-[12px] border border-[#E8E6E0] bg-white p-6 shadow-sm">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-[12px] border border-[color:var(--color-border-cream)] bg-white p-6 shadow-sm">
           {/* Nome completo */}
           <div>
             <Label className="mb-1.5 block text-sm font-medium">Nome completo</Label>
@@ -147,9 +147,9 @@ function Cadastro() {
               onChange={(e) => { setNome(e.target.value); clearError("nome"); }}
               placeholder="João da Silva"
               autoComplete="name"
-              className={errors.nome ? "border-[#993C1D] focus-visible:ring-[#993C1D]/20" : ""}
+              className={errors.nome ? "border-[color:var(--color-terracotta-deep)] focus-visible:ring-[color:var(--color-terracotta-deep)]/20" : ""}
             />
-            {errors.nome && <p className="mt-1 text-xs text-[#993C1D]">{errors.nome}</p>}
+            {errors.nome && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{errors.nome}</p>}
           </div>
 
           {/* E-mail */}
@@ -161,9 +161,9 @@ function Cadastro() {
               onChange={(e) => { setEmail(e.target.value); clearError("email"); }}
               placeholder="voce@email.com"
               autoComplete="email"
-              className={errors.email ? "border-[#993C1D] focus-visible:ring-[#993C1D]/20" : ""}
+              className={errors.email ? "border-[color:var(--color-terracotta-deep)] focus-visible:ring-[color:var(--color-terracotta-deep)]/20" : ""}
             />
-            {errors.email && <p className="mt-1 text-xs text-[#993C1D]">{errors.email}</p>}
+            {errors.email && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{errors.email}</p>}
           </div>
 
           {/* Senha */}
@@ -176,7 +176,7 @@ function Cadastro() {
                 onChange={(e) => { setSenha(e.target.value); clearError("senha"); }}
                 placeholder="Mínimo 8 caracteres"
                 autoComplete="new-password"
-                className={`pr-10 ${errors.senha ? "border-[#993C1D] focus-visible:ring-[#993C1D]/20" : ""}`}
+                className={`pr-10 ${errors.senha ? "border-[color:var(--color-terracotta-deep)] focus-visible:ring-[color:var(--color-terracotta-deep)]/20" : ""}`}
               />
               <button
                 type="button"
@@ -187,7 +187,7 @@ function Cadastro() {
                 {showSenha ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {errors.senha && <p className="mt-1 text-xs text-[#993C1D]">{errors.senha}</p>}
+            {errors.senha && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{errors.senha}</p>}
             <PasswordStrength senha={senha} />
           </div>
 
@@ -201,7 +201,7 @@ function Cadastro() {
                 onChange={(e) => { setConfirmar(e.target.value); clearError("confirmar"); }}
                 placeholder="Repita a senha"
                 autoComplete="new-password"
-                className={`pr-10 ${errors.confirmar ? "border-[#993C1D] focus-visible:ring-[#993C1D]/20" : senhaMatch ? "border-[#1D6E4E] focus-visible:ring-[#1D6E4E]/20" : ""}`}
+                className={`pr-10 ${errors.confirmar ? "border-[color:var(--color-terracotta-deep)] focus-visible:ring-[color:var(--color-terracotta-deep)]/20" : senhaMatch ? "border-[color:var(--color-cat-complete)] focus-visible:ring-[color:var(--color-cat-complete)]/20" : ""}`}
               />
               <button
                 type="button"
@@ -212,14 +212,14 @@ function Cadastro() {
                 {showConfirmar ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            {errors.confirmar && <p className="mt-1 text-xs text-[#993C1D]">{errors.confirmar}</p>}
+            {errors.confirmar && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{errors.confirmar}</p>}
             {!errors.confirmar && senhaMatch && (
-              <p className="mt-1 text-xs text-[#1D6E4E] font-medium">✓ As senhas coincidem</p>
+              <p className="mt-1 text-xs text-[color:var(--color-cat-complete)] font-medium">✓ As senhas coincidem</p>
             )}
           </div>
 
           {/* Termos e LGPD */}
-          <div className="space-y-4 rounded-[8px] border border-[#E8E6E0] bg-[#FAF9F6] p-4">
+          <div className="space-y-4 rounded-[8px] border border-[color:var(--color-border-cream)] bg-[color:var(--color-surface-cream)] p-4">
             {/* Termos de uso */}
             <div>
               <label className="flex items-start gap-3 cursor-pointer">
@@ -227,18 +227,18 @@ function Cadastro() {
                   type="checkbox"
                   checked={termos}
                   onChange={(e) => { setTermos(e.target.checked); clearError("termos"); }}
-                  className="mt-0.5 h-4 w-4 rounded border-[#E8E6E0] accent-[#B85A30] cursor-pointer"
+                  className="mt-0.5 h-4 w-4 rounded border-[color:var(--color-border-cream)] accent-[color:var(--color-terracotta-soft)] cursor-pointer"
                 />
                 <span className="text-sm leading-relaxed">
                   Li e aceito os{" "}
-                  <a href="#" className="text-[#B85A30] underline hover:opacity-80 font-medium">
+                  <a href="#" className="text-[color:var(--color-terracotta-soft)] underline hover:opacity-80 font-medium">
                     Termos de Uso
                   </a>{" "}
                   da plataforma ClassicosBR.{" "}
-                  <span className="text-[#993C1D] font-medium">*</span>
+                  <span className="text-[color:var(--color-terracotta-deep)] font-medium">*</span>
                 </span>
               </label>
-              {errors.termos && <p className="mt-1.5 ml-7 text-xs text-[#993C1D]">{errors.termos}</p>}
+              {errors.termos && <p className="mt-1.5 ml-7 text-xs text-[color:var(--color-terracotta-deep)]">{errors.termos}</p>}
             </div>
 
             {/* LGPD */}
@@ -248,27 +248,27 @@ function Cadastro() {
                   type="checkbox"
                   checked={lgpd}
                   onChange={(e) => { setLgpd(e.target.checked); clearError("lgpd"); }}
-                  className="mt-0.5 h-4 w-4 rounded border-[#E8E6E0] accent-[#B85A30] cursor-pointer"
+                  className="mt-0.5 h-4 w-4 rounded border-[color:var(--color-border-cream)] accent-[color:var(--color-terracotta-soft)] cursor-pointer"
                 />
                 <span className="text-sm leading-relaxed text-muted-foreground">
                   Estou ciente de que os metadados de localização das fotos e o IP de acesso serão
                   registrados exclusivamente para verificação de autenticidade dos anúncios, conforme
                   nossa{" "}
-                  <a href="#" className="text-[#185FA5] underline hover:opacity-80">
+                  <a href="#" className="text-[color:var(--color-cat-todo)] underline hover:opacity-80">
                     Política de Privacidade
                   </a>
                   .{" "}
-                  <span className="text-[#993C1D] font-medium">*</span>
+                  <span className="text-[color:var(--color-terracotta-deep)] font-medium">*</span>
                 </span>
               </label>
-              {errors.lgpd && <p className="mt-1.5 ml-7 text-xs text-[#993C1D]">{errors.lgpd}</p>}
+              {errors.lgpd && <p className="mt-1.5 ml-7 text-xs text-[color:var(--color-terracotta-deep)]">{errors.lgpd}</p>}
             </div>
           </div>
 
           <Button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#B85A30] hover:bg-[#993C1D] text-white font-medium h-10"
+            className="w-full bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white font-medium h-10"
           >
             {loading ? "Criando conta…" : "Criar conta grátis"}
           </Button>
@@ -276,7 +276,7 @@ function Cadastro() {
 
         <p className="mt-5 text-center text-sm text-muted-foreground">
           Já tem conta?{" "}
-          <Link to="/login" className="text-[#B85A30] underline hover:opacity-80 font-medium">
+          <Link to="/login" className="text-[color:var(--color-terracotta-soft)] underline hover:opacity-80 font-medium">
             Entrar
           </Link>
         </p>

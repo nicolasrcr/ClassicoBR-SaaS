@@ -59,8 +59,8 @@ function AdminLayout() {
             className={cn(
               "flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors",
               active
-                ? "bg-[#B85A30] text-white font-medium"
-                : "text-[#FAF9F6]/70 hover:bg-white/5 hover:text-[#FAF9F6]",
+                ? "bg-[color:var(--color-terracotta-soft)] text-white font-medium"
+                : "text-[color:var(--color-surface-cream)]/70 hover:bg-white/5 hover:text-[color:var(--color-surface-cream)]",
             )}
           >
             <Icon className="h-4 w-4 shrink-0" />
@@ -77,12 +77,12 @@ function AdminLayout() {
   );
 
   return (
-    <div className="min-h-screen bg-[#F4F2EE] md:flex">
+    <div className="min-h-screen bg-[color:var(--color-admin-bg)] md:flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex w-64 shrink-0 flex-col bg-[#1a1a1a] text-[#FAF9F6] fixed inset-y-0 left-0 z-30">
+      <aside className="hidden md:flex w-64 shrink-0 flex-col bg-[color:var(--color-charcoal-admin)] text-[color:var(--color-surface-cream)] fixed inset-y-0 left-0 z-30">
         <div className="border-b border-white/10 px-5 py-5">
           <div className="flex items-baseline gap-2">
-            <span className="font-serif text-xl text-[#B85A30]">ClassicosBR</span>
+            <span className="font-serif text-xl text-[color:var(--color-terracotta-soft)]">ClassicosBR</span>
             <span className="text-[10px] uppercase tracking-widest text-white/40">Admin</span>
           </div>
         </div>
@@ -92,7 +92,7 @@ function AdminLayout() {
         <div className="border-t border-white/10 p-3">
           <button
             onClick={() => { logout(); navigate({ to: "/" }); }}
-            className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-[#FAF9F6]/60 hover:bg-white/5 hover:text-[#FAF9F6]"
+            className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-[color:var(--color-surface-cream)]/60 hover:bg-white/5 hover:text-[color:var(--color-surface-cream)]"
           >
             <LogOut className="h-4 w-4" /> Sair
           </button>
@@ -100,11 +100,11 @@ function AdminLayout() {
       </aside>
 
       {/* Mobile header */}
-      <header className="flex items-center justify-between bg-[#1a1a1a] px-4 py-3 md:hidden">
-        <span className="font-serif text-lg text-[#B85A30]">ClassicosBR</span>
+      <header className="flex items-center justify-between bg-[color:var(--color-charcoal-admin)] px-4 py-3 md:hidden">
+        <span className="font-serif text-lg text-[color:var(--color-terracotta-soft)]">ClassicosBR</span>
         <button
           onClick={() => setMobileOpen(true)}
-          className="text-[#FAF9F6]/70 hover:text-[#FAF9F6]"
+          className="text-[color:var(--color-surface-cream)]/70 hover:text-[color:var(--color-surface-cream)]"
         >
           <Menu className="h-6 w-6" />
         </button>
@@ -117,9 +117,9 @@ function AdminLayout() {
             className="fixed inset-0 bg-black/60"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="relative z-10 flex w-72 flex-col bg-[#1a1a1a] text-[#FAF9F6]">
+          <aside className="relative z-10 flex w-72 flex-col bg-[color:var(--color-charcoal-admin)] text-[color:var(--color-surface-cream)]">
             <div className="flex items-center justify-between border-b border-white/10 px-5 py-4">
-              <span className="font-serif text-xl text-[#B85A30]">ClassicosBR</span>
+              <span className="font-serif text-xl text-[color:var(--color-terracotta-soft)]">ClassicosBR</span>
               <button onClick={() => setMobileOpen(false)} className="text-white/60 hover:text-white">
                 <X className="h-5 w-5" />
               </button>
@@ -130,7 +130,7 @@ function AdminLayout() {
             <div className="border-t border-white/10 p-3">
               <button
                 onClick={() => { logout(); navigate({ to: "/" }); setMobileOpen(false); }}
-                className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-[#FAF9F6]/60 hover:bg-white/5 hover:text-[#FAF9F6]"
+                className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-[color:var(--color-surface-cream)]/60 hover:bg-white/5 hover:text-[color:var(--color-surface-cream)]"
               >
                 <LogOut className="h-4 w-4" /> Sair
               </button>
@@ -143,7 +143,7 @@ function AdminLayout() {
         {/* Breadcrumbs */}
         <nav
           aria-label="Breadcrumb"
-          className="sticky top-0 z-20 border-b border-border bg-[#F4F2EE]/95 backdrop-blur px-4 md:px-6 py-3"
+          className="sticky top-0 z-20 border-b border-border bg-[color:var(--color-admin-bg)]/95 backdrop-blur px-4 md:px-6 py-3"
         >
           <ol className="flex items-center gap-1.5 text-xs text-muted-foreground">
             <li className="flex items-center gap-1.5">

@@ -226,7 +226,7 @@ function ProgressBar({ step }: { step: Step }) {
                 step === s
                   ? "bg-[color:var(--color-terracotta)] text-white"
                   : step > s
-                  ? "bg-[#1D6E4E] text-white"
+                  ? "bg-[color:var(--color-cat-complete)] text-white"
                   : "bg-muted text-muted-foreground",
               )}>
                 {step > s ? <CheckCircle className="h-4 w-4" /> : s}
@@ -237,7 +237,7 @@ function ProgressBar({ step }: { step: Step }) {
               )}>
                 {s === 1 ? "Dados do veículo" : s === 2 ? "Fotos & Descrição" : "Preço & Contato"}
               </span>
-              {i < 2 && <div className={cn("h-px flex-1", step > s ? "bg-[#1D6E4E]" : "bg-border")} />}
+              {i < 2 && <div className={cn("h-px flex-1", step > s ? "bg-[color:var(--color-cat-complete)]" : "bg-border")} />}
             </div>
           ))}
         </div>
@@ -447,7 +447,7 @@ function Anunciar() {
                 style={{
                   left: `${Math.random() * 100}%`,
                   top: `${Math.random() * 60}%`,
-                  backgroundColor: ["#B85A30", "#1D6E4E", "#C9A84C", "#185FA5", "#993C1D"][i % 5],
+                  backgroundColor: ["var(--color-terracotta-soft)", "var(--color-cat-complete)", "var(--color-gold)", "var(--color-cat-todo)", "var(--color-terracotta-deep)"][i % 5],
                   animationDelay: `${Math.random() * 2}s`,
                   animationDuration: `${0.8 + Math.random() * 1.2}s`,
                   transform: `rotate(${Math.random() * 360}deg)`,
@@ -457,8 +457,8 @@ function Anunciar() {
           </div>
 
           <div className="relative z-10 max-w-md">
-            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#1D6E4E]/10">
-              <CheckCircle className="h-10 w-10 text-[#1D6E4E]" />
+            <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[color:var(--color-cat-complete)]/10">
+              <CheckCircle className="h-10 w-10 text-[color:var(--color-cat-complete)]" />
             </div>
             <h1 className="font-serif text-4xl">Anúncio publicado!</h1>
             <p className="mt-4 text-muted-foreground">
@@ -828,7 +828,7 @@ function Anunciar() {
                     "Selecione a condição do veículo para ver dicas específicas",
                   ]).map((tip, i) => (
                     <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                       {tip}
                     </li>
                   ))}
@@ -946,7 +946,7 @@ function Anunciar() {
                     "Mostre a documentação",
                   ]).map((tip, i) => (
                     <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                      <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                       {tip}
                     </li>
                   ))}
@@ -962,7 +962,7 @@ function Anunciar() {
                       "Informe condições de pagamento",
                     ].map((tip, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs text-muted-foreground">
-                        <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                        <CheckCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                         {tip}
                       </li>
                     ))}
@@ -1210,7 +1210,7 @@ function Anunciar() {
                       <ul className="mt-3 space-y-1.5">
                         {plano.features.map((f, i) => (
                           <li key={i} className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <CheckCircle className="h-3.5 w-3.5 shrink-0 text-[#1D6E4E]" />
+                            <CheckCircle className="h-3.5 w-3.5 shrink-0 text-[color:var(--color-cat-complete)]" />
                             {f}
                           </li>
                         ))}

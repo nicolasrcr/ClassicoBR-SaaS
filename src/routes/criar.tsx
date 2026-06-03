@@ -37,7 +37,7 @@ const DOC_FISICOS_OPTIONS = [
 
 // Simple confetti
 function showConfetti() {
-  const colors = ["#C0522B", "#1a1a1a", "#f5f0e8", "#4CAF50", "#FF9800"];
+  const colors = ["var(--color-terracotta)", "var(--color-charcoal-admin)", "#f5f0e8", "#4CAF50", "#FF9800"];
   for (let i = 0; i < 60; i++) {
     const el = document.createElement("div");
     el.style.cssText = `

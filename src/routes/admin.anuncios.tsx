@@ -95,7 +95,7 @@ function VerificationDrawer({ listing, onClose }: { listing: Listing | null; onC
             <div className="flex items-center gap-3">
               <div className="h-2 flex-1 rounded-full bg-muted">
                 <div
-                  className={`h-2 rounded-full ${listing.scoreConfianca >= 70 ? "bg-[#1D6E4E]" : listing.scoreConfianca >= 40 ? "bg-amber-500" : "bg-red-500"}`}
+                  className={`h-2 rounded-full ${listing.scoreConfianca >= 70 ? "bg-[color:var(--color-cat-complete)]" : listing.scoreConfianca >= 40 ? "bg-amber-500" : "bg-red-500"}`}
                   style={{ width: `${listing.scoreConfianca}%` }}
                 />
               </div>
@@ -296,7 +296,7 @@ function AdminListings() {
                       </Link>
                       {l.status === "pendente" && (
                         <Button size="icon" variant="ghost" title="Aprovar" onClick={() => { updateListing(l.id, { status: "ativo" }); toast.success("Aprovado"); }}>
-                          <Check className="h-4 w-4 text-[#1D6E4E]" />
+                          <Check className="h-4 w-4 text-[color:var(--color-cat-complete)]" />
                         </Button>
                       )}
                       <Button size="icon" variant="ghost" title={l.status === "pausado" ? "Reativar" : "Pausar"} onClick={() => {

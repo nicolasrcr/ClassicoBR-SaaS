@@ -105,7 +105,7 @@ function AdminPlanos() {
                   <TableCell>{p.photos}</TableCell>
                   <TableCell>
                     {p.featured ? (
-                      <span className="inline-flex items-center gap-1 text-[#C9A84C]">
+                      <span className="inline-flex items-center gap-1 text-[color:var(--color-gold)]">
                         <Star className="h-3.5 w-3.5 fill-current" /> Sim
                       </span>
                     ) : (

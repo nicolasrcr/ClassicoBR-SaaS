@@ -85,7 +85,7 @@ function Login() {
 
   if (redirecting) {
     return (
-      <div className="min-h-screen bg-[#FAF9F6]">
+      <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
         <Header />
         <PostAuthSkeleton
           redirect={redirect}
@@ -98,13 +98,13 @@ function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6]">
+    <div className="min-h-screen bg-[color:var(--color-surface-cream)]">
       <Header />
       <main id="main-content" className="mx-auto flex max-w-md flex-col px-6 py-14">
         {/* Title */}
         <div className="flex items-center gap-3 mb-2">
-          <div className="h-10 w-10 rounded-full bg-[#B85A30]/10 flex items-center justify-center shrink-0">
-            <LogIn className="h-5 w-5 text-[#B85A30]" />
+          <div className="h-10 w-10 rounded-full bg-[color:var(--color-terracotta-soft)]/10 flex items-center justify-center shrink-0">
+            <LogIn className="h-5 w-5 text-[color:var(--color-terracotta-soft)]" />
           </div>
           <div>
             <h1 className="font-serif text-3xl text-foreground">Entrar</h1>
@@ -112,12 +112,12 @@ function Login() {
           </div>
         </div>
 
-        <div className="mt-8 rounded-[12px] border border-[#E8E6E0] bg-white p-6 shadow-sm space-y-4">
+        <div className="mt-8 rounded-[12px] border border-[color:var(--color-border-cream)] bg-white p-6 shadow-sm space-y-4">
           {/* Google */}
           <Button
             type="button"
             variant="outline"
-            className="w-full h-10 flex items-center gap-2 border-[#E8E6E0] hover:bg-[#FAF9F6] font-medium"
+            className="w-full h-10 flex items-center gap-2 border-[color:var(--color-border-cream)] hover:bg-[color:var(--color-surface-cream)] font-medium"
             onClick={handleGoogle}
           >
             <svg className="h-4 w-4 shrink-0" viewBox="0 0 24 24">
@@ -130,9 +130,9 @@ function Login() {
           </Button>
 
           <div className="relative flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="flex-1 h-px bg-[#E8E6E0]" />
+            <span className="flex-1 h-px bg-[color:var(--color-border-cream)]" />
             <span>ou entre com e-mail</span>
-            <span className="flex-1 h-px bg-[#E8E6E0]" />
+            <span className="flex-1 h-px bg-[color:var(--color-border-cream)]" />
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -145,9 +145,9 @@ function Login() {
                 onChange={(e) => { setEmail(e.target.value); clearError("email"); }}
                 placeholder="voce@email.com"
                 autoComplete="email"
-                className={errors.email ? "border-[#993C1D] focus-visible:ring-[#993C1D]/20" : ""}
+                className={errors.email ? "border-[color:var(--color-terracotta-deep)] focus-visible:ring-[color:var(--color-terracotta-deep)]/20" : ""}
               />
-              {errors.email && <p className="mt-1 text-xs text-[#993C1D]">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{errors.email}</p>}
               <p className="mt-1 text-[11px] text-muted-foreground">
                 Demo: qualquer e-mail funciona. Use "admin@..." para acesso admin.
               </p>
@@ -159,7 +159,7 @@ function Login() {
                 <Label className="text-sm font-medium">Senha</Label>
                 <Link
                   to="/esqueci-senha"
-                  className="text-xs text-[#185FA5] hover:underline"
+                  className="text-xs text-[color:var(--color-cat-todo)] hover:underline"
                 >
                   Esqueci minha senha
                 </Link>
@@ -171,7 +171,7 @@ function Login() {
                   onChange={(e) => { setSenha(e.target.value); clearError("senha"); }}
                   placeholder="Sua senha"
                   autoComplete="current-password"
-                  className={`pr-10 ${errors.senha ? "border-[#993C1D] focus-visible:ring-[#993C1D]/20" : ""}`}
+                  className={`pr-10 ${errors.senha ? "border-[color:var(--color-terracotta-deep)] focus-visible:ring-[color:var(--color-terracotta-deep)]/20" : ""}`}
                 />
                 <button
                   type="button"
@@ -182,13 +182,13 @@ function Login() {
                   {showSenha ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {errors.senha && <p className="mt-1 text-xs text-[#993C1D]">{errors.senha}</p>}
+              {errors.senha && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{errors.senha}</p>}
             </div>
 
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#B85A30] hover:bg-[#993C1D] text-white font-medium h-10"
+              className="w-full bg-[color:var(--color-terracotta-soft)] hover:bg-[color:var(--color-terracotta-deep)] text-white font-medium h-10"
             >
               {loading ? "Entrando…" : "Entrar"}
             </Button>
@@ -199,7 +199,7 @@ function Login() {
             <Link
               to="/cadastro"
               search={redirect ? { redirect } : undefined}
-              className="text-[#B85A30] underline hover:opacity-80 font-medium"
+              className="text-[color:var(--color-terracotta-soft)] underline hover:opacity-80 font-medium"
             >
               Criar conta grátis
             </Link>
