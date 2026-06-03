@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { MapPin, Star, Flag, ShieldCheck, TrendingUp, MessageCircle, Car } from "lucide-react";
+import { MapPin, Star, Flag, ShieldCheck, TrendingUp, MessageCircle, Car, Mail, Phone, BadgeCheck } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CarCard } from "@/components/CarCard";
