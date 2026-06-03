@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
  * - Saves (debounced) on every change.
  * - Returns `hasDraft` so the UI can show a "rascunho restaurado" banner.
  */
-export function useFormDraft<T extends Record<string, unknown>>(
+export function useFormDraft<T extends object>(
   key: string,
   initial: T,
   options: { debounceMs?: number } = {},
