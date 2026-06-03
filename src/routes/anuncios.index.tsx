@@ -50,6 +50,25 @@ function Anuncios() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [q]);
 
+  // Sync filter.search back to ?q= URL param (debounced) so deep links survive
+  useEffect(() => {
+    const t = setTimeout(() => {
+      const next = filters.search.trim();
+      const currentQ = (q ?? "").trim();
+      if (next === currentQ) return;
+      navigate({
+        search: (prev: { q?: string; page: number }) => ({
+          ...prev,
+          q: next || undefined,
+          page: 1,
+        }),
+        replace: true,
+      });
+    }, 350);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters.search]);
+
   const [view, setView] = useState<"grid" | "list">("grid");
   const [showSidebar, setShowSidebar] = useState(true);
   const [localColor, setLocalColor] = useState("all");
