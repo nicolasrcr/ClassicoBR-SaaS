@@ -14,6 +14,11 @@ export function DemoSwitcher() {
   const { loginAs, logout } = useAppStore();
   const user = useCurrentUser();
 
+  // Only render in demo mode (default: enabled in dev, off in production unless explicitly enabled)
+  const demoEnabled =
+    import.meta.env.VITE_DEMO_MODE === "true" || import.meta.env.DEV;
+  if (!demoEnabled) return null;
+
   return (
     <div className="fixed bottom-6 left-6 z-50">
       <button
