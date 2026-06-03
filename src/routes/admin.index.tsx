@@ -4,7 +4,7 @@ import {
   ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
 import {
-  ArrowDownRight, ArrowUpRight, FilePlus2, FileText, Flag, MessageSquare, ShieldAlert, Ban, CheckCircle2, DollarSign, AlertTriangle, UserPlus, Users, Wallet, UserPlus2,
+  ArrowDownRight, ArrowUpRight, FilePlus2, FileText, Flag, MessageSquare, ShieldAlert, Ban, CheckCircle2, DollarSign, AlertTriangle, TrendingUp, UserPlus, Users, Wallet, UserPlus2,
 } from "lucide-react";
 import { useAppStore } from "@/store/app-store";
 
