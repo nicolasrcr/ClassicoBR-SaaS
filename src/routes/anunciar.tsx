@@ -222,7 +222,7 @@ const testForm: FormData = {
 
 // ─── Helpers UI ───────────────────────────────────────────────────────────────
 
-function ProgressBar({ step }: { step: Step }) {
+function ProgressBar({ step, percent }: { step: Step; percent: number }) {
   return (
     <div className="sticky top-16 z-30 bg-background border-b border-border">
       <div className="mx-auto max-w-5xl px-6 py-3">
@@ -248,6 +248,16 @@ function ProgressBar({ step }: { step: Step }) {
               {i < 2 && <div className={cn("h-px flex-1", step > s ? "bg-[color:var(--color-cat-complete)]" : "bg-border")} />}
             </div>
           ))}
+        </div>
+        <div className="mt-2 flex items-center gap-3">
+          <Progress
+            value={percent}
+            aria-label={`Progresso do preenchimento: ${percent}%`}
+            className="h-1.5"
+          />
+          <span className="text-xs font-medium text-muted-foreground tabular-nums w-10 text-right">
+            {percent}%
+          </span>
         </div>
       </div>
     </div>
