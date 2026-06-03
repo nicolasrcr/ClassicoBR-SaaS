@@ -1103,7 +1103,11 @@ function Anunciar() {
               </section>
 
               {/* Descrição */}
-              <section className="rounded-[10px] border border-border bg-card p-6">
+              <section
+                data-field="description"
+                data-has-error={err("description") ? "true" : undefined}
+                className="rounded-[10px] border border-border bg-card p-6"
+              >
                 <div className="mb-1 flex items-center justify-between">
                   <SectionTitle>Descrição</SectionTitle>
                   <span className={cn(
