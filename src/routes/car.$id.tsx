@@ -174,7 +174,7 @@ function CarDetail() {
                   ["Aceita ajudar regularização", sit.aceitaAjudarRegularizacao],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-start gap-2 text-sm">
-                    <span className="mt-0.5 text-base leading-none">{docIcon(v.split(" ")[0])}</span>
+                    <span className="mt-0.5 leading-none"><DocIcon val={v.split(" ")[0]} /></span>
                     <div>
                       <dt className="text-xs text-muted-foreground uppercase tracking-wide">{k}</dt>
                       <dd className="font-medium">{DOC_LABELS[v.split(" ")[0]] ?? v}</dd>
@@ -189,8 +189,9 @@ function CarDetail() {
                 </div>
               )}
               {[sit.ipva === "atrasado", sit.licenciamento === "atrasado", sit.chassi !== "visivelLegivel"].some(Boolean) && (
-                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800">
-                  ℹ️ Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar.
+                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800 flex items-start gap-2">
+                  <HelpCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar.</span>
                 </div>
               )}
               <p className="mt-3 text-xs text-muted-foreground">Declarado pelo vendedor — não verificado pela plataforma</p>
