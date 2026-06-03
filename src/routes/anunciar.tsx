@@ -339,6 +339,7 @@ function Anunciar() {
   const markStepTouched = (fields: string[]) =>
     setTouched((p) => fields.reduce((acc, f) => ({ ...acc, [f]: true }), { ...p }));
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadErrors, setUploadErrors] = useState<string[]>([]);
 
   const upd = <K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
@@ -359,7 +360,8 @@ function Anunciar() {
     if (form.km && (isNaN(Number(form.km)) || Number(form.km) < 0))
       e.km = "Quilometragem inválida";
 
-    if (form.photos.length === 0) e.photos = "Adicione pelo menos 1 foto";
+    if (form.photos.length < MIN_PHOTOS)
+      e.photos = `Adicione pelo menos ${MIN_PHOTOS} foto`;
     if (!form.description.trim()) e.description = "Adicione uma descrição";
     else if (form.description.trim().length < 20)
       e.description = "Descrição muito curta (mínimo 20 caracteres)";
@@ -382,6 +384,33 @@ function Anunciar() {
 
   const stepHasErrors = (s: Step) => STEP_FIELDS[s].some((f) => errors[f]);
   const err = (field: string) => (touched[field] ? errors[field] ?? null : null);
+
+  // ─── Autofoco no primeiro campo com erro ────────────────────────────────────
+  const focusFirstError = (s: Step) => {
+    const firstErrorField = STEP_FIELDS[s].find((f) => errors[f]);
+    if (!firstErrorField) return;
+    // Aguarda repintura para que data-has-error esteja aplicado
+    requestAnimationFrame(() => {
+      const container = document.querySelector<HTMLElement>(
+        `[data-field="${firstErrorField}"]`,
+      );
+      if (!container) return;
+      container.scrollIntoView({ behavior: "smooth", block: "center" });
+      const focusable = container.querySelector<HTMLElement>(
+        'input:not([type="hidden"]), textarea, select, button, [role="combobox"], [tabindex]:not([tabindex="-1"])',
+      );
+      focusable?.focus({ preventScroll: true });
+    });
+  };
+
+  // ─── Progresso de preenchimento (campos obrigatórios) ───────────────────────
+  const REQUIRED_FIELDS: string[] = [
+    "category", "brand", "model", "anoFab",
+    "photos", "description",
+    "estadoConservacao", "originalidade", "cidade",
+  ];
+  const filledCount = REQUIRED_FIELDS.filter((f) => !errors[f]).length;
+  const progressPct = Math.round((filledCount / REQUIRED_FIELDS.length) * 100);
 
   // ─── CEP Lookup (mock) ──────────────────────────────────────────────────────
   const lookupCep = (cep: string) => {
