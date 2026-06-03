@@ -380,7 +380,7 @@ function Anuncios() {
                   ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
                   : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
               )}>
-                {filtered.map((listing) => {
+                {pagedItems.map((listing) => {
                   const color = CATEGORY_COLORS[listing.category];
                   const favorited = user ? isFavorited(user.id, listing.id) : false;
                   return (
@@ -485,7 +485,7 @@ function Anuncios() {
             ) : (
               /* List view */
               <div className="flex flex-col gap-3">
-                {filtered.map((listing) => {
+                {pagedItems.map((listing) => {
                   const color = CATEGORY_COLORS[listing.category];
                   const favorited = user ? isFavorited(user.id, listing.id) : false;
                   const inCompare = compareIds.includes(listing.id);
