@@ -455,8 +455,9 @@ function AnuncioDetalhe() {
               )}
 
               {hasPendencias && (
-                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800">
-                  ℹ️ Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar o preço.
+                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800 flex items-start gap-2">
+                  <HelpCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar o preço.</span>
                 </div>
               )}
 

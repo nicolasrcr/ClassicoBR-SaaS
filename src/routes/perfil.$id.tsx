@@ -168,7 +168,7 @@ function PerfilVendedor() {
                 )}
                 {seller.verificacoes.kyc && (
                   <Badge className="text-xs bg-yellow-100 text-yellow-800 border-yellow-300 gap-1">
-                    <span>🏅</span> Identidade verificada (KYC)
+                    <ShieldCheck className="h-3 w-3" /> Identidade verificada (KYC)
                   </Badge>
                 )}
               </div>

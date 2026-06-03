@@ -467,19 +467,19 @@ function AbaDados() {
           <div className="rounded-[10px] border border-border bg-card p-4">
             <div className="flex items-start gap-4">
               <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${user.verificacoes.kyc ? "bg-amber-100 text-amber-600" : "bg-muted text-muted-foreground"}`}>
-                {user.verificacoes.kyc ? "🏅" : "4"}
+                {user.verificacoes.kyc ? <Shield className="h-4 w-4" /> : "4"}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
                   <p className="font-medium text-sm">Nível 4 — Identidade (KYC)</p>
                   {user.verificacoes.kyc
-                    ? <span className="text-xs text-amber-600 font-medium">Confirmado 🏅</span>
+                    ? <span className="text-xs text-amber-600 font-medium inline-flex items-center gap-1"><Shield className="h-3 w-3" /> Confirmado</span>
                     : kycStatus === "pending"
                     ? <span className="text-xs text-[color:var(--color-cat-todo)] font-medium">Em revisão…</span>
                     : <span className="text-xs text-amber-600">Pendente</span>}
                 </div>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Badge dourado 🏅 + anúncios em destaque gratuitos
+                  Badge dourado + anúncios em destaque gratuitos
                 </p>
               </div>
             </div>
@@ -861,7 +861,7 @@ function MinhaConta() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h1 className="font-serif text-2xl truncate">{user.name}</h1>
-              {user.verificacoes.kyc && <span title="Identidade confirmada">🏅</span>}
+              {user.verificacoes.kyc && <Shield className="h-4 w-4 text-amber-600" aria-label="Identidade confirmada" />}
               {user.plan === "premium" && (
                 <span className="text-xs font-semibold text-amber-600 bg-amber-100 px-2 py-0.5 rounded-full">Premium</span>
               )}
