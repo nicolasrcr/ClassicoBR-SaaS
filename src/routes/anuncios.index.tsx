@@ -1,7 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  ChevronDown, ChevronUp, Grid2X2, List, MapPin, Search,
+  ChevronDown, ChevronUp, ChevronLeft, ChevronRight, MoreHorizontal,
+  Grid2X2, List, MapPin, Search,
   SlidersHorizontal, Star, X, Heart, GitCompareArrows, Car,
 } from "lucide-react";
 import { Header } from "@/components/Header";
@@ -13,10 +14,8 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { buttonVariants } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { useFavoritesStore } from "@/store/favorites-store";
 import { CATEGORY_COLORS, CATEGORY_LABELS } from "@/lib/types";
