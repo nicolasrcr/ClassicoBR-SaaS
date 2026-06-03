@@ -101,6 +101,30 @@
     letter-spacing: -0.02em;
   }
 
+  /* ── Global keyboard focus ring (a11y) ───────────────────────────
+     Garante indicador visível em qualquer elemento interativo focado
+     via teclado. Mouse/touch não dispara :focus-visible. */
+  :where(a, button, [role="button"], [role="tab"], [role="menuitem"],
+         input, select, textarea, summary, [tabindex]:not([tabindex="-1"]))
+    :focus-visible,
+  :where(a, button, [role="button"], [role="tab"], [role="menuitem"],
+         input, select, textarea, summary, [tabindex]:not([tabindex="-1"]))
+    :where(:focus-visible) {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [role="tab"]:focus-visible,
+  [role="menuitem"]:focus-visible,
+  summary:focus-visible,
+  [tabindex]:not([tabindex="-1"]):focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 2px;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
