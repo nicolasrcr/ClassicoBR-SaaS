@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { BRANDS } from "@/lib/mock-data";
 import { useAppStore } from "@/store/app-store";
@@ -79,6 +80,12 @@ const PLACAS = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 const RAIOS = ["25km", "50km", "100km", "Todo Brasil"];
 
 const ANOS = Array.from({ length: 2024 - 1950 + 1 }, (_, i) => String(2024 - i));
+
+// ─── Limites de upload ────────────────────────────────────────────────────────
+const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+const MAX_IMAGE_SIZE_BYTES = 8 * 1024 * 1024; // 8 MB
+const MIN_PHOTOS = 1;
+const MAX_PHOTOS = 5;
 
 const CATEGORY_INFO = {
   completo: {
@@ -215,7 +222,7 @@ const testForm: FormData = {
 
 // ─── Helpers UI ───────────────────────────────────────────────────────────────
 
-function ProgressBar({ step }: { step: Step }) {
+function ProgressBar({ step, percent }: { step: Step; percent: number }) {
   return (
     <div className="sticky top-16 z-30 bg-background border-b border-border">
       <div className="mx-auto max-w-5xl px-6 py-3">
@@ -242,6 +249,16 @@ function ProgressBar({ step }: { step: Step }) {
             </div>
           ))}
         </div>
+        <div className="mt-2 flex items-center gap-3">
+          <Progress
+            value={percent}
+            aria-label={`Progresso do preenchimento: ${percent}%`}
+            className="h-1.5"
+          />
+          <span className="text-xs font-medium text-muted-foreground tabular-nums w-10 text-right">
+            {percent}%
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -252,10 +269,16 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 }
 
 function FieldGroup({
-  label, children, required, error,
-}: { label: string; children: React.ReactNode; required?: boolean; error?: string | null }) {
+  label, children, required, error, fieldId,
+}: {
+  label: string;
+  children: React.ReactNode;
+  required?: boolean;
+  error?: string | null;
+  fieldId?: string;
+}) {
   return (
-    <div>
+    <div data-field={fieldId} data-has-error={error ? "true" : undefined}>
       <Label className="mb-1 block text-sm font-medium">
         {label}{required && <span className="ml-0.5 text-destructive">*</span>}
       </Label>
@@ -326,6 +349,7 @@ function Anunciar() {
   const markStepTouched = (fields: string[]) =>
     setTouched((p) => fields.reduce((acc, f) => ({ ...acc, [f]: true }), { ...p }));
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploadErrors, setUploadErrors] = useState<string[]>([]);
 
   const upd = <K extends keyof FormData>(k: K, v: FormData[K]) =>
     setForm((p) => ({ ...p, [k]: v }));
@@ -346,7 +370,8 @@ function Anunciar() {
     if (form.km && (isNaN(Number(form.km)) || Number(form.km) < 0))
       e.km = "Quilometragem inválida";
 
-    if (form.photos.length === 0) e.photos = "Adicione pelo menos 1 foto";
+    if (form.photos.length < MIN_PHOTOS)
+      e.photos = `Adicione pelo menos ${MIN_PHOTOS} foto`;
     if (!form.description.trim()) e.description = "Adicione uma descrição";
     else if (form.description.trim().length < 20)
       e.description = "Descrição muito curta (mínimo 20 caracteres)";
@@ -369,6 +394,33 @@ function Anunciar() {
 
   const stepHasErrors = (s: Step) => STEP_FIELDS[s].some((f) => errors[f]);
   const err = (field: string) => (touched[field] ? errors[field] ?? null : null);
+
+  // ─── Autofoco no primeiro campo com erro ────────────────────────────────────
+  const focusFirstError = (s: Step) => {
+    const firstErrorField = STEP_FIELDS[s].find((f) => errors[f]);
+    if (!firstErrorField) return;
+    // Aguarda repintura para que data-has-error esteja aplicado
+    requestAnimationFrame(() => {
+      const container = document.querySelector<HTMLElement>(
+        `[data-field="${firstErrorField}"]`,
+      );
+      if (!container) return;
+      container.scrollIntoView({ behavior: "smooth", block: "center" });
+      const focusable = container.querySelector<HTMLElement>(
+        'input:not([type="hidden"]), textarea, select, button, [role="combobox"], [tabindex]:not([tabindex="-1"])',
+      );
+      focusable?.focus({ preventScroll: true });
+    });
+  };
+
+  // ─── Progresso de preenchimento (campos obrigatórios) ───────────────────────
+  const REQUIRED_FIELDS: string[] = [
+    "category", "brand", "model", "anoFab",
+    "photos", "description",
+    "estadoConservacao", "originalidade", "cidade",
+  ];
+  const filledCount = REQUIRED_FIELDS.filter((f) => !errors[f]).length;
+  const progressPct = Math.round((filledCount / REQUIRED_FIELDS.length) * 100);
 
   // ─── CEP Lookup (mock) ──────────────────────────────────────────────────────
   const lookupCep = (cep: string) => {
@@ -394,10 +446,36 @@ function Anunciar() {
   // ─── Upload fotos ───────────────────────────────────────────────────────────
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    if (form.photos.length >= 5) return;
-    const slots = 5 - form.photos.length;
-    const toAdd = files.slice(0, slots).map((f) => URL.createObjectURL(f));
-    upd("photos", [...form.photos, ...toAdd]);
+    markTouched("photos");
+
+    const newErrors: string[] = [];
+    const accepted: File[] = [];
+
+    const remainingSlots = MAX_PHOTOS - form.photos.length;
+    if (files.length > remainingSlots) {
+      newErrors.push(
+        `Você selecionou ${files.length} arquivos, mas só restam ${remainingSlots} vaga(s). Os demais foram ignorados.`,
+      );
+    }
+
+    for (const file of files.slice(0, remainingSlots)) {
+      if (!ACCEPTED_IMAGE_TYPES.includes(file.type)) {
+        newErrors.push(`"${file.name}": formato não suportado (use JPG, PNG ou WEBP).`);
+        continue;
+      }
+      if (file.size > MAX_IMAGE_SIZE_BYTES) {
+        const mb = (file.size / 1024 / 1024).toFixed(1);
+        newErrors.push(`"${file.name}": ${mb} MB excede o limite de 8 MB.`);
+        continue;
+      }
+      accepted.push(file);
+    }
+
+    if (accepted.length > 0) {
+      const toAdd = accepted.map((f) => URL.createObjectURL(f));
+      upd("photos", [...form.photos, ...toAdd]);
+    }
+    setUploadErrors(newErrors);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -410,6 +488,7 @@ function Anunciar() {
     markStepTouched(STEP_FIELDS[s]);
     if (stepHasErrors(s)) {
       toast.error("Corrija os campos destacados antes de continuar");
+      focusFirstError(s);
       return false;
     }
     return true;
@@ -522,7 +601,7 @@ function Anunciar() {
   return (
     <>
       <Header />
-      <ProgressBar step={step} />
+      <ProgressBar step={step} percent={progressPct} />
 
       {hasDraft && draftBannerVisible && (
         <div
@@ -585,7 +664,11 @@ function Anunciar() {
             <div className="space-y-8 lg:col-span-2">
 
               {/* Condição */}
-              <section className="rounded-[10px] border border-border bg-card p-6">
+              <section
+                data-field="category"
+                data-has-error={err("category") ? "true" : undefined}
+                className="rounded-[10px] border border-border bg-card p-6"
+              >
                 <SectionTitle>Condição do veículo</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                   {(Object.keys(CATEGORY_INFO) as Category[]).map((cat) => {
@@ -629,7 +712,7 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Dados do veículo</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FieldGroup label="Marca" required error={err("brand")}>
+                  <FieldGroup label="Marca" required error={err("brand")} fieldId="brand">
                     <Select value={form.brand} onValueChange={(v) => { upd("brand", v); upd("model", ""); markTouched("brand"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
@@ -638,7 +721,7 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Modelo" required error={err("model") || err("modelCustom")}>
+                  <FieldGroup label="Modelo" required error={err("model") || err("modelCustom")} fieldId="model">
                     <Select
                       value={form.model}
                       onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); markTouched("model"); }}
@@ -661,7 +744,7 @@ function Anunciar() {
                     )}
                   </FieldGroup>
 
-                  <FieldGroup label="Ano de fabricação" required error={err("anoFab")}>
+                  <FieldGroup label="Ano de fabricação" required error={err("anoFab")} fieldId="anoFab">
                     <Select value={form.anoFab} onValueChange={(v) => { upd("anoFab", v); markTouched("anoFab"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
@@ -714,7 +797,7 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Quilometragem" error={err("km")}>
+                  <FieldGroup label="Quilometragem" error={err("km")} fieldId="km">
                     <Input
                       type="number"
                       placeholder="Ex: 87000"
@@ -923,14 +1006,18 @@ function Anunciar() {
             <div className="space-y-6 lg:col-span-2">
 
               {/* Upload fotos */}
-              <section className="rounded-[10px] border border-border bg-card p-6">
+              <section
+                data-field="photos"
+                data-has-error={err("photos") ? "true" : undefined}
+                className="rounded-[10px] border border-border bg-card p-6"
+              >
                 <div className="mb-1 flex items-center justify-between">
                   <SectionTitle>Fotos</SectionTitle>
                   <span className={cn(
                     "text-sm font-medium",
-                    form.photos.length >= 5 ? "text-[color:var(--color-terracotta)]" : "text-muted-foreground",
+                    form.photos.length >= MAX_PHOTOS ? "text-[color:var(--color-terracotta)]" : "text-muted-foreground",
                   )}>
-                    {form.photos.length} / 5
+                    {form.photos.length} / {MAX_PHOTOS}
                   </span>
                 </div>
 
@@ -959,11 +1046,11 @@ function Anunciar() {
                 {/* Dropzone */}
                 <button
                   type="button"
-                  disabled={form.photos.length >= 5}
+                  disabled={form.photos.length >= MAX_PHOTOS}
                   onClick={() => { fileInputRef.current?.click(); markTouched("photos"); }}
                   className={cn(
                     "flex min-h-11 w-full flex-col items-center gap-3 rounded-[8px] border-2 border-dashed px-6 py-10 transition-colors",
-                    form.photos.length >= 5
+                    form.photos.length >= MAX_PHOTOS
                       ? "cursor-not-allowed border-border opacity-50"
                       : "border-border hover:border-[color:var(--color-terracotta)] hover:bg-[color:var(--color-terracotta)]/5",
                   )}
@@ -971,9 +1058,11 @@ function Anunciar() {
                   <Upload className="h-8 w-8 text-muted-foreground" />
                   <div className="text-center">
                     <p className="text-sm font-medium">
-                      {form.photos.length >= 5 ? "Limite de 5 fotos atingido" : "Clique para adicionar fotos"}
+                      {form.photos.length >= MAX_PHOTOS
+                        ? `Limite de ${MAX_PHOTOS} fotos atingido`
+                        : `Clique para adicionar fotos (mín. ${MIN_PHOTOS}, máx. ${MAX_PHOTOS})`}
                     </p>
-                    <p className="mt-1 text-xs text-muted-foreground">JPG, PNG, WEBP — máx. 5 fotos</p>
+                    <p className="mt-1 text-xs text-muted-foreground">JPG, PNG ou WEBP — até 8 MB cada</p>
                   </div>
                 </button>
                 {err("photos") && (
@@ -981,10 +1070,27 @@ function Anunciar() {
                     <AlertCircle className="h-3 w-3" /> {err("photos")}
                   </p>
                 )}
+                {uploadErrors.length > 0 && (
+                  <ul
+                    role="alert"
+                    aria-live="polite"
+                    className="mt-2 space-y-1 rounded-md border border-destructive/30 bg-destructive/5 p-2"
+                  >
+                    {uploadErrors.map((msg, i) => (
+                      <li
+                        key={i}
+                        className="flex items-start gap-1.5 text-xs text-destructive"
+                      >
+                        <AlertCircle className="mt-0.5 h-3 w-3 shrink-0" />
+                        <span>{msg}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/*"
+                  accept={ACCEPTED_IMAGE_TYPES.join(",")}
                   multiple
                   className="sr-only"
                   onChange={handleFileChange}
@@ -997,7 +1103,11 @@ function Anunciar() {
               </section>
 
               {/* Descrição */}
-              <section className="rounded-[10px] border border-border bg-card p-6">
+              <section
+                data-field="description"
+                data-has-error={err("description") ? "true" : undefined}
+                className="rounded-[10px] border border-border bg-card p-6"
+              >
                 <div className="mb-1 flex items-center justify-between">
                   <SectionTitle>Descrição</SectionTitle>
                   <span className={cn(
@@ -1075,6 +1185,7 @@ function Anunciar() {
 
                 <div className="flex items-end gap-4">
                   <div className="flex-1">
+                    <div data-field="price" data-has-error={err("price") ? "true" : undefined}>
                     <Label className="mb-1 block text-sm">Valor (R$)</Label>
                     <div className="relative">
                       <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground">R$</span>
@@ -1092,6 +1203,7 @@ function Anunciar() {
                         <AlertCircle className="h-3 w-3" /> {err("price")}
                       </p>
                     )}
+                    </div>
                   </div>
                   <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
                     <input
@@ -1120,7 +1232,7 @@ function Anunciar() {
                 </p>
 
                 <div className="space-y-5">
-                  <FieldGroup label="Estado de conservação" required error={err("estadoConservacao")}>
+                  <FieldGroup label="Estado de conservação" required error={err("estadoConservacao")} fieldId="estadoConservacao">
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <ShieldCheck className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Como está hoje o veículo, em termos de carroceria, mecânica e acabamento.</span>
@@ -1135,7 +1247,7 @@ function Anunciar() {
                     />
                   </FieldGroup>
 
-                  <FieldGroup label="Originalidade" required error={err("originalidade")}>
+                  <FieldGroup label="Originalidade" required error={err("originalidade")} fieldId="originalidade">
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <Star className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Quanto do veículo permanece original de fábrica (motor, câmbio, pintura, interior).</span>
@@ -1187,7 +1299,7 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Localização</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FieldGroup label="CEP" error={err("cep")}>
+                  <FieldGroup label="CEP" error={err("cep")} fieldId="cep">
                     <Input
                       placeholder="00000-000"
                       value={form.cep}
@@ -1199,7 +1311,7 @@ function Anunciar() {
                       maxLength={9}
                     />
                   </FieldGroup>
-                  <FieldGroup label="Cidade" required error={err("cidade")}>
+                  <FieldGroup label="Cidade" required error={err("cidade")} fieldId="cidade">
                     <Input
                       placeholder="Cidade"
                       value={form.cidade}
@@ -1244,7 +1356,7 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Contato</SectionTitle>
                 <div className="space-y-4">
-                  <FieldGroup label="WhatsApp" error={err("whatsapp")}>
+                  <FieldGroup label="WhatsApp" error={err("whatsapp")} fieldId="whatsapp">
                     <Input
                       placeholder="(11) 99999-9999"
                       value={form.whatsapp}
