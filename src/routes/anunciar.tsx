@@ -321,6 +321,10 @@ function Anunciar() {
   const [published, setPublished] = useState(false);
   const [newListingId, setNewListingId] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const markTouched = (field: string) => setTouched((p) => (p[field] ? p : { ...p, [field]: true }));
+  const markStepTouched = (fields: string[]) =>
+    setTouched((p) => fields.reduce((acc, f) => ({ ...acc, [f]: true }), { ...p }));
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const upd = <K extends keyof FormData>(k: K, v: FormData[K]) =>
@@ -329,6 +333,42 @@ function Anunciar() {
   const priceNum = parseFloat(form.price.replace(/\D/g, "")) / 100 || 0;
 
   const availableModels = form.brand ? (MODELS_BY_BRAND[form.brand] ?? []) : [];
+
+  // ─── Erros inline (derivados) ───────────────────────────────────────────────
+  const errors = useMemo(() => {
+    const e: Record<string, string> = {};
+    if (!form.category) e.category = "Selecione a condição do veículo";
+    if (!form.brand) e.brand = "Selecione a marca";
+    if (!form.model) e.model = "Selecione o modelo";
+    if (form.model === MODEL_NAO_LISTADO && !form.modelCustom.trim())
+      e.modelCustom = "Escreva o nome do modelo";
+    if (!form.anoFab) e.anoFab = "Informe o ano de fabricação";
+    if (form.km && (isNaN(Number(form.km)) || Number(form.km) < 0))
+      e.km = "Quilometragem inválida";
+
+    if (form.photos.length === 0) e.photos = "Adicione pelo menos 1 foto";
+    if (!form.description.trim()) e.description = "Adicione uma descrição";
+    else if (form.description.trim().length < 20)
+      e.description = "Descrição muito curta (mínimo 20 caracteres)";
+
+    if (!form.semPreco && !form.price) e.price = "Informe o preço ou marque 'Não informar'";
+    if (!form.estadoConservacao) e.estadoConservacao = "Indique o estado de conservação";
+    if (!form.originalidade) e.originalidade = "Indique o nível de originalidade";
+    if (!form.cidade.trim()) e.cidade = "Informe a cidade";
+    if (form.cep && !/^\d{5}-?\d{3}$/.test(form.cep)) e.cep = "CEP inválido (use 00000-000)";
+    if (form.whatsapp && !/^\(?\d{2}\)?\s*\d{4,5}-?\d{4}$/.test(form.whatsapp))
+      e.whatsapp = "WhatsApp inválido";
+    return e;
+  }, [form]);
+
+  const STEP_FIELDS: Record<Step, string[]> = {
+    1: ["category", "brand", "model", "modelCustom", "anoFab", "km"],
+    2: ["photos", "description"],
+    3: ["price", "estadoConservacao", "originalidade", "cidade", "cep", "whatsapp"],
+  };
+
+  const stepHasErrors = (s: Step) => STEP_FIELDS[s].some((f) => errors[f]);
+  const err = (field: string) => (touched[field] ? errors[field] ?? null : null);
 
   // ─── CEP Lookup (mock) ──────────────────────────────────────────────────────
   const lookupCep = (cep: string) => {
@@ -365,35 +405,19 @@ function Anunciar() {
     upd("photos", form.photos.filter((_, i) => i !== idx));
   };
 
-  // ─── Validações por step ────────────────────────────────────────────────────
-  const validateStep1 = () => {
-    if (!form.category) { toast.error("Selecione a condição do veículo"); return false; }
-    if (!form.brand) { toast.error("Selecione a marca"); return false; }
-    if (!form.model) { toast.error("Selecione o modelo"); return false; }
-    if (form.model === MODEL_NAO_LISTADO && !form.modelCustom.trim()) {
-      toast.error("Escreva o nome do modelo não listado"); return false;
+  // ─── Validações por step (usam errors derivados) ────────────────────────────
+  const validateStepInline = (s: Step) => {
+    markStepTouched(STEP_FIELDS[s]);
+    if (stepHasErrors(s)) {
+      toast.error("Corrija os campos destacados antes de continuar");
+      return false;
     }
-    if (!form.anoFab) { toast.error("Informe o ano de fabricação"); return false; }
-    return true;
-  };
-
-  const validateStep2 = () => {
-    if (form.photos.length === 0) { toast.error("Adicione pelo menos 1 foto"); return false; }
-    if (!form.description.trim()) { toast.error("Adicione uma descrição"); return false; }
-    return true;
-  };
-
-  const validateStep3 = () => {
-    if (!form.semPreco && !form.price) { toast.error("Informe o preço ou marque 'Não informar preço'"); return false; }
-    if (!form.estadoConservacao) { toast.error("Indique o estado de conservação"); return false; }
-    if (!form.originalidade) { toast.error("Indique o nível de originalidade"); return false; }
-    if (!form.cidade) { toast.error("Informe a cidade"); return false; }
     return true;
   };
 
   // ─── Publicar ───────────────────────────────────────────────────────────────
   const handlePublish = () => {
-    if (!validateStep3()) return;
+    if (!validateStepInline(3)) return;
 
     const id = "l_" + Date.now();
     const modeloFinal = form.model === MODEL_NAO_LISTADO ? form.modelCustom.trim() : form.model;
