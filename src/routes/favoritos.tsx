@@ -47,7 +47,7 @@ function Favoritos() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      <main className="mx-auto max-w-7xl px-6 py-10">
+      <main id="main-content" className="mx-auto max-w-7xl px-6 py-10">
         {/* Page header */}
         <div className="mb-8">
           <h1 className="font-serif text-3xl flex items-center gap-3">

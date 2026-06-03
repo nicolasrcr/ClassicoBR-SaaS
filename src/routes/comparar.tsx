@@ -105,7 +105,7 @@ function Comparar() {
     return (
       <div className="min-h-screen">
         <Header />
-        <main className="mx-auto max-w-4xl px-6 py-20 text-center">
+        <main id="main-content" className="mx-auto max-w-4xl px-6 py-20 text-center">
           <Scale className="h-16 w-16 mx-auto mb-6 text-muted-foreground/30" strokeWidth={1} />
           <h1 className="font-serif text-3xl mb-3">Comparar veículos</h1>
           <p className="text-muted-foreground mb-8 max-w-md mx-auto">

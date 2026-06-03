@@ -1,7 +1,8 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  ChevronDown, ChevronUp, Grid2X2, List, MapPin, Search,
+  ChevronDown, ChevronUp, ChevronLeft, ChevronRight, MoreHorizontal,
+  Grid2X2, List, MapPin, Search,
   SlidersHorizontal, Star, X, Heart, GitCompareArrows, Car,
 } from "lucide-react";
 import { Header } from "@/components/Header";
@@ -13,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { useFavoritesStore } from "@/store/favorites-store";
@@ -32,10 +33,12 @@ export const Route = createFileRoute("/anuncios/")({
 
 const CORES = ["Branco", "Preto", "Prata", "Cinza", "Vermelho", "Azul", "Verde", "Amarelo", "Laranja", "Bege", "Marrom", "Roxo"];
 const CARROCERIAS = ["Sedan", "Coupe", "Hatch", "Perua/Station", "Pickup", "Conversível", "Van/Kombi", "Buggy"];
+const PAGE_SIZE = 12;
 
 function Anuncios() {
   const { listings, filters, setFilter, toggleCategory, resetFilters, compareIds, toggleCompare, clearCompare } = useAppStore();
-  const { q } = Route.useSearch();
+  const { q, page } = Route.useSearch();
+  const navigate = useNavigate({ from: "/anuncios" });
   const user = useCurrentUser();
   const { toggle, isFavorited } = useFavoritesStore();
 
@@ -78,6 +81,34 @@ function Anuncios() {
     l = [...l].sort((a, b) => Number(!!b.destaquePremium) - Number(!!a.destaquePremium));
     return l;
   }, [listings, filters, localColor, localCity]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+
+  // If filters change and current page is out of range, snap back to page 1
+  useEffect(() => {
+    if (page > totalPages) {
+      navigate({ search: (prev: { q?: string; page: number }) => ({ ...prev, page: 1 }), replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPages]);
+
+  const pagedItems = useMemo(
+    () => filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [filtered, currentPage],
+  );
+
+  // Compute condensed page list for pagination UI
+  const pageNumbers = useMemo<(number | "ellipsis")[]>(() => {
+    const pages: (number | "ellipsis")[] = [];
+    const push = (n: number) => { if (!pages.includes(n)) pages.push(n); };
+    push(1);
+    if (currentPage - 1 > 2) pages.push("ellipsis");
+    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) push(i);
+    if (currentPage + 1 < totalPages - 1) pages.push("ellipsis");
+    if (totalPages > 1) push(totalPages);
+    return pages;
+  }, [currentPage, totalPages]);
 
   const activeFiltersCount = [
     filters.brand !== "all" && filters.brand,
@@ -336,7 +367,7 @@ function Anuncios() {
           )}
 
           {/* Listings */}
-          <main className="flex-1 min-w-0">
+          <main id="main-content" className="flex-1 min-w-0">
             {filtered.length === 0 ? (
               <EmptyState description="Tente remover alguns filtros ou buscar por outro termo." />
             ) : view === "grid" ? (
@@ -346,7 +377,7 @@ function Anuncios() {
                   ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
                   : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
               )}>
-                {filtered.map((listing) => {
+                {pagedItems.map((listing) => {
                   const color = CATEGORY_COLORS[listing.category];
                   const favorited = user ? isFavorited(user.id, listing.id) : false;
                   return (
@@ -451,7 +482,7 @@ function Anuncios() {
             ) : (
               /* List view */
               <div className="flex flex-col gap-3">
-                {filtered.map((listing) => {
+                {pagedItems.map((listing) => {
                   const color = CATEGORY_COLORS[listing.category];
                   const favorited = user ? isFavorited(user.id, listing.id) : false;
                   const inCompare = compareIds.includes(listing.id);
@@ -527,6 +558,79 @@ function Anuncios() {
                   );
                 })}
               </div>
+            )}
+
+            {/* Pagination */}
+            {filtered.length > PAGE_SIZE && (
+              <nav
+                aria-label="Paginação de anúncios"
+                className="mt-10 flex flex-col items-center gap-2"
+              >
+                <ul className="flex flex-row items-center gap-1">
+                  <li>
+                    <Link
+                      from="/anuncios"
+                      to="."
+                      search={(prev: { q?: string; page: number }) => ({ ...prev, page: Math.max(1, currentPage - 1) })}
+                      aria-label="Página anterior"
+                      aria-disabled={currentPage <= 1}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "default" }),
+                        "gap-1 pl-2.5",
+                        currentPage <= 1 && "pointer-events-none opacity-40",
+                      )}
+                    >
+                      <ChevronLeft className="h-4 w-4" />
+                      <span>Anterior</span>
+                    </Link>
+                  </li>
+
+                  {pageNumbers.map((p, i) =>
+                    p === "ellipsis" ? (
+                      <li key={`e-${i}`} aria-hidden="true" className="flex h-9 w-9 items-center justify-center">
+                        <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
+                      </li>
+                    ) : (
+                      <li key={p}>
+                        <Link
+                          from="/anuncios"
+                          to="."
+                          search={(prev: { q?: string; page: number }) => ({ ...prev, page: p })}
+                          aria-label={`Ir para página ${p}`}
+                          aria-current={p === currentPage ? "page" : undefined}
+                          className={cn(
+                            buttonVariants({ variant: p === currentPage ? "outline" : "ghost", size: "icon" }),
+                            p === currentPage && "border-[color:var(--color-terracotta)] text-[color:var(--color-terracotta)] font-semibold",
+                          )}
+                        >
+                          {p}
+                        </Link>
+                      </li>
+                    ),
+                  )}
+
+                  <li>
+                    <Link
+                      from="/anuncios"
+                      to="."
+                      search={(prev: { q?: string; page: number }) => ({ ...prev, page: Math.min(totalPages, currentPage + 1) })}
+                      aria-label="Próxima página"
+                      aria-disabled={currentPage >= totalPages}
+                      className={cn(
+                        buttonVariants({ variant: "ghost", size: "default" }),
+                        "gap-1 pr-2.5",
+                        currentPage >= totalPages && "pointer-events-none opacity-40",
+                      )}
+                    >
+                      <span>Próxima</span>
+                      <ChevronRight className="h-4 w-4" />
+                    </Link>
+                  </li>
+                </ul>
+                <p className="text-xs text-muted-foreground">
+                  Página {currentPage} de {totalPages} · {filtered.length} resultados
+                </p>
+              </nav>
             )}
           </main>
         </div>

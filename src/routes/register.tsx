@@ -28,7 +28,7 @@ function Register() {
   return (
     <div className="min-h-screen">
       <Header />
-      <main className="mx-auto flex max-w-md flex-col px-6 py-16">
+      <main id="main-content" className="mx-auto flex max-w-md flex-col px-6 py-16">
         <h1 className="font-serif text-3xl">Criar conta</h1>
         <p className="mt-2 text-sm text-muted-foreground">É grátis e leva menos de um minuto.</p>
         <form onSubmit={submit} className="mt-8 space-y-4 rounded-[10px] border border-border bg-card p-6">

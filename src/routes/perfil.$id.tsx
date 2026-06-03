@@ -94,7 +94,7 @@ function PerfilVendedor() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      <main className="mx-auto max-w-4xl px-6 py-10">
+      <main id="main-content" className="mx-auto max-w-4xl px-6 py-10">
 
         {/* Low-reputation warning */}
         {seller.sellerScore < 60 && (

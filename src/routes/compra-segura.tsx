@@ -33,7 +33,7 @@ function CompraSegura() {
   return (
     <div className="min-h-screen bg-[#FAF9F6]">
       <Header />
-      <main>
+      <main id="main-content">
         {/* Hero */}
         <section className="bg-[color:var(--color-charcoal)] text-white py-20">
           <div className="mx-auto max-w-3xl px-6 text-center">

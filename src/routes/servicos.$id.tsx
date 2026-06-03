@@ -21,7 +21,7 @@ function ServicoDetail() {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="mx-auto max-w-3xl flex-1 px-6 py-20 text-center">
+        <main id="main-content" className="mx-auto max-w-3xl flex-1 px-6 py-20 text-center">
           <h1 className="font-serif text-2xl">Anúncio não encontrado</h1>
           <Link to="/servicos" className="mt-4 inline-block text-sm text-[color:var(--color-terracotta)] hover:underline">← Voltar</Link>
         </main>
