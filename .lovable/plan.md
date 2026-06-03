@@ -1,92 +1,58 @@
-## Escopo
+# Plano de correções UX/UI — ClassicosBR
 
-Quatro entregas conectadas para os módulos `/eventos` e `/servicos`, reaproveitando a infra já existente (`traceability.ts`, `TraceabilityPanel`, `app-store`, `moderation.ts`). Tudo permanece em mock/Zustand (sem backend), seguindo o padrão do resto do SAAS.
-
----
-
-## 1. Validação de origem nos uploads de Eventos
-
-**`src/lib/types.ts`**
-- Adicionar `rastreabilidade?: TraceabilityRecord` e `statusModeracao: "pendente" | "aprovado" | "reprovado" | "novas-fotos"` em `ClassicEvent` e `ServiceListing`.
-
-**`src/routes/eventos.tsx`** (formulário inline de publicação)
-- Espelhar o fluxo já usado em `servicos.tsx`: `analyzeImageFile` → `buildTraceability` → render do `<TraceabilityPanel />` antes do submit.
-- Botão "Publicar" desabilitado quando `scoreOrigem < 50` (mesmo limiar do painel); mostrar mensagem de bloqueio.
-- Eventos novos entram com `statusModeracao: "pendente"`.
-
-**`src/routes/eventos.$id.tsx` e `servicos.$id.tsx`**
-- Renderizar `<TraceabilityPanel trace={item.rastreabilidade} />` quando disponível (somente para admin/autor — usar `useCurrentUser`).
+Este é um escopo muito grande (16 blocos, ~30+ arquivos). Vou propor execução em **3 ondas** para manter qualidade e permitir revisão entre cada uma. Confirme qual onda começar (ou se quer tudo de uma vez).
 
 ---
 
-## 2. Denúncias com evidências e trilha de auditoria
+## Onda 1 — P0 (Crítico)
 
-**`src/lib/types.ts`** — estender `Report`:
-```ts
-tipoAlvo: "anuncio" | "evento" | "servico";
-alvoId: string;
-evidencias: { tipo: "url"|"texto"|"imagem"; valor: string; hash?: string }[];
-trilhaAuditoria: { acao: string; autorId: string; em: string; meta?: any }[];
-```
+Itens fundamentais que travam UX mobile e acessibilidade.
 
-**`src/store/app-store.ts`**
-- `addReport` agora aceita o shape estendido e gera entrada inicial na trilha (`"denuncia_criada"`).
-- Novas actions: `appendAuditTrail(reportId, entry)`, `requestNewPhotos(targetType, id)`.
-
-**Novo componente `src/components/ReportDialog.tsx`**
-- Dialog com motivo (select), descrição (textarea ≥ 30 chars), upload opcional de imagens (passa por `analyzeImageFile` → hash SHA-256 anexado como evidência).
-- Submit chama `addReport({ tipoAlvo, alvoId, ... })`.
-
-**Integração em `eventos.$id.tsx` e `servicos.$id.tsx`**
-- Botão "Denunciar" abre o `ReportDialog`.
-- Card "Trilha de auditoria" lista entradas da denúncia (visível para admin/autor).
+1. **Menu hamburger mobile** (`Header.tsx`)
+   - Sheet lateral com todos os links + ações de usuário
+   - Ícones Lucide + close-on-click
+2. **Contrastes WCAG AA**
+   - Substituir `text-white/{25,30,40,45,70}` por versões mais opacas
+   - Adicionar `prefers-reduced-motion` em `styles.css`
+3. **Resolver busca duplicada na home** (`routes/index.tsx`)
+   - Hero search → redireciona para `/anuncios?q=...`
+   - Remover filtros e listagem completa da home
+   - Manter apenas seção "Destaques" (6 cards) + CTA "Ver todos"
+4. **Paginação em `/anuncios`** (`anuncios.index.tsx`)
+   - 12 cards/página, `?page=N` na URL
+   - Componente `Pagination` shadcn + contador de resultados
 
 ---
 
-## 3. Busca global e filtros avançados
+## Onda 2 — P1 (Importante)
 
-**`src/routes/eventos.tsx`**
-- Estado local de filtros: `search`, `cidade`, `estado`, `tipo` (encontro/exposição/rally/leilão/feira), `dataInicio`, `dataFim`, `sort` (`relevancia`|`data-asc`|`data-desc`).
-- "Relevância": score = match em título(3pts) + descrição(2pts) + cidade/estado(1pt cada) + proximidade da data atual (bônus).
-- Componente `EventFilters` colapsável no topo.
-
-**`src/routes/servicos.tsx`**
-- Mesmos filtros menos data: `search`, `cidade`, `estado`, `tipo` (oficina/autopeça/serviço/peça-classificado), `sort` (`relevancia`|`recente`).
-
-**Helper compartilhado `src/lib/search.ts`** com `scoreRelevance(item, query)` reusável.
-
----
-
-## 4. Fila de moderação
-
-**Nova rota `src/routes/admin.moderacao.tsx`**
-- Tabs: "Eventos" | "Serviços", ordenadas por `scoreOrigem` ascendente (mais suspeitos primeiro).
-- Cada card: thumb, título, autor, `<TraceabilityPanel compact />`, status atual.
-- Ações: **Aprovar** (`statusModeracao="aprovado"`), **Reprovar** (`"reprovado"` + motivo obrigatório), **Solicitar novas fotos** (`"novas-fotos"` + notificação mock).
-- Toda ação grava entrada na trilha de auditoria do item.
-
-**Store**
-- `approveModerationItem(tipo, id)`, `rejectModerationItem(tipo, id, motivo)`, `requestNewPhotosFor(tipo, id)`.
-
-**Listagem pública (`eventos.tsx` / `servicos.tsx`)**
-- Filtrar para mostrar apenas `statusModeracao === "aprovado"` para usuários não-admin (admin vê tudo com badge de status).
-
-**Header admin**
-- Adicionar link "Moderação" no `admin.tsx`.
+5. **Unificar cores hardcoded → CSS vars** (find/replace global)
+6. **Auto-save de rascunho** (`anunciar.tsx`)
+   - Hook `useFormDraft` com debounce + localStorage
+   - Banner de "Rascunho encontrado"
+7. **Stepper visual + validação inline** (`anunciar.tsx`)
+8. **Filtros colapsam em Sheet no mobile** (`anuncios.index.tsx`)
+   - Badge com contagem de filtros ativos
+9. **Aria-labels em botões icon-only** (~12 locais)
+10. **Loading skeletons** (`ListingSkeleton` + Suspense)
 
 ---
 
-## Detalhes técnicos
+## Onda 3 — P2 (Refinamentos)
 
-- Persistência: Zustand já está persistido em `localStorage`; novos campos entram no mesmo store. Sem migrations / Supabase nesta etapa.
-- `screen`/`navigator` já estão guarded em `traceability.ts`.
-- Bloqueio de upload: limiar `scoreOrigem >= 50` (consistente com `TraceabilityPanel`).
-- Mock-data: adicionar `statusModeracao: "aprovado"` aos eventos/serviços existentes para não sumirem da listagem.
+11. Touch targets ≥ 44px em mobile
+12. Emojis → ícones Lucide (`anuncios.$id.tsx`)
+13. Empty states contextuais (variants em `EmptyState.tsx`)
+14. Breadcrumbs no admin
+15. Skip navigation + landmarks semânticos
+16. DemoSwitcher condicionado a `VITE_DEMO_MODE` + remover FAB conflitante
 
 ---
 
-## Arquivos tocados
+## Como prefere prosseguir?
 
-Criar: `src/components/ReportDialog.tsx`, `src/components/EventFilters.tsx`, `src/components/ServiceFilters.tsx`, `src/lib/search.ts`, `src/routes/admin.moderacao.tsx`.
+**Opção A** — Eu executo as 3 ondas em sequência sem parar (mais rápido, mas menos checkpoint).
+**Opção B** — Executo apenas a Onda 1 (P0) agora, você revisa, e seguimos.
+**Opção C** — Outra prioridade/seleção que você indicar.
 
-Editar: `src/lib/types.ts`, `src/lib/mock-data.ts`, `src/store/app-store.ts`, `src/routes/eventos.tsx`, `src/routes/eventos.$id.tsx`, `src/routes/servicos.tsx`, `src/routes/servicos.$id.tsx`, `src/routes/admin.tsx`, `src/components/Header.tsx` (se necessário).
+Recomendo **Opção B** porque mudanças P0 (especialmente remover busca/filtros da home e adicionar paginação) alteram fluxos importantes — vale validar antes de empilhar P1/P2 em cima.
