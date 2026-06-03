@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
   ChevronDown, ChevronUp, Grid2X2, List, MapPin, Search,
@@ -15,6 +15,10 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Pagination, PaginationContent, PaginationItem, PaginationLink,
+  PaginationNext, PaginationPrevious, PaginationEllipsis,
+} from "@/components/ui/pagination";
 import { useAppStore, useCurrentUser } from "@/store/app-store";
 import { useFavoritesStore } from "@/store/favorites-store";
 import { CATEGORY_COLORS, CATEGORY_LABELS } from "@/lib/types";
@@ -32,10 +36,12 @@ export const Route = createFileRoute("/anuncios/")({
 
 const CORES = ["Branco", "Preto", "Prata", "Cinza", "Vermelho", "Azul", "Verde", "Amarelo", "Laranja", "Bege", "Marrom", "Roxo"];
 const CARROCERIAS = ["Sedan", "Coupe", "Hatch", "Perua/Station", "Pickup", "Conversível", "Van/Kombi", "Buggy"];
+const PAGE_SIZE = 12;
 
 function Anuncios() {
   const { listings, filters, setFilter, toggleCategory, resetFilters, compareIds, toggleCompare, clearCompare } = useAppStore();
-  const { q } = Route.useSearch();
+  const { q, page } = Route.useSearch();
+  const navigate = useNavigate({ from: "/anuncios" });
   const user = useCurrentUser();
   const { toggle, isFavorited } = useFavoritesStore();
 
@@ -78,6 +84,34 @@ function Anuncios() {
     l = [...l].sort((a, b) => Number(!!b.destaquePremium) - Number(!!a.destaquePremium));
     return l;
   }, [listings, filters, localColor, localCity]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+
+  // If filters change and current page is out of range, snap back to page 1
+  useEffect(() => {
+    if (page > totalPages) {
+      navigate({ search: (prev) => ({ ...prev, page: 1 }), replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalPages]);
+
+  const pagedItems = useMemo(
+    () => filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE),
+    [filtered, currentPage],
+  );
+
+  // Compute condensed page list for pagination UI
+  const pageNumbers = useMemo<(number | "ellipsis")[]>(() => {
+    const pages: (number | "ellipsis")[] = [];
+    const push = (n: number) => { if (!pages.includes(n)) pages.push(n); };
+    push(1);
+    if (currentPage - 1 > 2) pages.push("ellipsis");
+    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) push(i);
+    if (currentPage + 1 < totalPages - 1) pages.push("ellipsis");
+    if (totalPages > 1) push(totalPages);
+    return pages;
+  }, [currentPage, totalPages]);
 
   const activeFiltersCount = [
     filters.brand !== "all" && filters.brand,
