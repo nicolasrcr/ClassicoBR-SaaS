@@ -136,7 +136,7 @@ function CompraSegura() {
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-6 w-6 text-red-600 shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-serif text-lg text-red-800 mb-3">⚠️ Sinais de alerta — fuja desses padrões</h3>
+                  <h3 className="font-serif text-lg text-red-800 mb-3">Sinais de alerta — fuja desses padrões</h3>
                   <ul className="space-y-2.5 text-sm text-red-700">
                     <li className="flex items-start gap-2">
                       <span className="font-bold shrink-0 mt-0.5">•</span>
@@ -176,7 +176,7 @@ function CompraSegura() {
             <div className="rounded-xl border border-[color:var(--color-cat-todo)]/20 bg-[color:var(--color-cat-todo)]/5 px-6 py-4 text-sm text-[color:var(--color-cat-todo)] flex items-center justify-center gap-2">
               <MessageCircle className="h-4 w-4 shrink-0" />
               <span>
-                <strong>🔒 Sempre negocie pelo chat da plataforma</strong> — o histórico é preservado e serve como prova.{" "}
+                <strong>Sempre negocie pelo chat da plataforma</strong> — o histórico é preservado e serve como prova.{" "}
                 <Link to="/compra-segura" className="underline underline-offset-2 hover:text-[color:var(--color-cat-todo)]/80">
                   Guia de compra segura
                 </Link>

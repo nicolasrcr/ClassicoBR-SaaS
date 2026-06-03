@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useParams } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  ArrowLeft, Car, Check, ChevronDown, ChevronUp, Copy, ExternalLink, Flag,
-  Heart, MapPin, MessageCircle, Phone, Share2,
+  AlertTriangle, ArrowLeft, BadgeCheck, Car, Check, CheckCircle2, ChevronDown, ChevronUp, Copy, ExternalLink, Flag,
+  Heart, HelpCircle, Lightbulb, Mail, MapPin, MessageCircle, Phone, Share2, ShieldCheck,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
@@ -33,18 +33,18 @@ const DOC_LABELS: Record<string, string> = {
   comMultas: "Com multas", naoVerificado: "Não verificado", sim: "Sim", parcialmente: "Parcialmente", nao: "Não",
 };
 
-function docIcon(val: string): string {
+function DocIcon({ val }: { val: string }) {
   const ok = ["proprio", "nenhuma", "emDia", "isentoAntiguidade", "visivelLegivel", "original", "naoSeAplica", "sim"];
   const warn = ["terceiro", "1a2", "atrasado", "parcialmenteLegivel", "trocadoMesmaFamilia", "comMultas", "parcialmente"];
-  if (ok.includes(val)) return "✅";
-  if (warn.includes(val)) return "⚠️";
-  return "❓";
+  if (ok.includes(val)) return <CheckCircle2 className="h-4 w-4 text-[color:var(--color-cat-complete)]" aria-hidden="true" />;
+  if (warn.includes(val)) return <AlertTriangle className="h-4 w-4 text-amber-600" aria-hidden="true" />;
+  return <HelpCircle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />;
 }
 
 function VerBadge({ badge }: { badge: string }) {
-  if (badge === "verificada") return <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">Localização verificada ✅</span>;
-  if (badge === "provavel") return <span className="inline-flex items-center rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">Localização provável ⚠️</span>;
-  if (badge === "divergencia") return <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">⚠️ Divergência detectada</span>;
+  if (badge === "verificada") return <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700"><CheckCircle2 className="h-3 w-3" /> Localização verificada</span>;
+  if (badge === "provavel") return <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700"><AlertTriangle className="h-3 w-3" /> Localização provável</span>;
+  if (badge === "divergencia") return <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700"><AlertTriangle className="h-3 w-3" /> Divergência detectada</span>;
   return <span className="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-500">Sem dados de verificação</span>;
 }
 
@@ -135,8 +135,9 @@ function CarDetail() {
 
               {/* Preço suspeito */}
               {listing.alertaPrecoSuspeito && (
-                <div className="mt-3 rounded-[8px] bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800">
-                  ⚠️ Este veículo está anunciado muito abaixo do valor de mercado. Recomendamos atenção especial antes de negociar.
+                <div className="mt-3 rounded-[8px] bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>Este veículo está anunciado muito abaixo do valor de mercado. Recomendamos atenção especial antes de negociar.</span>
                 </div>
               )}
             </div>
@@ -173,7 +174,7 @@ function CarDetail() {
                   ["Aceita ajudar regularização", sit.aceitaAjudarRegularizacao],
                 ].map(([k, v]) => (
                   <div key={k} className="flex items-start gap-2 text-sm">
-                    <span className="mt-0.5 text-base leading-none">{docIcon(v.split(" ")[0])}</span>
+                    <span className="mt-0.5 leading-none"><DocIcon val={v.split(" ")[0]} /></span>
                     <div>
                       <dt className="text-xs text-muted-foreground uppercase tracking-wide">{k}</dt>
                       <dd className="font-medium">{DOC_LABELS[v.split(" ")[0]] ?? v}</dd>
@@ -188,8 +189,9 @@ function CarDetail() {
                 </div>
               )}
               {[sit.ipva === "atrasado", sit.licenciamento === "atrasado", sit.chassi !== "visivelLegivel"].some(Boolean) && (
-                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800">
-                  ℹ️ Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar.
+                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800 flex items-start gap-2">
+                  <HelpCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar.</span>
                 </div>
               )}
               <p className="mt-3 text-xs text-muted-foreground">Declarado pelo vendedor — não verificado pela plataforma</p>
@@ -213,7 +215,7 @@ function CarDetail() {
                   <div className="flex justify-between border-t pt-2 font-semibold text-[color:var(--color-terracotta)]">
                     <span>Total estimado</span><span>~{formatPrice(totalEstimado)}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground pt-1">💡 Use este valor como argumento na negociação</p>
+                  <p className="text-xs text-muted-foreground pt-1 flex items-center gap-1"><Lightbulb className="h-3 w-3" /> Use este valor como argumento na negociação</p>
                 </div>
               )}
             </div>
@@ -272,10 +274,10 @@ function CarDetail() {
                     </div>
                     {/* Verification badges */}
                     <div className="mt-3 flex gap-1 flex-wrap">
-                      {seller.verificacoes.email && <Badge variant="secondary" className="text-[10px]">✉️ E-mail</Badge>}
-                      {seller.verificacoes.telefone && <Badge variant="secondary" className="text-[10px]">📱 Tel</Badge>}
-                      {seller.verificacoes.cpf && <Badge variant="secondary" className="text-[10px]">🪪 CPF</Badge>}
-                      {seller.verificacoes.kyc && <Badge className="text-[10px] bg-yellow-100 text-yellow-800 border-yellow-300">🏅 Verificado</Badge>}
+                      {seller.verificacoes.email && <Badge variant="secondary" className="text-[10px] gap-1"><Mail className="h-3 w-3" /> E-mail</Badge>}
+                      {seller.verificacoes.telefone && <Badge variant="secondary" className="text-[10px] gap-1"><Phone className="h-3 w-3" /> Tel</Badge>}
+                      {seller.verificacoes.cpf && <Badge variant="secondary" className="text-[10px] gap-1"><BadgeCheck className="h-3 w-3" /> CPF</Badge>}
+                      {seller.verificacoes.kyc && <Badge className="text-[10px] bg-yellow-100 text-yellow-800 border-yellow-300 gap-1"><ShieldCheck className="h-3 w-3" /> Verificado</Badge>}
                     </div>
                     <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                       <span>Taxa resposta: <strong className="text-foreground">{seller.taxaResposta}%</strong></span>

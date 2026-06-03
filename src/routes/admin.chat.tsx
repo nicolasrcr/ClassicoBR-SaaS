@@ -83,7 +83,7 @@ function AdminChat() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <span className="font-medium text-xs">{author?.name ?? "?"}</span>
-                      {m.padraoSuspeito && <Badge className="ml-2 text-[9px] bg-amber-100 text-amber-800">⚠️ Suspeito</Badge>}
+                      {m.padraoSuspeito && <Badge className="ml-2 text-[9px] bg-amber-100 text-amber-800 gap-1"><AlertTriangle className="h-2.5 w-2.5" /> Suspeito</Badge>}
                       <p className="mt-1">{m.texto}</p>
                     </div>
                     <div className="text-right text-[10px] text-muted-foreground shrink-0">

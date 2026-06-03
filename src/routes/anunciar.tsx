@@ -1,7 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useFormDraft } from "@/hooks/use-form-draft";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star, Save, RotateCcw } from "lucide-react";
+import { Car, Wrench, Package, Upload, X, CheckCircle, ChevronRight, Gem, ShieldCheck, Star, Save, RotateCcw, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -251,13 +251,21 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
   return <h3 className="mb-3 font-serif text-lg font-medium">{children}</h3>;
 }
 
-function FieldGroup({ label, children, required }: { label: string; children: React.ReactNode; required?: boolean }) {
+function FieldGroup({
+  label, children, required, error,
+}: { label: string; children: React.ReactNode; required?: boolean; error?: string | null }) {
   return (
     <div>
       <Label className="mb-1 block text-sm font-medium">
         {label}{required && <span className="ml-0.5 text-destructive">*</span>}
       </Label>
       {children}
+      {error && (
+        <p role="alert" className="mt-1 flex items-center gap-1 text-xs text-destructive">
+          <AlertCircle className="h-3 w-3 shrink-0" />
+          <span>{error}</span>
+        </p>
+      )}
     </div>
   );
 }
@@ -276,7 +284,7 @@ function RadioGroup({
         <label
           key={o.value}
           className={cn(
-            "flex cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors",
+            "flex min-h-11 cursor-pointer items-center gap-2 rounded-md border px-3 py-2 text-sm transition-colors",
             value === o.value
               ? "border-[color:var(--color-terracotta)] bg-[color:var(--color-terracotta)]/10 font-medium text-[color:var(--color-terracotta)]"
               : "border-border hover:border-muted-foreground",
@@ -313,6 +321,10 @@ function Anunciar() {
   const [published, setPublished] = useState(false);
   const [newListingId, setNewListingId] = useState<string>("");
   const [showPreview, setShowPreview] = useState(false);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const markTouched = (field: string) => setTouched((p) => (p[field] ? p : { ...p, [field]: true }));
+  const markStepTouched = (fields: string[]) =>
+    setTouched((p) => fields.reduce((acc, f) => ({ ...acc, [f]: true }), { ...p }));
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const upd = <K extends keyof FormData>(k: K, v: FormData[K]) =>
@@ -321,6 +333,42 @@ function Anunciar() {
   const priceNum = parseFloat(form.price.replace(/\D/g, "")) / 100 || 0;
 
   const availableModels = form.brand ? (MODELS_BY_BRAND[form.brand] ?? []) : [];
+
+  // ─── Erros inline (derivados) ───────────────────────────────────────────────
+  const errors = useMemo(() => {
+    const e: Record<string, string> = {};
+    if (!form.category) e.category = "Selecione a condição do veículo";
+    if (!form.brand) e.brand = "Selecione a marca";
+    if (!form.model) e.model = "Selecione o modelo";
+    if (form.model === MODEL_NAO_LISTADO && !form.modelCustom.trim())
+      e.modelCustom = "Escreva o nome do modelo";
+    if (!form.anoFab) e.anoFab = "Informe o ano de fabricação";
+    if (form.km && (isNaN(Number(form.km)) || Number(form.km) < 0))
+      e.km = "Quilometragem inválida";
+
+    if (form.photos.length === 0) e.photos = "Adicione pelo menos 1 foto";
+    if (!form.description.trim()) e.description = "Adicione uma descrição";
+    else if (form.description.trim().length < 20)
+      e.description = "Descrição muito curta (mínimo 20 caracteres)";
+
+    if (!form.semPreco && !form.price) e.price = "Informe o preço ou marque 'Não informar'";
+    if (!form.estadoConservacao) e.estadoConservacao = "Indique o estado de conservação";
+    if (!form.originalidade) e.originalidade = "Indique o nível de originalidade";
+    if (!form.cidade.trim()) e.cidade = "Informe a cidade";
+    if (form.cep && !/^\d{5}-?\d{3}$/.test(form.cep)) e.cep = "CEP inválido (use 00000-000)";
+    if (form.whatsapp && !/^\(?\d{2}\)?\s*\d{4,5}-?\d{4}$/.test(form.whatsapp))
+      e.whatsapp = "WhatsApp inválido";
+    return e;
+  }, [form]);
+
+  const STEP_FIELDS: Record<Step, string[]> = {
+    1: ["category", "brand", "model", "modelCustom", "anoFab", "km"],
+    2: ["photos", "description"],
+    3: ["price", "estadoConservacao", "originalidade", "cidade", "cep", "whatsapp"],
+  };
+
+  const stepHasErrors = (s: Step) => STEP_FIELDS[s].some((f) => errors[f]);
+  const err = (field: string) => (touched[field] ? errors[field] ?? null : null);
 
   // ─── CEP Lookup (mock) ──────────────────────────────────────────────────────
   const lookupCep = (cep: string) => {
@@ -357,35 +405,19 @@ function Anunciar() {
     upd("photos", form.photos.filter((_, i) => i !== idx));
   };
 
-  // ─── Validações por step ────────────────────────────────────────────────────
-  const validateStep1 = () => {
-    if (!form.category) { toast.error("Selecione a condição do veículo"); return false; }
-    if (!form.brand) { toast.error("Selecione a marca"); return false; }
-    if (!form.model) { toast.error("Selecione o modelo"); return false; }
-    if (form.model === MODEL_NAO_LISTADO && !form.modelCustom.trim()) {
-      toast.error("Escreva o nome do modelo não listado"); return false;
+  // ─── Validações por step (usam errors derivados) ────────────────────────────
+  const validateStepInline = (s: Step) => {
+    markStepTouched(STEP_FIELDS[s]);
+    if (stepHasErrors(s)) {
+      toast.error("Corrija os campos destacados antes de continuar");
+      return false;
     }
-    if (!form.anoFab) { toast.error("Informe o ano de fabricação"); return false; }
-    return true;
-  };
-
-  const validateStep2 = () => {
-    if (form.photos.length === 0) { toast.error("Adicione pelo menos 1 foto"); return false; }
-    if (!form.description.trim()) { toast.error("Adicione uma descrição"); return false; }
-    return true;
-  };
-
-  const validateStep3 = () => {
-    if (!form.semPreco && !form.price) { toast.error("Informe o preço ou marque 'Não informar preço'"); return false; }
-    if (!form.estadoConservacao) { toast.error("Indique o estado de conservação"); return false; }
-    if (!form.originalidade) { toast.error("Indique o nível de originalidade"); return false; }
-    if (!form.cidade) { toast.error("Informe a cidade"); return false; }
     return true;
   };
 
   // ─── Publicar ───────────────────────────────────────────────────────────────
   const handlePublish = () => {
-    if (!validateStep3()) return;
+    if (!validateStepInline(3)) return;
 
     const id = "l_" + Date.now();
     const modeloFinal = form.model === MODEL_NAO_LISTADO ? form.modelCustom.trim() : form.model;
@@ -564,9 +596,9 @@ function Anunciar() {
                       <button
                         key={cat}
                         type="button"
-                        onClick={() => upd("category", cat)}
+                        onClick={() => { upd("category", cat); markTouched("category"); }}
                         className={cn(
-                          "flex flex-col items-center gap-3 rounded-[8px] border p-5 text-center transition-all",
+                          "flex min-h-11 flex-col items-center gap-3 rounded-[8px] border p-5 text-center transition-all",
                           active
                             ? "border-[color:var(--color-terracotta)] bg-[color:var(--color-terracotta)]/8 ring-1 ring-[color:var(--color-terracotta)]"
                             : "border-border hover:border-muted-foreground",
@@ -586,14 +618,19 @@ function Anunciar() {
                     );
                   })}
                 </div>
+                {err("category") && (
+                  <p role="alert" className="mt-3 flex items-center gap-1 text-xs text-destructive">
+                    <AlertCircle className="h-3 w-3" /> {err("category")}
+                  </p>
+                )}
               </section>
 
               {/* Dados do veículo */}
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Dados do veículo</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FieldGroup label="Marca" required>
-                    <Select value={form.brand} onValueChange={(v) => { upd("brand", v); upd("model", ""); }}>
+                  <FieldGroup label="Marca" required error={err("brand")}>
+                    <Select value={form.brand} onValueChange={(v) => { upd("brand", v); upd("model", ""); markTouched("brand"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
                         {BRANDS.map((b) => <SelectItem key={b} value={b}>{b}</SelectItem>)}
@@ -601,10 +638,10 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Modelo" required>
+                  <FieldGroup label="Modelo" required error={err("model") || err("modelCustom")}>
                     <Select
                       value={form.model}
-                      onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); }}
+                      onValueChange={(v) => { upd("model", v); if (v !== MODEL_NAO_LISTADO) upd("modelCustom", ""); markTouched("model"); }}
                       disabled={!form.brand}
                     >
                       <SelectTrigger><SelectValue placeholder={form.brand ? "Selecione..." : "Selecione a marca primeiro"} /></SelectTrigger>
@@ -619,12 +656,13 @@ function Anunciar() {
                         placeholder="Digite o nome exato do modelo"
                         value={form.modelCustom}
                         onChange={(e) => upd("modelCustom", e.target.value)}
+                        onBlur={() => markTouched("modelCustom")}
                       />
                     )}
                   </FieldGroup>
 
-                  <FieldGroup label="Ano de fabricação" required>
-                    <Select value={form.anoFab} onValueChange={(v) => upd("anoFab", v)}>
+                  <FieldGroup label="Ano de fabricação" required error={err("anoFab")}>
+                    <Select value={form.anoFab} onValueChange={(v) => { upd("anoFab", v); markTouched("anoFab"); }}>
                       <SelectTrigger><SelectValue placeholder="Selecione..." /></SelectTrigger>
                       <SelectContent>
                         {ANOS.map((a) => <SelectItem key={a} value={a}>{a}</SelectItem>)}
@@ -676,12 +714,13 @@ function Anunciar() {
                     </Select>
                   </FieldGroup>
 
-                  <FieldGroup label="Quilometragem">
+                  <FieldGroup label="Quilometragem" error={err("km")}>
                     <Input
                       type="number"
                       placeholder="Ex: 87000"
                       value={form.km}
                       onChange={(e) => upd("km", e.target.value)}
+                      onBlur={() => markTouched("km")}
                     />
                   </FieldGroup>
 
@@ -717,7 +756,7 @@ function Anunciar() {
                     { key: "chaveReserva" as const, label: "Chave reserva" },
                     { key: "aceitaTroca" as const, label: "Aceita troca" },
                   ]).map(({ key, label }) => (
-                    <label key={key} className="flex cursor-pointer items-center gap-2 text-sm">
+                    <label key={key} className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
                       <input
                         type="checkbox"
                         className="h-4 w-4 rounded border-border accent-[color:var(--color-terracotta)]"
@@ -904,9 +943,10 @@ function Anunciar() {
                         <button
                           type="button"
                           onClick={() => removePhoto(i)}
-                          className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                          aria-label={`Remover foto ${i + 1}`}
+                          className="absolute right-1 top-1 flex h-8 w-8 items-center justify-center rounded-full bg-black/70 text-white opacity-100 transition-opacity sm:h-7 sm:w-7 sm:opacity-0 sm:group-hover:opacity-100"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-4 w-4" />
                         </button>
                         {i === 0 && (
                           <span className="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-white">Capa</span>
@@ -920,9 +960,9 @@ function Anunciar() {
                 <button
                   type="button"
                   disabled={form.photos.length >= 5}
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={() => { fileInputRef.current?.click(); markTouched("photos"); }}
                   className={cn(
-                    "flex w-full flex-col items-center gap-3 rounded-[8px] border-2 border-dashed px-6 py-10 transition-colors",
+                    "flex min-h-11 w-full flex-col items-center gap-3 rounded-[8px] border-2 border-dashed px-6 py-10 transition-colors",
                     form.photos.length >= 5
                       ? "cursor-not-allowed border-border opacity-50"
                       : "border-border hover:border-[color:var(--color-terracotta)] hover:bg-[color:var(--color-terracotta)]/5",
@@ -936,6 +976,11 @@ function Anunciar() {
                     <p className="mt-1 text-xs text-muted-foreground">JPG, PNG, WEBP — máx. 5 fotos</p>
                   </div>
                 </button>
+                {err("photos") && (
+                  <p role="alert" className="mt-2 flex items-center gap-1 text-xs text-destructive">
+                    <AlertCircle className="h-3 w-3" /> {err("photos")}
+                  </p>
+                )}
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -968,8 +1013,14 @@ function Anunciar() {
                   placeholder="Descreva o veículo com detalhes: estado de conservação, histórico de manutenção, documentação, diferenciais..."
                   value={form.description}
                   onChange={(e) => upd("description", e.target.value)}
+                  onBlur={() => markTouched("description")}
                   className="resize-none"
                 />
+                {err("description") && (
+                  <p role="alert" className="mt-2 flex items-center gap-1 text-xs text-destructive">
+                    <AlertCircle className="h-3 w-3" /> {err("description")}
+                  </p>
+                )}
               </section>
             </div>
 
@@ -1033,10 +1084,16 @@ function Anunciar() {
                         disabled={form.semPreco}
                         value={form.price}
                         onChange={(e) => upd("price", e.target.value)}
+                        onBlur={() => markTouched("price")}
                       />
                     </div>
+                    {err("price") && (
+                      <p role="alert" className="mt-1 flex items-center gap-1 text-xs text-destructive">
+                        <AlertCircle className="h-3 w-3" /> {err("price")}
+                      </p>
+                    )}
                   </div>
-                  <label className="flex cursor-pointer items-center gap-2 text-sm">
+                  <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
                     <input
                       type="checkbox"
                       className="h-4 w-4 rounded border-border accent-[color:var(--color-terracotta)]"
@@ -1063,7 +1120,7 @@ function Anunciar() {
                 </p>
 
                 <div className="space-y-5">
-                  <FieldGroup label="Estado de conservação" required>
+                  <FieldGroup label="Estado de conservação" required error={err("estadoConservacao")}>
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <ShieldCheck className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Como está hoje o veículo, em termos de carroceria, mecânica e acabamento.</span>
@@ -1071,14 +1128,14 @@ function Anunciar() {
                     <RadioGroup
                       name="estadoConservacao"
                       value={form.estadoConservacao}
-                      onChange={(v) => upd("estadoConservacao", v as EstadoConservacao)}
+                      onChange={(v) => { upd("estadoConservacao", v as EstadoConservacao); markTouched("estadoConservacao"); }}
                       options={(Object.keys(ESTADO_LABELS) as EstadoConservacao[]).map((k) => ({
                         value: k, label: ESTADO_LABELS[k],
                       }))}
                     />
                   </FieldGroup>
 
-                  <FieldGroup label="Originalidade" required>
+                  <FieldGroup label="Originalidade" required error={err("originalidade")}>
                     <div className="flex items-start gap-2 text-xs text-muted-foreground mb-2">
                       <Star className="h-3.5 w-3.5 mt-0.5 shrink-0" />
                       <span>Quanto do veículo permanece original de fábrica (motor, câmbio, pintura, interior).</span>
@@ -1086,7 +1143,7 @@ function Anunciar() {
                     <RadioGroup
                       name="originalidade"
                       value={form.originalidade}
-                      onChange={(v) => upd("originalidade", v as Originalidade)}
+                      onChange={(v) => { upd("originalidade", v as Originalidade); markTouched("originalidade"); }}
                       options={(Object.keys(ORIGINALIDADE_LABELS) as Originalidade[]).map((k) => ({
                         value: k, label: ORIGINALIDADE_LABELS[k],
                       }))}
@@ -1130,7 +1187,7 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Localização</SectionTitle>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                  <FieldGroup label="CEP">
+                  <FieldGroup label="CEP" error={err("cep")}>
                     <Input
                       placeholder="00000-000"
                       value={form.cep}
@@ -1138,14 +1195,16 @@ function Anunciar() {
                         upd("cep", e.target.value);
                         lookupCep(e.target.value);
                       }}
+                      onBlur={() => markTouched("cep")}
                       maxLength={9}
                     />
                   </FieldGroup>
-                  <FieldGroup label="Cidade" required>
+                  <FieldGroup label="Cidade" required error={err("cidade")}>
                     <Input
                       placeholder="Cidade"
                       value={form.cidade}
                       onChange={(e) => upd("cidade", e.target.value)}
+                      onBlur={() => markTouched("cidade")}
                     />
                   </FieldGroup>
                   <FieldGroup label="Estado">
@@ -1168,7 +1227,7 @@ function Anunciar() {
                         type="button"
                         onClick={() => upd("raio", r)}
                         className={cn(
-                          "rounded-full border px-4 py-1.5 text-sm transition-colors",
+                          "min-h-11 rounded-full border px-4 py-2 text-sm transition-colors",
                           form.raio === r
                             ? "border-[color:var(--color-terracotta)] bg-[color:var(--color-terracotta)] text-white"
                             : "border-border hover:border-muted-foreground",
@@ -1185,14 +1244,15 @@ function Anunciar() {
               <section className="rounded-[10px] border border-border bg-card p-6">
                 <SectionTitle>Contato</SectionTitle>
                 <div className="space-y-4">
-                  <FieldGroup label="WhatsApp">
+                  <FieldGroup label="WhatsApp" error={err("whatsapp")}>
                     <Input
                       placeholder="(11) 99999-9999"
                       value={form.whatsapp}
                       onChange={(e) => upd("whatsapp", e.target.value)}
+                      onBlur={() => markTouched("whatsapp")}
                     />
                   </FieldGroup>
-                  <label className="flex cursor-pointer items-center gap-2 text-sm">
+                  <label className="flex min-h-11 cursor-pointer items-center gap-2 text-sm">
                     <input
                       type="checkbox"
                       className="h-4 w-4 rounded border-border accent-[color:var(--color-terracotta)]"
@@ -1232,7 +1292,7 @@ function Anunciar() {
                       type="button"
                       onClick={() => upd("plano", plano.key)}
                       className={cn(
-                        "flex flex-col rounded-[8px] border p-5 text-left transition-all",
+                        "flex min-h-11 flex-col rounded-[8px] border p-5 text-left transition-all",
                         form.plano === plano.key
                           ? "border-[color:var(--color-terracotta)] bg-[color:var(--color-terracotta)]/8 ring-1 ring-[color:var(--color-terracotta)]"
                           : "border-border hover:border-muted-foreground",
@@ -1302,7 +1362,7 @@ function Anunciar() {
               <Button
                 variant="outline"
                 onClick={() => {
-                  if (!validateStep3()) return;
+                  if (!validateStepInline(3)) return;
                   setShowPreview(true);
                 }}
               >
@@ -1314,8 +1374,7 @@ function Anunciar() {
               <Button
                 className="bg-[color:var(--color-terracotta)] text-white hover:bg-[color:var(--color-terracotta-dark)]"
                 onClick={() => {
-                  if (step === 1 && !validateStep1()) return;
-                  if (step === 2 && !validateStep2()) return;
+                  if (!validateStepInline(step)) return;
                   setStep((s) => (s + 1) as Step);
                 }}
               >
@@ -1325,6 +1384,8 @@ function Anunciar() {
               <Button
                 className="bg-[color:var(--color-terracotta)] text-white hover:bg-[color:var(--color-terracotta-dark)]"
                 onClick={handlePublish}
+                disabled={stepHasErrors(3)}
+                aria-disabled={stepHasErrors(3)}
               >
                 Publicar anúncio
               </Button>

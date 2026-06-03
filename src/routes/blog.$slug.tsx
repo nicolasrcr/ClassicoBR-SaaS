@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowLeft, Clock, BookOpen, ArrowRight, ChevronRight } from "lucide-react";
+import { ArrowLeft, Clock, BookOpen, ArrowRight, ChevronRight, Lock } from "lucide-react";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ContactLeadDialog } from "@/components/ContactLeadDialog";
@@ -221,7 +221,7 @@ function BlogPostPage() {
 
               {/* Security promo */}
               <div className="rounded-xl border border-[color:var(--color-cat-todo)]/20 bg-[color:var(--color-cat-todo)]/5 p-5">
-                <p className="text-sm font-semibold text-[color:var(--color-cat-todo)] mb-2">🔒 Compra segura</p>
+                <p className="text-sm font-semibold text-[color:var(--color-cat-todo)] mb-2 flex items-center gap-1.5"><Lock className="h-4 w-4" /> Compra segura</p>
                 <p className="text-xs text-[color:var(--color-cat-todo)]/80 leading-relaxed mb-3">
                   Negocie sempre pelo chat da plataforma. Nunca pague antes de ver o veículo.
                 </p>

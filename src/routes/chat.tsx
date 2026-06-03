@@ -81,7 +81,7 @@ function OfferModal({ onSend, onClose }: { onSend: (v: string) => void; onClose:
             onClick={() => {
               if (value.trim()) {
                 const formatted = Number(value).toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
-                onSend(`💰 Oferta formal: ${formatted} à vista. Podemos conversar?`);
+                onSend(`Oferta formal: ${formatted} à vista. Podemos conversar?`);
                 onClose();
               }
             }}
@@ -175,7 +175,7 @@ function Chat() {
       <div className="z-30 bg-green-50 border-b border-green-200 px-4 py-2 text-xs text-green-800 flex items-center justify-center gap-2 shrink-0">
         <Shield className="h-3.5 w-3.5 shrink-0 text-green-600" />
         <span>
-          <strong>🔒 ClassicosBR nunca solicita pagamento antecipado.</strong>{" "}
+          <strong>ClassicosBR nunca solicita pagamento antecipado.</strong>{" "}
           Não transfira valores antes de ver o veículo pessoalmente.{" "}
           <Link to="/compra-segura" className="underline underline-offset-2 hover:text-green-900 font-medium">
             → Guia de compra segura
@@ -307,7 +307,7 @@ function Chat() {
             {flags.includes("pagamento_suspeito") && (
               <div className="shrink-0 bg-red-50 border-b border-red-200 px-4 py-2 text-xs text-red-700 flex items-center gap-2">
                 <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                <span>⚠️ Nunca pague antes de ver o veículo pessoalmente. Use sempre o chat da plataforma.</span>
+                <span>Nunca pague antes de ver o veículo pessoalmente. Use sempre o chat da plataforma.</span>
                 <button onClick={() => setFlags([])} className="ml-auto text-red-400 hover:text-red-600"><X className="h-3 w-3" /></button>
               </div>
             )}
@@ -321,13 +321,13 @@ function Chat() {
             {hasPhone && (
               <div className="shrink-0 bg-amber-50 border-b border-amber-200 px-4 py-2 text-xs text-amber-700 flex items-center gap-2">
                 <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                <span>⚠️ Detectamos um número de telefone. Prefira negociar pelo chat para manter o histórico.</span>
+                <span>Detectamos um número de telefone. Prefira negociar pelo chat para manter o histórico.</span>
               </div>
             )}
             {hasPayment && (
               <div className="shrink-0 bg-red-50 border-b border-red-200 px-4 py-2 text-xs text-red-700 flex items-center gap-2">
                 <AlertTriangle className="h-3.5 w-3.5 shrink-0" />
-                <span>⚠️ Nunca pague antes de ver o veículo. ClassicosBR não solicita pagamentos antecipados.</span>
+                <span>Nunca pague antes de ver o veículo. ClassicosBR não solicita pagamentos antecipados.</span>
               </div>
             )}
 
@@ -362,13 +362,13 @@ function Chat() {
                             {mod.texto}
                           </div>
                           {mod.flags.includes("telefone_externo") && (
-                            <p className="text-[10px] text-amber-600 mt-0.5 px-1">
-                              ⚠️ Prefira negociar pelo chat para manter o histórico seguro
+                            <p className="text-[10px] text-amber-600 mt-0.5 px-1 flex items-center gap-1">
+                              <AlertTriangle className="h-3 w-3" /> Prefira negociar pelo chat para manter o histórico seguro
                             </p>
                           )}
                           {m.padraoSuspeito && !mod.flags.includes("telefone_externo") && (
-                            <p className="text-[10px] text-amber-600 mt-0.5 px-1">
-                              ⚠️ Mensagem sinalizada como potencialmente suspeita
+                            <p className="text-[10px] text-amber-600 mt-0.5 px-1 flex items-center gap-1">
+                              <AlertTriangle className="h-3 w-3" /> Mensagem sinalizada como potencialmente suspeita
                             </p>
                           )}
                           <span className="text-[10px] text-muted-foreground mt-0.5 px-1 flex items-center gap-1">

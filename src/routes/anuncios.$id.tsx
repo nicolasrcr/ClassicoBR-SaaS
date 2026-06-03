@@ -2,7 +2,7 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState, useCallback } from "react";
 import {
   ArrowLeft, Car, ChevronDown, ChevronUp, Copy, ExternalLink, Flag,
-  ArrowRight, Heart, Lock, MapPin, MessageCircle, Phone, Share2, ShieldCheck, Star, UserPlus, X,
+  ArrowRight, Heart, Lock, MapPin, MessageCircle, Phone, Share2, ShieldCheck, Star, UserPlus, X, AlertTriangle, BadgeCheck, CheckCircle2, HelpCircle, Lightbulb, Mail,
   ChevronLeft, ChevronRight, Maximize2,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -77,9 +77,9 @@ function docIcon(val: string): "ok" | "warn" | "unknown" {
 
 function DocIcon({ val }: { val: string }) {
   const kind = docIcon(val);
-  if (kind === "ok") return <span className="text-base leading-none">✅</span>;
-  if (kind === "warn") return <span className="text-base leading-none">⚠️</span>;
-  return <span className="text-base leading-none text-muted-foreground">❓</span>;
+  if (kind === "ok") return <CheckCircle2 className="h-4 w-4 text-[color:var(--color-cat-complete)]" aria-hidden="true" />;
+  if (kind === "warn") return <AlertTriangle className="h-4 w-4 text-amber-600" aria-hidden="true" />;
+  return <HelpCircle className="h-4 w-4 text-muted-foreground" aria-hidden="true" />;
 }
 
 // ──────────────────────────────────────────────────────────
@@ -89,13 +89,13 @@ function LocBadge({ badge }: { badge: string }) {
   if (badge === "verificada")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
-        Localização verificada ✅
+        <CheckCircle2 className="h-3 w-3" /> Localização verificada
       </span>
     );
   if (badge === "provavel" || badge === "divergencia")
     return (
       <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 px-2.5 py-0.5 text-xs font-medium text-amber-700">
-        Localização provável ⚠️
+        <AlertTriangle className="h-3 w-3" /> Localização provável
       </span>
     );
   return (
@@ -371,8 +371,9 @@ function AnuncioDetalhe() {
 
               {/* Preço suspeito */}
               {listing.alertaPrecoSuspeito && (
-                <div className="mt-3 rounded-[8px] bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800">
-                  ⚠️ Este veículo está anunciado muito abaixo do valor de mercado. Recomendamos atenção especial antes de negociar.
+                <div className="mt-3 rounded-[8px] bg-amber-50 border border-amber-200 p-3 text-sm text-amber-800 flex items-start gap-2">
+                  <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>Este veículo está anunciado muito abaixo do valor de mercado. Recomendamos atenção especial antes de negociar.</span>
                 </div>
               )}
             </div>
@@ -454,8 +455,9 @@ function AnuncioDetalhe() {
               )}
 
               {hasPendencias && (
-                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800">
-                  ℹ️ Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar o preço.
+                <div className="mt-4 rounded-[8px] bg-blue-50 border border-blue-200 p-3 text-sm text-blue-800 flex items-start gap-2">
+                  <HelpCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                  <span>Pendências documentais são comuns em veículos com mais de 25 anos. Considere os custos de regularização ao negociar o preço.</span>
                 </div>
               )}
 
@@ -501,8 +503,8 @@ function AnuncioDetalhe() {
                     <span>Total estimado</span>
                     <span>~{formatPrice(totalEstimado)}</span>
                   </div>
-                  <p className="text-xs text-muted-foreground pt-1">
-                    💡 Use este valor como argumento na negociação
+                  <p className="text-xs text-muted-foreground pt-1 flex items-center gap-1">
+                    <Lightbulb className="h-3 w-3" /> Use este valor como argumento na negociação
                   </p>
                 </div>
               )}
@@ -518,7 +520,7 @@ function AnuncioDetalhe() {
                 to="/compra-segura"
                 className="mt-4 inline-flex items-center gap-1 text-xs text-[color:var(--color-terracotta-soft)] hover:underline"
               >
-                🔒 Guia de compra segura <ExternalLink className="h-3 w-3" />
+                <Lock className="h-3 w-3" /> Guia de compra segura <ExternalLink className="h-3 w-3" />
               </Link>
             </div>
 
@@ -670,17 +672,17 @@ function AnuncioDetalhe() {
                     {/* Verification badges — only show verified ones */}
                     <div className="flex gap-1 flex-wrap mb-3">
                       {seller.verificacoes.email && (
-                        <Badge variant="secondary" className="text-[10px] font-normal">✉️ E-mail</Badge>
+                        <Badge variant="secondary" className="text-[10px] font-normal gap-1"><Mail className="h-3 w-3" /> E-mail</Badge>
                       )}
                       {seller.verificacoes.telefone && (
-                        <Badge variant="secondary" className="text-[10px] font-normal">📱 Tel</Badge>
+                        <Badge variant="secondary" className="text-[10px] font-normal gap-1"><Phone className="h-3 w-3" /> Tel</Badge>
                       )}
                       {seller.verificacoes.cpf && (
-                        <Badge variant="secondary" className="text-[10px] font-normal">🪪 CPF</Badge>
+                        <Badge variant="secondary" className="text-[10px] font-normal gap-1"><BadgeCheck className="h-3 w-3" /> CPF</Badge>
                       )}
                       {seller.verificacoes.kyc && (
-                        <Badge className="text-[10px] font-semibold bg-yellow-100 text-yellow-800 border-yellow-300">
-                          🏅 KYC Verificado
+                        <Badge className="text-[10px] font-semibold bg-yellow-100 text-yellow-800 border-yellow-300 gap-1">
+                          <ShieldCheck className="h-3 w-3" /> KYC Verificado
                         </Badge>
                       )}
                     </div>

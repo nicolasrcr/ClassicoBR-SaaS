@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Check, Cog, ImageIcon, Trash2, Upload, Wrench, X, Search } from "lucide-react";
+import { AlertTriangle, Camera, Check, CheckCircle2, Cog, ImageIcon, MapPin, Rocket, Trash2, Upload, Wrench, X, Search } from "lucide-react";
 import { toast } from "sonner";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
@@ -112,7 +112,7 @@ function Create() {
       if (!data.model) update("model", found.model);
       if (!data.year)  update("year", String(found.year));
       if (!data.color) update("color", found.color);
-      toast.success("Dados conferidos com a placa ✅");
+      toast.success("Dados conferidos com a placa");
     } else {
       setPlacaStatus("divergencia");
       toast.warning(`Divergência detectada: ${divergencias.join(", ")}`);
@@ -181,7 +181,7 @@ function Create() {
       document.head.appendChild(s);
     }
     showConfetti();
-    toast.success("🎉 Anúncio publicado com sucesso!");
+    toast.success("Anúncio publicado com sucesso!");
     setTimeout(() => navigate({ to: "/car/$id", params: { id: newListing.id } }), 1200);
   };
 
@@ -257,8 +257,8 @@ function Create() {
                     <Search className="h-4 w-4 mr-1" /> Consultar
                   </Button>
                 </div>
-                {placaStatus === "ok" && <p className="mt-1 text-xs text-green-600">✅ Dados conferidos com a placa</p>}
-                {placaStatus === "divergencia" && <p className="mt-1 text-xs text-red-500">⚠️ Divergência detectada — verifique os campos</p>}
+                {placaStatus === "ok" && <p className="mt-1 text-xs text-green-600 flex items-center gap-1"><CheckCircle2 className="h-3 w-3" /> Dados conferidos com a placa</p>}
+                {placaStatus === "divergencia" && <p className="mt-1 text-xs text-red-500 flex items-center gap-1"><AlertTriangle className="h-3 w-3" /> Divergência detectada — verifique os campos</p>}
               </div>
 
               {/* Dados básicos */}
@@ -349,7 +349,7 @@ function Create() {
             <div className="space-y-6">
               {/* Dicas contextuais */}
               <div className="rounded-[8px] bg-secondary border border-border p-4 text-sm space-y-1">
-                <p className="font-medium">📸 Dicas para fotos ({CATEGORY_LABELS[category]})</p>
+                <p className="font-medium flex items-center gap-2"><Camera className="h-4 w-4" /> Dicas para fotos ({CATEGORY_LABELS[category]})</p>
                 {category === "completo" && <p className="text-xs text-muted-foreground">Fotografe: chassi, motor, plaqueta, documentos, 4 laterais, interior</p>}
                 {category === "fazer" && <p className="text-xs text-muted-foreground">Mostre ferrugem, partes faltantes, motor, documentos disponíveis</p>}
                 {category === "pecas" && <p className="text-xs text-muted-foreground">Fotografe cada peça individualmente com boa iluminação</p>}
@@ -377,8 +377,8 @@ function Create() {
                 {uploadError && <p className="mt-2 text-xs text-destructive">{uploadError}</p>}
 
                 {/* LGPD notice */}
-                <p className="mt-2 text-xs text-muted-foreground">
-                  📍 As fotos podem conter dados de localização (EXIF) utilizados para verificar a autenticidade do anúncio.
+                <p className="mt-2 text-xs text-muted-foreground flex items-start gap-1">
+                  <MapPin className="h-3 w-3 mt-0.5 shrink-0" /> As fotos podem conter dados de localização (EXIF) utilizados para verificar a autenticidade do anúncio.
                 </p>
 
                 {photos.length > 0 && (
@@ -493,8 +493,8 @@ function Create() {
             {step < 3 ? (
               <Button onClick={() => setStep(step + 1)} className="bg-foreground text-background hover:bg-foreground/90">Continuar</Button>
             ) : (
-              <Button onClick={submit} className="bg-[color:var(--color-terracotta)] text-white hover:bg-[color:var(--color-terracotta-dark)]">
-                🚀 Publicar anúncio
+              <Button onClick={submit} className="bg-[color:var(--color-terracotta)] text-white hover:bg-[color:var(--color-terracotta-dark)] gap-2">
+                <Rocket className="h-4 w-4" /> Publicar anúncio
               </Button>
             )}
           </div>
