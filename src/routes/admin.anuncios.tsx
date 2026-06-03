@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import {
-  Car, Check, Eye, MapPin, MoreHorizontal, Pause, Pencil, Play, Search, ShieldAlert, Trash2, X,
+  AlertTriangle, Car, Check, CheckCircle2, Eye, MapPin, MoreHorizontal, Pause, Pencil, Play, Search, ShieldAlert, Trash2, X, XCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -34,9 +34,9 @@ const VERIFICATION_RED = new Set(["l14", "l11"]);
 const VERIFICATION_AMBER = new Set(["l3", "l5", "l7"]);
 
 function getVerificationIcon(listingId: string) {
-  if (VERIFICATION_RED.has(listingId)) return { icon: "🔴", label: "Alerta de fraude" };
-  if (VERIFICATION_AMBER.has(listingId)) return { icon: "⚠️", label: "Verificação pendente" };
-  return { icon: "✅", label: "Verificado" };
+  if (VERIFICATION_RED.has(listingId)) return { Icon: XCircle, tone: "text-red-600", label: "Alerta de fraude" };
+  if (VERIFICATION_AMBER.has(listingId)) return { Icon: AlertTriangle, tone: "text-amber-600", label: "Verificação pendente" };
+  return { Icon: CheckCircle2, tone: "text-[color:var(--color-cat-complete)]", label: "Verificado" };
 }
 
 function VerificationDrawer({ listing, onClose }: { listing: Listing | null; onClose: () => void }) {
@@ -57,7 +57,11 @@ function VerificationDrawer({ listing, onClose }: { listing: Listing | null; onC
         <div className="mt-6 space-y-6">
           {/* Badge */}
           <div className={`rounded-[8px] border p-3 text-sm ${isRed ? "border-red-300 bg-red-50" : isAmber ? "border-amber-300 bg-amber-50" : "border-green-300 bg-green-50"}`}>
-            <p className="font-medium">{isRed ? "🔴 Alerta de fraude detectado" : isAmber ? "⚠️ Verificação pendente" : "✅ Verificação OK"}</p>
+            <p className="font-medium flex items-center gap-2">
+              {isRed ? <><XCircle className="h-4 w-4 text-red-600" /> Alerta de fraude detectado</>
+                : isAmber ? <><AlertTriangle className="h-4 w-4 text-amber-600" /> Verificação pendente</>
+                : <><CheckCircle2 className="h-4 w-4 text-[color:var(--color-cat-complete)]" /> Verificação OK</>}
+            </p>
             {isRed && <p className="mt-1 text-xs text-red-700">IP divergente + EXIF suspeito. Requer revisão imediata.</p>}
           </div>
 
@@ -102,10 +106,10 @@ function VerificationDrawer({ listing, onClose }: { listing: Listing | null; onC
               <span className="text-sm font-medium">{listing.scoreConfianca}/100</span>
             </div>
             {listing.alertaPrecoSuspeito && (
-              <p className="mt-2 text-xs text-amber-700">⚠️ Preço suspeitamente abaixo do mercado</p>
+              <p className="mt-2 text-xs text-amber-700 flex items-center gap-1"><AlertTriangle className="h-3 w-3" /> Preço suspeitamente abaixo do mercado</p>
             )}
             {listing.fotoDuplicadaFlag && (
-              <p className="mt-1 text-xs text-amber-700">⚠️ Foto duplicada detectada</p>
+              <p className="mt-1 text-xs text-amber-700 flex items-center gap-1"><AlertTriangle className="h-3 w-3" /> Foto duplicada detectada</p>
             )}
           </div>
 
