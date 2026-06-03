@@ -289,8 +289,9 @@ function AdminListings() {
                       onClick={() => setVerifyListing(l)}
                       className="flex items-center gap-1 text-sm hover:opacity-70 transition-opacity"
                       title={verif.label}
+                      aria-label={verif.label}
                     >
-                      <span>{verif.icon}</span>
+                      <verif.Icon className={`h-4 w-4 ${verif.tone}`} />
                     </button>
                   </TableCell>
                   <TableCell className="text-right">
