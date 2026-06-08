@@ -156,18 +156,19 @@ export const useAppStore = create<AppState>()(
       services: [],
       dbLoaded: false,
 
-      // Bootstrap: carrega todos os dados do Supabase
+      // Bootstrap: carrega dados essenciais do Supabase.
+      // chat_messages são carregados sob demanda por conversa (lazy) para não
+      // sobrecarregar o carregamento inicial com dados potencialmente grandes.
       loadFromDB: async () => {
         if (get().dbLoaded) return;
         const [
-          listings, users, conversations, messages, reports,
+          listings, users, conversations, reports,
           pendingRegistrations, payments, blogPosts, reviews,
           favorites, flaggedListings, blockedAttempts, events, services,
         ] = await Promise.all([
           db.fetchListings(),
           db.fetchUsers(),
           db.fetchConversations(),
-          db.fetchMessages(),
           db.fetchReports(),
           db.fetchPendingRegistrations(),
           db.fetchPayments(),
@@ -180,7 +181,7 @@ export const useAppStore = create<AppState>()(
           db.fetchServices(),
         ]);
         set({
-          listings, users, conversations, messages, reports,
+          listings, users, conversations, reports,
           pendingRegistrations, payments, blogPosts, reviews,
           favorites, flaggedListings, blockedAttempts, events, services,
           dbLoaded: true,
@@ -384,7 +385,10 @@ export const useAppStore = create<AppState>()(
               favorites: s.favorites.map((f) => (f.id === tempId ? { ...f, id: realId } : f)),
             }));
           })
-          .catch(console.error);
+          .catch((err) => {
+            console.error(err);
+            set((s) => ({ favorites: s.favorites.filter((f) => f.id !== tempId) }));
+          });
       },
       removeFavorite: (userId, listingId) => {
         set((s) => ({
@@ -456,7 +460,16 @@ export const useAppStore = create<AppState>()(
         if (updated) db.updateReport(reportId, { trilhaAuditoria: updated.trilhaAuditoria }).catch(console.error);
       },
     }),
-    { name: "classicosbr-store-v3" },
+    {
+      name: "classicosbr-store-v3",
+      // Persiste apenas estado de UI — dados do banco são re-buscados via loadFromDB()
+      // evitando estouro do limite de 5MB do localStorage com coleções grandes.
+      partialize: (state) => ({
+        currentUserId: state.currentUserId,
+        filters: state.filters,
+        compareIds: state.compareIds,
+      }),
+    },
   ),
 );
 
