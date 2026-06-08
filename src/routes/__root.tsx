@@ -9,6 +9,8 @@ import {
 } from "@tanstack/react-router";
 import { Toaster } from "@/components/ui/sonner";
 import { DemoSwitcher } from "@/components/DemoSwitcher";
+import { useEffect } from "react";
+import { useAppStore } from "@/store/app-store";
 
 import appCss from "../styles.css?url";
 
@@ -89,6 +91,12 @@ function RootShell({ children }: { children: React.ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const loadFromDB = useAppStore((s) => s.loadFromDB);
+
+  useEffect(() => {
+    loadFromDB().catch(console.error);
+  }, [loadFromDB]);
+
   return (
     <QueryClientProvider client={queryClient}>
       <a
