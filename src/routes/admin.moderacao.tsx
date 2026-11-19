@@ -19,7 +19,7 @@ function StatusBadge({ status }: { status: StatusModeracao }) {
     "novas-fotos": "bg-blue-500/15 text-blue-700",
   };
   return (
-    <span className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${cls[status]}`}>
+    <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${cls[status]}`}>
       {STATUS_MODERACAO_LABELS[status]}
     </span>
   );
@@ -82,7 +82,7 @@ function AdminModeracao() {
                 </div>
                 <p className="text-xs text-muted-foreground">{ev.cidade}/{ev.estado} · {ev.organizadorNome}</p>
                 <p className="text-sm mt-2 line-clamp-2">{ev.descricao}</p>
-                <Textarea
+                <Textarea aria-label="Motivo (necessário para reprovação)"
                   value={motivo[ev.id] ?? ""}
                   onChange={(e) => setMotivo((cur) => ({ ...cur, [ev.id]: e.target.value }))}
                   placeholder="Motivo (necessário para reprovação)"
@@ -113,12 +113,12 @@ function AdminModeracao() {
                   <h3 className="font-serif text-lg">{sv.titulo}</h3>
                   <StatusBadge status={sv.statusModeracao ?? "pendente"} />
                   {sv.rastreabilidade.scoreOrigem >= 80 && (
-                    <span className="inline-flex items-center gap-1 text-[10px] text-emerald-700"><ShieldCheck className="h-3 w-3" /> alta</span>
+                    <span className="inline-flex items-center gap-1 text-xs text-emerald-700"><ShieldCheck className="h-3 w-3" /> alta</span>
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">{sv.cidade}/{sv.estado} · {sv.anuncianteNome}</p>
                 <p className="text-sm mt-2 line-clamp-2">{sv.descricao}</p>
-                <Textarea
+                <Textarea aria-label="Motivo (necessário para reprovação)"
                   value={motivo[sv.id] ?? ""}
                   onChange={(e) => setMotivo((cur) => ({ ...cur, [sv.id]: e.target.value }))}
                   placeholder="Motivo (necessário para reprovação)"

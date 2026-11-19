@@ -26,7 +26,7 @@ export function CarCard({ listing, showCompare = false }: CarCardProps) {
       {/* Compare checkbox */}
       {showCompare && (
         <label
-          className="absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-1 text-[10px] font-medium text-white shadow cursor-pointer hover:bg-black/75 transition-colors"
+          className="absolute left-3 top-3 z-10 flex items-center gap-1.5 rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-1 text-xs font-medium text-white shadow cursor-pointer hover:bg-black/75 transition-colors"
           onClick={(e) => e.stopPropagation()}
         >
           <input
@@ -66,7 +66,7 @@ export function CarCard({ listing, showCompare = false }: CarCardProps) {
           ) : (
             <div className="flex flex-col items-center gap-2">
               <Car className="h-14 w-14 text-muted-foreground/25" strokeWidth={1} />
-              <span className="text-[10px] text-muted-foreground/40 font-medium uppercase tracking-widest">Sem foto</span>
+              <span className="text-xs text-muted-foreground/40 font-medium uppercase tracking-widest">Sem foto</span>
             </div>
           )}
 
@@ -75,14 +75,14 @@ export function CarCard({ listing, showCompare = false }: CarCardProps) {
 
           {/* Category badge */}
           <span
-            className="absolute bottom-3 left-3 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white shadow"
+            className="absolute bottom-3 left-3 rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-white shadow"
             style={{ backgroundColor: color }}
           >
             {CATEGORY_LABELS[listing.category]}
           </span>
 
           {/* Year badge */}
-          <span className="absolute bottom-3 right-3 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-semibold text-white">
+          <span className="absolute bottom-3 right-3 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-0.5 text-xs font-semibold text-white">
             {listing.year}
           </span>
         </div>

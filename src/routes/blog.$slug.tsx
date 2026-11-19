@@ -22,7 +22,7 @@ const CATEGORY_CHIP_COLORS: Record<string, string> = {
 function CategoryChip({ categoria }: { categoria: string }) {
   const cls = CATEGORY_CHIP_COLORS[categoria] ?? "bg-secondary text-muted-foreground border-border";
   return (
-    <span className={`inline-block rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${cls}`}>
+    <span className={`inline-block rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${cls}`}>
       {categoria}
     </span>
   );
@@ -203,7 +203,7 @@ function BlogPostPage() {
                           <p className="text-xs font-medium leading-snug line-clamp-2 group-hover:text-[color:var(--color-terracotta)] transition-colors">
                             {p.titulo}
                           </p>
-                          <p className="text-[10px] text-muted-foreground mt-1 flex items-center gap-1">
+                          <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
                             <Clock className="h-2.5 w-2.5" /> {p.tempoLeitura}
                           </p>
                         </div>

@@ -23,7 +23,7 @@ const CATEGORY_CHIP_COLORS: Record<string, string> = {
 function CategoryChip({ categoria }: { categoria: string }) {
   const cls = CATEGORY_CHIP_COLORS[categoria] ?? "bg-secondary text-muted-foreground border-border";
   return (
-    <span className={`inline-block rounded-full border px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${cls}`}>
+    <span className={`inline-block rounded-full border px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide ${cls}`}>
       {categoria}
     </span>
   );

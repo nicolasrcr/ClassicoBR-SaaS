@@ -148,7 +148,7 @@ function Login() {
                 className={errors.email ? "border-[color:var(--color-terracotta-deep)] focus-visible:ring-[color:var(--color-terracotta-deep)]/20" : ""}
               />
               {errors.email && <p className="mt-1 text-xs text-[color:var(--color-terracotta-deep)]">{errors.email}</p>}
-              <p className="mt-1 text-[11px] text-muted-foreground">
+              <p className="mt-1 text-xs text-muted-foreground">
                 Demo: qualquer e-mail funciona. Use "admin@..." para acesso admin.
               </p>
             </div>
@@ -165,7 +165,7 @@ function Login() {
                 </Link>
               </div>
               <div className="relative">
-                <Input
+                <Input aria-label="Sua senha"
                   type={showSenha ? "text" : "password"}
                   value={senha}
                   onChange={(e) => { setSenha(e.target.value); clearError("senha"); }}

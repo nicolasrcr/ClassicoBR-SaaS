@@ -734,7 +734,7 @@ function Anunciar() {
                       </SelectContent>
                     </Select>
                     {form.model === MODEL_NAO_LISTADO && (
-                      <Input
+                      <Input aria-label="Digite o nome exato do modelo"
                         className="mt-2"
                         placeholder="Digite o nome exato do modelo"
                         value={form.modelCustom}
@@ -763,7 +763,7 @@ function Anunciar() {
                   </FieldGroup>
 
                   <FieldGroup label="Motor">
-                    <Input
+                    <Input aria-label="Ex: 2.5 8v"
                       placeholder="Ex: 2.5 8v"
                       value={form.motor}
                       onChange={(e) => upd("motor", e.target.value)}
@@ -798,7 +798,7 @@ function Anunciar() {
                   </FieldGroup>
 
                   <FieldGroup label="Quilometragem" error={err("km")} fieldId="km">
-                    <Input
+                    <Input aria-label="Ex: 87000"
                       type="number"
                       placeholder="Ex: 87000"
                       value={form.km}
@@ -1036,7 +1036,7 @@ function Anunciar() {
                           <X className="h-4 w-4" />
                         </button>
                         {i === 0 && (
-                          <span className="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[10px] text-white">Capa</span>
+                          <span className="absolute bottom-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-xs text-white">Capa</span>
                         )}
                       </div>
                     ))}
@@ -1312,7 +1312,7 @@ function Anunciar() {
                     />
                   </FieldGroup>
                   <FieldGroup label="Cidade" required error={err("cidade")} fieldId="cidade">
-                    <Input
+                    <Input aria-label="Cidade"
                       placeholder="Cidade"
                       value={form.cidade}
                       onChange={(e) => upd("cidade", e.target.value)}

@@ -107,7 +107,7 @@ function AdminSeguranca() {
                 <span className="text-xs text-muted-foreground">Tel: {b.telefone}</span>
                 <span className="text-xs text-muted-foreground">{b.data}</span>
               </div>
-              <Badge variant="secondary" className="text-[10px] shrink-0">{b.motivo}</Badge>
+              <Badge variant="secondary" className="text-xs shrink-0">{b.motivo}</Badge>
             </div>
           ))}
         </div>
@@ -129,9 +129,9 @@ function AdminSeguranca() {
                       <span className="font-medium">{author?.name ?? "?"}</span>
                       <p className="text-muted-foreground mt-0.5 text-xs truncate max-w-xs">{m.texto}</p>
                     </div>
-                    <div className="text-right text-[10px] text-muted-foreground shrink-0">
+                    <div className="text-right text-xs text-muted-foreground shrink-0">
                       <p>{m.timestamp}</p>
-                      <Button size="sm" variant="outline" className="mt-1 text-[10px] h-6" onClick={() => { setBanId(m.autorId); }}>Banir</Button>
+                      <Button size="sm" variant="outline" className="mt-1 text-xs h-6" onClick={() => { setBanId(m.autorId); }}>Banir</Button>
                     </div>
                   </div>
                 </div>
@@ -171,7 +171,7 @@ function AdminSeguranca() {
             <AlertDialogTitle>Banir usuário?</AlertDialogTitle>
             <AlertDialogDescription>Informe o motivo do banimento.</AlertDialogDescription>
           </AlertDialogHeader>
-          <input className="w-full rounded border border-border p-2 text-sm" placeholder="Motivo" value={banMotivo} onChange={(e) => setBanMotivo(e.target.value)} />
+          <input aria-label="Motivo" className="w-full rounded border border-border p-2 text-sm" placeholder="Motivo" value={banMotivo} onChange={(e) => setBanMotivo(e.target.value)} />
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
             <AlertDialogAction className="bg-destructive text-destructive-foreground" onClick={() => {

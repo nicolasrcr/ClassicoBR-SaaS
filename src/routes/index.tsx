@@ -79,7 +79,7 @@ function Index() {
             <div className="md:col-span-7 lg:col-span-7">
               {/* Eyebrow */}
               <div className="mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-md px-4 py-1.5 animate-fade-up">
-                <span className="text-[11px] font-medium tracking-[0.18em] uppercase text-white/80">O marketplace dos clássicos</span>
+                <span className="text-xs font-medium tracking-[0.18em] uppercase text-white/80">O marketplace dos clássicos</span>
               </div>
 
               <h1 className="font-serif font-semibold text-white leading-[0.98] tracking-tight text-[2.75rem] sm:text-6xl md:text-7xl lg:text-[5.5rem] animate-fade-up animate-fade-up-1">
@@ -175,7 +175,7 @@ function Index() {
                       <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[color:var(--color-terracotta)]/20 border border-[color:var(--color-terracotta)]/40">
                         <Sparkles className="h-3.5 w-3.5 text-[color:var(--color-terracotta-light)]" />
                       </div>
-                      <span className="text-[11px] uppercase tracking-wider text-white/60 font-medium">Marketplace dos clássicos</span>
+                      <span className="text-xs uppercase tracking-wider text-white/60 font-medium">Marketplace dos clássicos</span>
                     </div>
                     <span className="flex h-2 w-2 rounded-full bg-green-400 animate-pulse" />
                   </div>
@@ -202,7 +202,7 @@ function Index() {
                   </div>
 
                   <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-[11px] text-white/50">Atualizado agora</span>
+                    <span className="text-xs text-white/50">Atualizado agora</span>
                     <Link to="/anuncios" className="text-xs text-[color:var(--color-terracotta-light)] hover:text-white font-semibold transition-colors">
                       Ver tudo →
                     </Link>
@@ -241,7 +241,7 @@ function Index() {
       <main id="main-content" className="mx-auto w-full max-w-7xl flex-1 px-6 py-12 md:py-16">
         <div className="mb-8 flex items-end justify-between gap-4 flex-wrap">
           <div>
-            <p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-terracotta)] font-semibold">
+            <p className="text-xs uppercase tracking-[0.18em] text-[color:var(--color-terracotta)] font-semibold">
               Em destaque
             </p>
             <h2 className="font-serif text-3xl md:text-4xl mt-2">Clássicos selecionados</h2>
@@ -265,7 +265,7 @@ function Index() {
             return (
               <div key={listing.id} className="car-card group relative flex flex-col overflow-hidden rounded-[10px] border border-border bg-card">
                 {listing.destaquePremium && (
-                  <span className="absolute left-3 top-3 z-10 flex items-center gap-1 rounded-full bg-[color:var(--color-gold)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                  <span className="absolute left-3 top-3 z-10 flex items-center gap-1 rounded-full bg-[color:var(--color-gold)] px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow">
                     <Sparkles className="h-3 w-3" /> Destaque
                   </span>
                 )}
@@ -290,17 +290,17 @@ function Index() {
                     ) : (
                       <div className="flex flex-col items-center gap-2">
                         <Car className="h-12 w-12 text-muted-foreground/25" strokeWidth={1} />
-                        <span className="text-[10px] text-muted-foreground/40 font-medium uppercase tracking-widest">Sem foto</span>
+                        <span className="text-xs text-muted-foreground/40 font-medium uppercase tracking-widest">Sem foto</span>
                       </div>
                     )}
                     <div className="img-overlay absolute inset-0" />
                     <span
-                      className="absolute bottom-3 left-3 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white shadow"
+                      className="absolute bottom-3 left-3 rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-white shadow"
                       style={{ backgroundColor: color }}
                     >
                       {CATEGORY_LABELS[listing.category]}
                     </span>
-                    <span className="absolute bottom-3 right-3 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-semibold text-white">
+                    <span className="absolute bottom-3 right-3 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-0.5 text-xs font-semibold text-white">
                       {listing.year}
                     </span>
                   </div>
@@ -343,7 +343,7 @@ function Index() {
                           <MapPin className="h-3 w-3 shrink-0" />
                           <span>{listing.city}, {listing.state}</span>
                         </div>
-                        <span className="text-[10px]">{listing.distancia}</span>
+                        <span className="text-xs">{listing.distancia}</span>
                       </div>
                     </div>
                   </div>
@@ -368,7 +368,7 @@ function Index() {
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 flex items-end justify-between">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-terracotta)] font-semibold">Mais da comunidade</p>
+              <p className="text-xs uppercase tracking-[0.18em] text-[color:var(--color-terracotta)] font-semibold">Mais da comunidade</p>
               <h2 className="font-serif text-3xl md:text-4xl mt-2">Vá além do anúncio</h2>
             </div>
           </div>
@@ -378,7 +378,7 @@ function Index() {
                 <img src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1200" alt="Encontros de clássicos" className="car-card-img h-full w-full object-cover" />
               </div>
               <div className="p-6">
-                <p className="text-[10px] uppercase tracking-wider text-[color:var(--color-terracotta)] font-semibold">Agenda</p>
+                <p className="text-xs uppercase tracking-wider text-[color:var(--color-terracotta)] font-semibold">Agenda</p>
                 <h3 className="font-serif text-xl mt-1">Encontros, exposições e rallies</h3>
                 <p className="mt-2 text-sm text-muted-foreground">Veja os próximos eventos de clássicos perto de você — ou divulgue o seu.</p>
                 <span className="mt-3 inline-flex text-xs font-semibold text-[color:var(--color-terracotta)] group-hover:underline">Ver agenda completa →</span>
@@ -389,7 +389,7 @@ function Index() {
                 <img src="https://images.unsplash.com/photo-1632823471565-1ecdf5c6dab1?w=1200" alt="Oficinas e auto-peças" className="car-card-img h-full w-full object-cover" />
               </div>
               <div className="p-6">
-                <p className="text-[10px] uppercase tracking-wider text-[color:var(--color-terracotta)] font-semibold">Serviços & Peças</p>
+                <p className="text-xs uppercase tracking-wider text-[color:var(--color-terracotta)] font-semibold">Serviços & Peças</p>
                 <h3 className="font-serif text-xl mt-1">Oficinas, auto-peças e classificados</h3>
                 <p className="mt-2 text-sm text-muted-foreground">Toda publicação com validação de IP, fingerprint e metadados das fotos.</p>
                 <span className="mt-3 inline-flex text-xs font-semibold text-[color:var(--color-terracotta)] group-hover:underline">Explorar →</span>

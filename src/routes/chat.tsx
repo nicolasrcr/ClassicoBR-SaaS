@@ -65,7 +65,7 @@ function OfferModal({ onSend, onClose }: { onSend: (v: string) => void; onClose:
         <p className="text-sm text-muted-foreground mb-4">
           Informe o valor que deseja oferecer pelo veículo:
         </p>
-        <Input
+        <Input aria-label="Ex: 35000"
           type="number"
           placeholder="Ex: 35000"
           value={value}
@@ -194,7 +194,7 @@ function Chat() {
             <h2 className="font-serif text-base mb-2.5">Mensagens</h2>
             <div className="relative">
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-              <Input
+              <Input aria-label="Buscar conversa"
                 placeholder="Buscar conversa…"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -246,14 +246,14 @@ function Chat() {
                       <div className="flex items-start justify-between gap-1">
                         <p className="text-sm font-medium truncate leading-tight">{listing?.title ?? "Anúncio"}</p>
                         {lastMsg && (
-                          <span className="text-[10px] text-muted-foreground shrink-0">{lastMsg.timestamp.slice(11, 16)}</span>
+                          <span className="text-xs text-muted-foreground shrink-0">{lastMsg.timestamp.slice(11, 16)}</span>
                         )}
                       </div>
-                      <p className="text-[11px] text-muted-foreground truncate mt-0.5">{other?.name ?? "Usuário"}</p>
+                      <p className="text-xs text-muted-foreground truncate mt-0.5">{other?.name ?? "Usuário"}</p>
                       <p className="text-xs text-muted-foreground truncate mt-0.5 flex items-center gap-1">
                         {lastMsg?.texto ?? "—"}
                         {unread > 0 && (
-                          <span className="ml-auto shrink-0 flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-[9px] font-bold text-white">
+                          <span className="ml-auto shrink-0 flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-xs font-bold text-white">
                             {unread}
                           </span>
                         )}
@@ -338,7 +338,7 @@ function Chat() {
                   {/* Date separator */}
                   <div className="flex items-center gap-3 my-4">
                     <div className="flex-1 h-px bg-border" />
-                    <span className="text-[10px] text-muted-foreground font-medium px-2">{formatGroupDate(date)}</span>
+                    <span className="text-xs text-muted-foreground font-medium px-2">{formatGroupDate(date)}</span>
                     <div className="flex-1 h-px bg-border" />
                   </div>
                   {/* Messages in this date group */}
@@ -362,16 +362,16 @@ function Chat() {
                             {mod.texto}
                           </div>
                           {mod.flags.includes("telefone_externo") && (
-                            <p className="text-[10px] text-amber-600 mt-0.5 px-1 flex items-center gap-1">
+                            <p className="text-xs text-amber-600 mt-0.5 px-1 flex items-center gap-1">
                               <AlertTriangle className="h-3 w-3" /> Prefira negociar pelo chat para manter o histórico seguro
                             </p>
                           )}
                           {m.padraoSuspeito && !mod.flags.includes("telefone_externo") && (
-                            <p className="text-[10px] text-amber-600 mt-0.5 px-1 flex items-center gap-1">
+                            <p className="text-xs text-amber-600 mt-0.5 px-1 flex items-center gap-1">
                               <AlertTriangle className="h-3 w-3" /> Mensagem sinalizada como potencialmente suspeita
                             </p>
                           )}
-                          <span className="text-[10px] text-muted-foreground mt-0.5 px-1 flex items-center gap-1">
+                          <span className="text-xs text-muted-foreground mt-0.5 px-1 flex items-center gap-1">
                             {m.timestamp.slice(11, 16)}
                             {mine && <ReadReceipt status={m.status} />}
                           </span>
@@ -403,7 +403,7 @@ function Chat() {
                   <DollarSign className="h-3.5 w-3.5" />
                   Fazer oferta
                 </Button>
-                <Input
+                <Input aria-label="Digite uma mensagem"
                   placeholder="Digite uma mensagem…"
                   value={text}
                   onChange={(e) => setText(e.target.value)}

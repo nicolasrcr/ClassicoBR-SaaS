@@ -91,7 +91,7 @@ function AdminBlog() {
                 <TableCell className="font-medium text-sm max-w-xs truncate">{p.titulo}</TableCell>
                 <TableCell className="text-sm text-muted-foreground">{p.categoria}</TableCell>
                 <TableCell>
-                  <Badge variant={p.status === "Publicado" ? "default" : "secondary"} className="text-[10px]">
+                  <Badge variant={p.status === "Publicado" ? "default" : "secondary"} className="text-xs">
                     {p.status}
                   </Badge>
                 </TableCell>

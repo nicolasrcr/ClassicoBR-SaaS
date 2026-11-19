@@ -30,7 +30,7 @@ export function DemoSwitcher() {
       </button>
       {open && (
         <div className="absolute bottom-12 left-0 w-52 rounded-[10px] border border-border bg-card shadow-xl overflow-hidden">
-          <p className="px-3 py-2 text-[10px] uppercase tracking-wide text-muted-foreground border-b border-border">Demo: trocar perfil</p>
+          <p className="px-3 py-2 text-xs uppercase tracking-wide text-muted-foreground border-b border-border">Demo: trocar perfil</p>
           {PROFILES.map((p) => (
             <button
               key={p.label}

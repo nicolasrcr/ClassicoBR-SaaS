@@ -34,7 +34,7 @@ function AdminChat() {
           <h1 className="font-serif text-xl mb-3">Chat & Suporte</h1>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Buscar…" className="pl-9" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <Input aria-label="Buscar" placeholder="Buscar…" className="pl-9" value={search} onChange={(e) => setSearch(e.target.value)} />
           </div>
         </div>
         <div className="flex-1 overflow-y-auto">
@@ -56,7 +56,7 @@ function AdminChat() {
                     <p className="text-xs text-muted-foreground mt-0.5 truncate">{lastMsg?.texto ?? "—"}</p>
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0">
-                    <span className="text-[10px] text-muted-foreground">{msgs.length} msgs</span>
+                    <span className="text-xs text-muted-foreground">{msgs.length} msgs</span>
                     {suspicious && <AlertTriangle className="h-3.5 w-3.5 text-amber-500" />}
                   </div>
                 </div>
@@ -83,10 +83,10 @@ function AdminChat() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <span className="font-medium text-xs">{author?.name ?? "?"}</span>
-                      {m.padraoSuspeito && <Badge className="ml-2 text-[9px] bg-amber-100 text-amber-800 gap-1"><AlertTriangle className="h-2.5 w-2.5" /> Suspeito</Badge>}
+                      {m.padraoSuspeito && <Badge className="ml-2 text-xs bg-amber-100 text-amber-800 gap-1"><AlertTriangle className="h-2.5 w-2.5" /> Suspeito</Badge>}
                       <p className="mt-1">{m.texto}</p>
                     </div>
-                    <div className="text-right text-[10px] text-muted-foreground shrink-0">
+                    <div className="text-right text-xs text-muted-foreground shrink-0">
                       <p>{m.timestamp}</p>
                       <p>{m.ip_cidade}/{m.ip_estado}</p>
                     </div>

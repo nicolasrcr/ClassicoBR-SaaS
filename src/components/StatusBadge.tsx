@@ -10,7 +10,7 @@ const TONES: Record<string, string> = {
 
 export function StatusBadge({ tone, children }: { tone: keyof typeof TONES; children: React.ReactNode }) {
   return (
-    <span className={cn("inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium", TONES[tone])}>
+    <span className={cn("inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium", TONES[tone])}>
       {children}
     </span>
   );

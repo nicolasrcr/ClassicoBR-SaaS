@@ -25,7 +25,7 @@ export function TraceabilityPanel({ trace, compact = false }: { trace: Traceabil
           <span>
             IP <span className="font-mono text-foreground">{trace.ip}</span> · {trace.cidadeIp}/{trace.estadoIp}
             {trace.divergenciaLocalizacao && (
-              <span className="ml-2 rounded bg-[color:var(--color-terracotta)]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[color:var(--color-terracotta)]">
+              <span className="ml-2 rounded bg-[color:var(--color-terracotta)]/15 px-1.5 py-0.5 text-xs font-semibold text-[color:var(--color-terracotta)]">
                 divergência geo
               </span>
             )}
@@ -47,14 +47,14 @@ export function TraceabilityPanel({ trace, compact = false }: { trace: Traceabil
       {!compact && trace.imagens.length > 0 && (
         <div className="mt-3 space-y-1.5 border-t border-border pt-3">
           {trace.imagens.map((img, i) => (
-            <div key={i} className="flex items-start justify-between gap-2 text-[11px]">
+            <div key={i} className="flex items-start justify-between gap-2 text-xs">
               <div className="min-w-0">
                 <p className="truncate font-medium text-foreground">{img.nome}</p>
                 <p className="font-mono text-muted-foreground truncate">{img.hashSha256.slice(0, 24)}…</p>
                 {img.camera && <p className="text-muted-foreground">{img.camera}</p>}
               </div>
               {img.origemSuspeita && (
-                <span className="rounded bg-[color:var(--color-terracotta)]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[color:var(--color-terracotta)] shrink-0">
+                <span className="rounded bg-[color:var(--color-terracotta)]/15 px-1.5 py-0.5 text-xs font-semibold text-[color:var(--color-terracotta)] shrink-0">
                   {img.reutilizadaDeAnuncioId ? "reuso" : "sem EXIF"}
                 </span>
               )}
@@ -63,7 +63,7 @@ export function TraceabilityPanel({ trace, compact = false }: { trace: Traceabil
         </div>
       )}
 
-      <p className="mt-3 text-[10px] text-muted-foreground leading-relaxed">
+      <p className="mt-3 text-xs text-muted-foreground leading-relaxed">
         Validamos IP, fingerprint do navegador, metadados (EXIF) e hash SHA-256 de cada foto para detectar reuso de imagens, divergência geográfica e origem suspeita.
       </p>
     </div>

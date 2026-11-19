@@ -399,7 +399,7 @@ function Create() {
                             <Trash2 className="h-3 w-3" />
                           </button>
                         </div>
-                        {i === 0 && <span className="absolute top-1 left-1 rounded bg-black/70 px-1 text-[9px] text-white">Capa</span>}
+                        {i === 0 && <span className="absolute top-1 left-1 rounded bg-black/70 px-1 text-xs text-white">Capa</span>}
                       </div>
                     ))}
                   </div>

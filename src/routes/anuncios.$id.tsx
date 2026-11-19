@@ -159,7 +159,7 @@ function Gallery({ photos, title }: { photos: string[]; title: string }) {
         </button>
 
         {/* Counter */}
-        <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-2 py-0.5 text-[10px] font-medium text-white">
+        <span className="absolute bottom-3 left-3 rounded-full bg-black/50 px-2 py-0.5 text-xs font-medium text-white">
           {active + 1} / {imgList.length}
         </span>
       </div>
@@ -326,7 +326,7 @@ function AnuncioDetalhe() {
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <span
-                  className="rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white"
+                  className="rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-white"
                   style={{ backgroundColor: color }}
                 >
                   {CATEGORY_LABELS[listing.category]}
@@ -401,7 +401,7 @@ function AnuncioDetalhe() {
                   ["Aceita troca", sit.aceitaAjudarRegularizacao === "nao" ? "Não" : "Consultar"],
                 ].map(([k, v]) => (
                   <div key={k as string}>
-                    <dt className="text-[10px] uppercase tracking-wide text-muted-foreground">{k}</dt>
+                    <dt className="text-xs uppercase tracking-wide text-muted-foreground">{k}</dt>
                     <dd className="mt-0.5 font-medium text-sm">{String(v)}</dd>
                   </div>
                 ))}
@@ -412,7 +412,7 @@ function AnuncioDetalhe() {
             <div className="rounded-[10px] border-2 border-[color:var(--color-terracotta-soft)]/40 p-5">
               <div className="flex items-center gap-2 mb-4">
                 <h2 className="font-serif text-xl font-semibold">Dossiê Documental</h2>
-                <span className="rounded-full bg-[color:var(--color-terracotta-soft)]/10 px-2 py-0.5 text-[10px] font-semibold text-[color:var(--color-terracotta-soft)] uppercase tracking-wide">
+                <span className="rounded-full bg-[color:var(--color-terracotta-soft)]/10 px-2 py-0.5 text-xs font-semibold text-[color:var(--color-terracotta-soft)] uppercase tracking-wide">
                   Declarado
                 </span>
               </div>
@@ -437,7 +437,7 @@ function AnuncioDetalhe() {
                     <div key={k} className="flex items-start gap-2.5 text-sm">
                       <DocIcon val={raw} />
                       <div>
-                        <dt className="text-[10px] text-muted-foreground uppercase tracking-wide">{k}</dt>
+                        <dt className="text-xs text-muted-foreground uppercase tracking-wide">{k}</dt>
                         <dd className="font-medium">{label as string}</dd>
                       </div>
                     </div>
@@ -447,7 +447,7 @@ function AnuncioDetalhe() {
 
               {sit.documentosFisicos.length > 0 && (
                 <div className="mt-4 text-sm">
-                  <span className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                  <span className="text-xs uppercase tracking-wide text-muted-foreground">
                     Documentos físicos disponíveis:{" "}
                   </span>
                   <span className="font-medium">{sit.documentosFisicos.join(", ")}</span>
@@ -526,7 +526,7 @@ function AnuncioDetalhe() {
 
             {/* Você sabia? — bloco editorial estático */}
             <div className="rounded-[10px] border border-border bg-card p-5">
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-2">
+              <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">
                 Você sabia?
               </p>
               <h3 className="font-serif text-base font-semibold mb-2">
@@ -672,16 +672,16 @@ function AnuncioDetalhe() {
                     {/* Verification badges — only show verified ones */}
                     <div className="flex gap-1 flex-wrap mb-3">
                       {seller.verificacoes.email && (
-                        <Badge variant="secondary" className="text-[10px] font-normal gap-1"><Mail className="h-3 w-3" /> E-mail</Badge>
+                        <Badge variant="secondary" className="text-xs font-normal gap-1"><Mail className="h-3 w-3" /> E-mail</Badge>
                       )}
                       {seller.verificacoes.telefone && (
-                        <Badge variant="secondary" className="text-[10px] font-normal gap-1"><Phone className="h-3 w-3" /> Tel</Badge>
+                        <Badge variant="secondary" className="text-xs font-normal gap-1"><Phone className="h-3 w-3" /> Tel</Badge>
                       )}
                       {seller.verificacoes.cpf && (
-                        <Badge variant="secondary" className="text-[10px] font-normal gap-1"><BadgeCheck className="h-3 w-3" /> CPF</Badge>
+                        <Badge variant="secondary" className="text-xs font-normal gap-1"><BadgeCheck className="h-3 w-3" /> CPF</Badge>
                       )}
                       {seller.verificacoes.kyc && (
-                        <Badge className="text-[10px] font-semibold bg-yellow-100 text-yellow-800 border-yellow-300 gap-1">
+                        <Badge className="text-xs font-semibold bg-yellow-100 text-yellow-800 border-yellow-300 gap-1">
                           <ShieldCheck className="h-3 w-3" /> KYC Verificado
                         </Badge>
                       )}
@@ -821,7 +821,7 @@ function AnuncioDetalhe() {
                 <span className="text-sm">{r}</span>
               </label>
             ))}
-            <Textarea
+            <Textarea aria-label="Observações adicionais (opcional)"
               placeholder="Observações adicionais (opcional)"
               rows={3}
               value={reportNote}
@@ -855,7 +855,7 @@ function AnuncioDetalhe() {
             <p className="text-xs text-muted-foreground">
               Re: {listing.title}
             </p>
-            <Textarea
+            <Textarea aria-label="Olá, tenho interesse no seu anúncio"
               placeholder="Olá, tenho interesse no seu anúncio…"
               rows={5}
               value={msgText}

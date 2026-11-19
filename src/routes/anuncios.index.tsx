@@ -150,7 +150,7 @@ function Anuncios() {
         <Label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Buscar</Label>
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
-          <Input
+          <Input aria-label="Marca, modelo, ano"
             placeholder="Marca, modelo, ano…"
             value={filters.search}
             onChange={(e) => setFilter("search", e.target.value)}
@@ -302,7 +302,7 @@ function Anuncios() {
                   <SlidersHorizontal className="h-3.5 w-3.5" />
                   Filtros
                   {activeFiltersCount > 0 && (
-                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-[10px] text-white font-bold">
+                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-xs text-white font-bold">
                       {activeFiltersCount}
                     </span>
                   )}
@@ -375,7 +375,7 @@ function Anuncios() {
                 <div className="flex items-center justify-between mb-4">
                   <span className="font-serif text-sm font-semibold">Filtros</span>
                   {activeFiltersCount > 0 && (
-                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-[10px] text-white font-bold">
+                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-xs text-white font-bold">
                       {activeFiltersCount}
                     </span>
                   )}
@@ -402,7 +402,7 @@ function Anuncios() {
                   return (
                     <div key={listing.id} className="car-card group relative flex flex-col overflow-hidden rounded-[10px] border border-border bg-card">
                       {listing.destaquePremium && (
-                        <span className="absolute left-3 top-3 z-10 rounded-full bg-[color:var(--color-gold)] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white shadow">
+                        <span className="absolute left-3 top-3 z-10 rounded-full bg-[color:var(--color-gold)] px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white shadow">
                           ★ Destaque
                         </span>
                       )}
@@ -428,17 +428,17 @@ function Anuncios() {
                           ) : (
                             <div className="flex flex-col items-center gap-2">
                               <Car className="h-12 w-12 text-muted-foreground/25" strokeWidth={1} />
-                              <span className="text-[10px] text-muted-foreground/40 font-medium uppercase tracking-widest">Sem foto</span>
+                              <span className="text-xs text-muted-foreground/40 font-medium uppercase tracking-widest">Sem foto</span>
                             </div>
                           )}
                           <div className="img-overlay absolute inset-0" />
                           <span
-                            className="absolute bottom-3 left-3 rounded-full px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white shadow"
+                            className="absolute bottom-3 left-3 rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-white shadow"
                             style={{ backgroundColor: color }}
                           >
                             {CATEGORY_LABELS[listing.category]}
                           </span>
-                          <span className="absolute bottom-3 right-3 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-0.5 text-[10px] font-semibold text-white">
+                          <span className="absolute bottom-3 right-3 rounded-full bg-black/50 backdrop-blur-sm px-2.5 py-0.5 text-xs font-semibold text-white">
                             {listing.year}
                           </span>
                         </div>
@@ -489,7 +489,7 @@ function Anuncios() {
                                 <MapPin className="h-3 w-3 shrink-0" />
                                 <span>{listing.city}, {listing.state}</span>
                               </div>
-                              <span className="text-[10px]">{listing.distancia}</span>
+                              <span className="text-xs">{listing.distancia}</span>
                             </div>
                           </div>
                         </div>
@@ -516,7 +516,7 @@ function Anuncios() {
                             <Car className="h-10 w-10 text-muted-foreground/30" strokeWidth={1.2} />
                           )}
                           <span
-                            className="absolute bottom-2 left-2 rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-white shadow"
+                            className="absolute bottom-2 left-2 rounded-full px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-white shadow"
                             style={{ backgroundColor: color }}
                           >
                             {CATEGORY_LABELS[listing.category]}

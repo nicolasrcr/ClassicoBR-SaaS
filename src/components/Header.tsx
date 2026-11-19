@@ -75,7 +75,7 @@ export function Header() {
                 <Link to="/chat" aria-label="Mensagens">
                   <MessageCircle className="h-4 w-4" />
                   {unread > 0 && (
-                    <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-[10px] font-bold text-white">
+                    <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] text-xs font-bold text-white">
                       {unread}
                     </span>
                   )}
@@ -222,7 +222,7 @@ export function Header() {
                       >
                         <MessageCircle className="h-4 w-4 shrink-0" /> Mensagens
                         {unread > 0 && (
-                          <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] px-1.5 text-[10px] font-bold text-white">
+                          <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-[color:var(--color-terracotta)] px-1.5 text-xs font-bold text-white">
                             {unread}
                           </span>
                         )}

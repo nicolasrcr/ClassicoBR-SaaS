@@ -84,7 +84,7 @@ function EventoDetail() {
             <img src={event.capa} alt={event.titulo} className="h-full w-full object-cover" />
           </div>
           <div className="p-6 md:p-8">
-            <span className="rounded-full bg-[color:var(--color-terracotta)]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[color:var(--color-terracotta)]">
+            <span className="rounded-full bg-[color:var(--color-terracotta)]/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--color-terracotta)]">
               {TIPO_EVENTO_LABELS[event.tipo]}
             </span>
             <h1 className="mt-3 font-serif text-3xl md:text-4xl leading-tight">{event.titulo}</h1>
@@ -230,7 +230,7 @@ function Info({ icon: Icon, label, value }: { icon: React.ElementType; label: st
         <Icon className="h-4 w-4 text-[color:var(--color-terracotta)]" />
       </div>
       <div>
-        <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{label}</p>
+        <p className="text-xs uppercase tracking-wider text-muted-foreground">{label}</p>
         <p className="text-sm font-semibold">{value}</p>
       </div>
     </div>

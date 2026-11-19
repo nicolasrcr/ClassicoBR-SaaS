@@ -44,7 +44,7 @@ function ServicoDetail() {
               <img src={s.fotos[0]} alt={s.titulo} className="h-full w-full object-cover" />
             </div>
             <div className="p-6">
-              <span className="rounded-full bg-[color:var(--color-terracotta)]/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[color:var(--color-terracotta)]">
+              <span className="rounded-full bg-[color:var(--color-terracotta)]/10 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--color-terracotta)]">
                 {SERVICE_KIND_LABELS[s.kind]}
               </span>
               <h1 className="mt-3 font-serif text-3xl leading-tight">{s.titulo}</h1>

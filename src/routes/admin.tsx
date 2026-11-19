@@ -66,7 +66,7 @@ function AdminLayout() {
             <Icon className="h-4 w-4 shrink-0" />
             <span className="flex-1">{n.label}</span>
             {n.badge ? (
-              <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
+              <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs font-bold text-white">
                 {n.badge}
               </span>
             ) : null}
@@ -83,7 +83,7 @@ function AdminLayout() {
         <div className="border-b border-white/10 px-5 py-5">
           <div className="flex items-baseline gap-2">
             <span className="font-serif text-xl text-[color:var(--color-terracotta-soft)]">ClassicosBR</span>
-            <span className="text-[10px] uppercase tracking-widest text-white/40">Admin</span>
+            <span className="text-xs uppercase tracking-widest text-white/40">Admin</span>
           </div>
         </div>
         <nav className="flex-1 space-y-0.5 overflow-y-auto p-3">

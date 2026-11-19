@@ -35,7 +35,7 @@ function PasswordStrength({ senha }: { senha: string }) {
           />
         ))}
       </div>
-      <p className="text-[11px] text-muted-foreground">
+      <p className="text-xs text-muted-foreground">
         Força: <span className={score === 3 ? "text-[color:var(--color-cat-complete)] font-medium" : score === 2 ? "text-[color:var(--color-terracotta-soft)] font-medium" : "text-[color:var(--color-terracotta-deep)] font-medium"}>{labels[score]}</span>
         {" · "}mínimo 8 caracteres, uma maiúscula e um número ou símbolo.
       </p>

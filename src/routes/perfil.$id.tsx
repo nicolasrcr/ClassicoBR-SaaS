@@ -312,7 +312,7 @@ function PerfilVendedor() {
                           ] as [string, number][]
                         ).map(([label, val]) => (
                           <div key={label} className="text-center">
-                            <p className="text-[10px] text-muted-foreground mb-1">{label}</p>
+                            <p className="text-xs text-muted-foreground mb-1">{label}</p>
                             <Stars n={val} size="xs" />
                             <p className="text-xs font-medium mt-0.5">{val}/5</p>
                           </div>

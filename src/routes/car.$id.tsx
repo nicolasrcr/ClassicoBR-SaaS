@@ -110,7 +110,7 @@ function CarDetail() {
           <div className="md:col-span-2 space-y-8">
             <div>
               <div className="flex flex-wrap items-center gap-3">
-                <span className="rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-white" style={{ backgroundColor: color }}>
+                <span className="rounded-full px-2.5 py-1 text-xs font-semibold uppercase tracking-wide text-white" style={{ backgroundColor: color }}>
                   {CATEGORY_LABELS[listing.category]}
                 </span>
                 <span className="text-sm text-muted-foreground">{listing.year}</span>
@@ -274,10 +274,10 @@ function CarDetail() {
                     </div>
                     {/* Verification badges */}
                     <div className="mt-3 flex gap-1 flex-wrap">
-                      {seller.verificacoes.email && <Badge variant="secondary" className="text-[10px] gap-1"><Mail className="h-3 w-3" /> E-mail</Badge>}
-                      {seller.verificacoes.telefone && <Badge variant="secondary" className="text-[10px] gap-1"><Phone className="h-3 w-3" /> Tel</Badge>}
-                      {seller.verificacoes.cpf && <Badge variant="secondary" className="text-[10px] gap-1"><BadgeCheck className="h-3 w-3" /> CPF</Badge>}
-                      {seller.verificacoes.kyc && <Badge className="text-[10px] bg-yellow-100 text-yellow-800 border-yellow-300 gap-1"><ShieldCheck className="h-3 w-3" /> Verificado</Badge>}
+                      {seller.verificacoes.email && <Badge variant="secondary" className="text-xs gap-1"><Mail className="h-3 w-3" /> E-mail</Badge>}
+                      {seller.verificacoes.telefone && <Badge variant="secondary" className="text-xs gap-1"><Phone className="h-3 w-3" /> Tel</Badge>}
+                      {seller.verificacoes.cpf && <Badge variant="secondary" className="text-xs gap-1"><BadgeCheck className="h-3 w-3" /> CPF</Badge>}
+                      {seller.verificacoes.kyc && <Badge className="text-xs bg-yellow-100 text-yellow-800 border-yellow-300 gap-1"><ShieldCheck className="h-3 w-3" /> Verificado</Badge>}
                     </div>
                     <div className="mt-3 grid grid-cols-2 gap-2 text-xs text-muted-foreground">
                       <span>Taxa resposta: <strong className="text-foreground">{seller.taxaResposta}%</strong></span>
@@ -331,7 +331,7 @@ function CarDetail() {
                 <span className="text-sm">{r}</span>
               </label>
             ))}
-            <Textarea placeholder="Observações adicionais (opcional)" rows={3} value={reportNote} onChange={(e) => setReportNote(e.target.value)} />
+            <Textarea aria-label="Observações adicionais (opcional)" placeholder="Observações adicionais (opcional)" rows={3} value={reportNote} onChange={(e) => setReportNote(e.target.value)} />
             <Button
               className="w-full bg-[color:var(--color-terracotta)] text-white"
               onClick={() => { toast.success("Denúncia enviada. Obrigado!"); setReportOpen(false); setReportReason(""); setReportNote(""); }}

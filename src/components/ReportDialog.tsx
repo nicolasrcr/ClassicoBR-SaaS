@@ -107,7 +107,7 @@ export function ReportDialog({
           <div>
             <Label>Descrição (mín. 30 caracteres)</Label>
             <Textarea rows={4} value={descricao} onChange={(e) => setDescricao(e.target.value)} placeholder="O que aconteceu? Onde você viu a mesma imagem? Detalhes ajudam a equipe a agir mais rápido." />
-            <p className="mt-1 text-[11px] text-muted-foreground">{descricao.length} / 30</p>
+            <p className="mt-1 text-xs text-muted-foreground">{descricao.length} / 30</p>
           </div>
           <div>
             <Label>Link de evidência (opcional)</Label>
@@ -120,7 +120,7 @@ export function ReportDialog({
               <input type="file" multiple accept="image/*" className="hidden" onChange={(e) => onFiles(e.target.files)} />
             </label>
             {evidencias.length > 0 && (
-              <ul className="mt-2 space-y-1 text-[11px]">
+              <ul className="mt-2 space-y-1 text-xs">
                 {evidencias.map((e, i) => (
                   <li key={i} className="flex items-center justify-between gap-2 rounded bg-muted px-2 py-1">
                     <span className="truncate">{e.valor}</span>
@@ -155,7 +155,7 @@ export function AuditTrailCard({ entries }: { entries?: Array<{ acao: string; au
                 {new Date(e.em).toLocaleString("pt-BR")} · {e.autorNome ?? e.autorId}
               </p>
               {e.meta && Object.keys(e.meta).length > 0 && (
-                <p className="mt-0.5 text-[11px] text-muted-foreground/80">
+                <p className="mt-0.5 text-xs text-muted-foreground/80">
                   {Object.entries(e.meta).map(([k, v]) => `${k}: ${String(v)}`).join(" · ")}
                 </p>
               )}

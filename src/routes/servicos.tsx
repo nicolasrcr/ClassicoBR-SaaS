@@ -66,7 +66,7 @@ function ServicosPage() {
         <div className="mx-auto max-w-7xl relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 mb-5">
             <Wrench className="h-3.5 w-3.5 text-[color:var(--color-terracotta-light)]" />
-            <span className="text-[11px] uppercase tracking-[0.15em] text-white/80">Serviços & Peças</span>
+            <span className="text-xs uppercase tracking-[0.15em] text-white/80">Serviços & Peças</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl text-white leading-tight">
             Oficinas, auto-peças<br />
@@ -105,9 +105,9 @@ function ServicosPage() {
           <div className="flex flex-1 flex-col gap-2 sm:flex-row">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar oficinas, peças, especialidades…" className="pl-9 h-9 bg-card" />
+              <Input aria-label="Buscar oficinas, peças, especialidades" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar oficinas, peças, especialidades…" className="pl-9 h-9 bg-card" />
             </div>
-            <Input value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="Cidade" className="h-9 sm:w-40 bg-card" />
+            <Input aria-label="Cidade" value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="Cidade" className="h-9 sm:w-40 bg-card" />
             <Select value={estadoFilter} onValueChange={setEstadoFilter}>
               <SelectTrigger className="h-9 sm:w-32 bg-card"><SelectValue /></SelectTrigger>
               <SelectContent>
@@ -152,11 +152,11 @@ function ServicosPage() {
                 <Link key={s.id} to="/servicos/$id" params={{ id: s.id }} className="car-card group overflow-hidden rounded-xl border border-border bg-card flex flex-col">
                   <div className="aspect-[16/10] overflow-hidden bg-muted relative">
                     <img src={s.fotos[0]} alt={s.titulo} className="car-card-img h-full w-full object-cover" loading="lazy" />
-                    <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/65 backdrop-blur px-2.5 py-1 text-[10px] font-semibold text-white">
+                    <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/65 backdrop-blur px-2.5 py-1 text-xs font-semibold text-white">
                       <Icon className="h-3 w-3" /> {SERVICE_KIND_LABELS[s.kind]}
                     </span>
                     {s.rastreabilidade.scoreOrigem >= 80 && (
-                      <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-[color:var(--color-cat-complete)]/90 px-2 py-1 text-[10px] font-semibold text-white">
+                      <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-[color:var(--color-cat-complete)]/90 px-2 py-1 text-xs font-semibold text-white">
                         <ShieldCheck className="h-3 w-3" /> Origem validada
                       </span>
                     )}
@@ -310,7 +310,7 @@ function ServicoForm({ onClose, onSubmit, userId, userName }: {
 
         <div className="md:col-span-1">
           <TraceabilityPanel trace={trace} />
-          <p className="mt-3 text-[11px] text-muted-foreground">
+          <p className="mt-3 text-xs text-muted-foreground">
             O painel ao lado é gerado em tempo real conforme você adiciona imagens. Publicações com score &lt; 50 são bloqueadas.
           </p>
         </div>

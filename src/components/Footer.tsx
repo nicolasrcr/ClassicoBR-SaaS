@@ -30,7 +30,7 @@ export function Footer() {
 
           {/* Marketplace */}
           <div>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-widest text-white/55">Marketplace</p>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/55">Marketplace</p>
             <ul className="space-y-2.5 text-sm">
               <li><Link to="/anuncios" className="hover:text-white transition-colors flex items-center gap-1.5"><Car className="h-3 w-3" /> Explorar carros</Link></li>
               <li><Link to="/anunciar" className="hover:text-white transition-colors">Anunciar veículo</Link></li>
@@ -41,7 +41,7 @@ export function Footer() {
 
           {/* Informações */}
           <div>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-widest text-white/55">Informações</p>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/55">Informações</p>
             <ul className="space-y-2.5 text-sm">
               <li><Link to="/compra-segura" className="hover:text-white transition-colors flex items-center gap-1.5"><Shield className="h-3 w-3" /> Compra segura</Link></li>
               <li><Link to="/blog" className="hover:text-white transition-colors flex items-center gap-1.5"><BookOpen className="h-3 w-3" /> Blog e dicas</Link></li>
@@ -52,7 +52,7 @@ export function Footer() {
 
           {/* Newsletter */}
           <div>
-            <p className="mb-4 text-[11px] font-semibold uppercase tracking-widest text-white/55">Newsletter</p>
+            <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-white/55">Newsletter</p>
             <p className="text-sm text-white/70 mb-3">Receba os melhores clássicos na sua caixa de entrada.</p>
             <div className="flex gap-2">
               <input

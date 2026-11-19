@@ -160,14 +160,14 @@ function AbaAnuncios({ myListings }: { myListings: Listing[] }) {
                     </td>
                     <td className="p-3 hidden sm:table-cell">
                       <span
-                        className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                        className="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold text-white"
                         style={{ backgroundColor: CATEGORY_COLORS[l.category] }}
                       >
                         {CATEGORY_LABELS[l.category]}
                       </span>
                     </td>
                     <td className="p-3">
-                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold capitalize ${statusColor(l.status)}`}>
+                      <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold capitalize ${statusColor(l.status)}`}>
                         {l.status}
                       </span>
                     </td>
@@ -607,7 +607,7 @@ function AbaSeguranca() {
                     <p className="text-sm font-medium flex items-center gap-2">
                       {s.device}
                       {s.current && (
-                        <span className="text-[10px] font-semibold text-[color:var(--color-cat-complete)] bg-[color:var(--color-cat-complete)]/10 px-1.5 py-0.5 rounded-full">
+                        <span className="text-xs font-semibold text-[color:var(--color-cat-complete)] bg-[color:var(--color-cat-complete)]/10 px-1.5 py-0.5 rounded-full">
                           Esta sessão
                         </span>
                       )}
@@ -774,7 +774,7 @@ function AbaPlano({ myListings }: { myListings: Listing[] }) {
                     <td className="p-3 font-medium">{formatPrice(p.amount)}</td>
                     <td className="p-3">
                       <span
-                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${
+                        className={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold ${
                           p.status === "pago"
                             ? "bg-[color:var(--color-cat-complete)]/10 text-[color:var(--color-cat-complete)]"
                             : p.status === "falhou"

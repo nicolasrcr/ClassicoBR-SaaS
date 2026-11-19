@@ -63,7 +63,7 @@ function EventosPage() {
         <div className="mx-auto max-w-7xl relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 mb-5">
             <Calendar className="h-3.5 w-3.5 text-[color:var(--color-terracotta-light)]" />
-            <span className="text-[11px] uppercase tracking-[0.15em] text-white/80">Agenda</span>
+            <span className="text-xs uppercase tracking-[0.15em] text-white/80">Agenda</span>
           </div>
           <h1 className="font-serif text-4xl md:text-6xl text-white leading-tight">
             Encontros, exposições<br />
@@ -81,7 +81,7 @@ function EventosPage() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar eventos por título, descrição ou local…" className="pl-9 h-10" />
+                <Input aria-label="Buscar eventos por título, descrição ou local" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar eventos por título, descrição ou local…" className="pl-9 h-10" />
               </div>
               <Button onClick={() => {
                 if (!user) { toast.error("Faça login para divulgar um evento"); return; }
@@ -107,7 +107,7 @@ function EventosPage() {
                   {BR_STATES.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
                 </SelectContent>
               </Select>
-              <Input value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="Cidade" className="h-9" />
+              <Input aria-label="Cidade" value={cidade} onChange={(e) => setCidade(e.target.value)} placeholder="Cidade" className="h-9" />
               <Input type="date" value={dataIni} onChange={(e) => setDataIni(e.target.value)} className="h-9" />
               <Input type="date" value={dataFim} onChange={(e) => setDataFim(e.target.value)} className="h-9" />
               <Select value={sort} onValueChange={(v) => setSort(v as typeof sort)}>
@@ -144,10 +144,10 @@ function EventosPage() {
                 </div>
                 <div className="p-4 flex flex-col gap-2 flex-1">
                   <div className="flex items-center justify-between">
-                    <span className="rounded-full bg-[color:var(--color-terracotta)]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[color:var(--color-terracotta)]">
+                    <span className="rounded-full bg-[color:var(--color-terracotta)]/10 px-2 py-0.5 text-xs font-semibold uppercase tracking-wider text-[color:var(--color-terracotta)]">
                       {TIPO_EVENTO_LABELS[ev.tipo]}
                     </span>
-                    <span className="text-[11px] text-muted-foreground">{formatDateRange(ev.dataInicio, ev.dataFim)}</span>
+                    <span className="text-xs text-muted-foreground">{formatDateRange(ev.dataInicio, ev.dataFim)}</span>
                   </div>
                   <h3 className="font-serif text-lg leading-tight">{ev.titulo}</h3>
                   <p className="text-xs text-muted-foreground line-clamp-2">{ev.descricao}</p>
@@ -159,7 +159,7 @@ function EventosPage() {
                     </span>
                   </div>
                   {isAdmin && ev.statusModeracao && ev.statusModeracao !== "aprovado" && (
-                    <span className="text-[10px] uppercase font-semibold text-amber-700">moderação: {ev.statusModeracao}</span>
+                    <span className="text-xs uppercase font-semibold text-amber-700">moderação: {ev.statusModeracao}</span>
                   )}
                 </div>
               </Link>
@@ -365,7 +365,7 @@ function EventoForm({ onClose, onSubmit, userId, userName }: {
         </div>
         <div className="md:col-span-1">
           <TraceabilityPanel trace={trace} />
-          <p className="mt-3 text-[11px] text-muted-foreground">
+          <p className="mt-3 text-xs text-muted-foreground">
             Publicações com <strong>score &lt; 50</strong> são bloqueadas. Toda submissão fica pendente até aprovação na fila de moderação.
           </p>
         </div>

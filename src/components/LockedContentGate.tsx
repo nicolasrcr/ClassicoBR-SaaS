@@ -118,7 +118,7 @@ export function LockedContentGate({
             </Button>
           </div>
 
-          <p className="mt-4 text-center text-[11px] text-muted-foreground">
+          <p className="mt-4 text-center text-xs text-muted-foreground">
             Você voltará automaticamente para esta página após entrar.
           </p>
         </div>

@@ -197,7 +197,7 @@ function AdminListings() {
       <div className="mb-4 flex flex-wrap items-center gap-3 rounded-[10px] border border-border bg-card p-4">
         <div className="relative flex-1 min-w-[200px]">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input placeholder="Buscar título ou vendedor…" value={search} onChange={(e) => { setSearch(e.target.value); setPage(0); }} className="pl-9" />
+          <Input aria-label="Buscar título ou vendedor" placeholder="Buscar título ou vendedor…" value={search} onChange={(e) => { setSearch(e.target.value); setPage(0); }} className="pl-9" />
         </div>
         <Select value={cat} onValueChange={(v) => { setCat(v as Category | "all"); setPage(0); }}>
           <SelectTrigger className="w-40"><SelectValue placeholder="Categoria" /></SelectTrigger>

@@ -130,7 +130,7 @@ function Comparar() {
             <DialogHeader>
               <DialogTitle>Adicionar veículo à comparação</DialogTitle>
             </DialogHeader>
-            <Input
+            <Input aria-label="Buscar por marca, modelo ou título"
               placeholder="Buscar por marca, modelo ou título…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -216,14 +216,14 @@ function Comparar() {
                         <Link
                           to="/car/$id"
                           params={{ id: l.id }}
-                          className="text-[11px] text-[color:var(--color-terracotta)] hover:underline font-medium"
+                          className="text-xs text-[color:var(--color-terracotta)] hover:underline font-medium"
                         >
                           Ver anúncio →
                         </Link>
-                        <span className="text-muted-foreground text-[11px]">·</span>
+                        <span className="text-muted-foreground text-xs">·</span>
                         <button
                           onClick={() => toggleCompare(l.id)}
-                          className="text-[11px] text-muted-foreground hover:text-destructive transition-colors flex items-center gap-0.5"
+                          className="text-xs text-muted-foreground hover:text-destructive transition-colors flex items-center gap-0.5"
                         >
                           <X className="h-3 w-3" /> Remover
                         </button>
@@ -303,7 +303,7 @@ function Comparar() {
           <DialogHeader>
             <DialogTitle>Adicionar veículo à comparação</DialogTitle>
           </DialogHeader>
-          <Input
+          <Input aria-label="Buscar por marca, modelo ou título"
             placeholder="Buscar por marca, modelo ou título…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}

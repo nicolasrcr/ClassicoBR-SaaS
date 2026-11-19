@@ -102,12 +102,12 @@ function Favoritos() {
                       </div>
                     )}
                     {/* Saved badge */}
-                    <div className="absolute top-2 left-2 rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-0.5 text-[10px] text-white">
+                    <div className="absolute top-2 left-2 rounded-full bg-black/60 backdrop-blur-sm px-2.5 py-0.5 text-xs text-white">
                       Salvo há {days} dia{days !== 1 ? "s" : ""}
                     </div>
                     {/* Category badge */}
                     <div
-                      className="absolute top-2 right-2 rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                      className="absolute top-2 right-2 rounded-full px-2 py-0.5 text-xs font-semibold text-white"
                       style={{ backgroundColor: catColor }}
                     >
                       {CATEGORY_LABELS[listing.category]}

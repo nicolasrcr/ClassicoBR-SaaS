@@ -64,7 +64,7 @@ function CompraSegura() {
               {checklist.map((item, i) => (
                 <div key={i} className="flex items-start gap-3 rounded-xl border border-[color:var(--color-border-cream)] bg-white p-4 shadow-sm hover:border-[color:var(--color-cat-complete)]/30 transition-colors">
                   <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[color:var(--color-cat-complete)]/10 mt-0.5">
-                    <span className="text-[10px] font-bold text-[color:var(--color-cat-complete)]">{i + 1}</span>
+                    <span className="text-xs font-bold text-[color:var(--color-cat-complete)]">{i + 1}</span>
                   </div>
                   <p className="text-sm leading-relaxed">{item}</p>
                 </div>
