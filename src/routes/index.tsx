@@ -94,7 +94,7 @@ function Index() {
               <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/85 animate-fade-up animate-fade-up-2">
                 Compre e venda Opalas, Fuscas, Galaxies, Mavericks e outras lendas
                 com <span className="text-white font-medium">histórico declarado pelo vendedor</span>
-                e contato direto com o dono.
+                e conversa com o dono pelo chat do site.
               </p>
 
               {/* Inline glass search */}
@@ -220,7 +220,7 @@ function Index() {
           {[
             { icon: ShieldCheck, title: "Histórico transparente", desc: "Vendedor declara chassi, motor e situação fiscal" },
             { icon: Sparkles, title: "Score de confiança", desc: "Anunciantes com histórico" },
-            { icon: Handshake, title: "Contato direto", desc: "Sem atravessador, sem taxa" },
+            { icon: Handshake, title: "Relíquias com história", desc: "Opalas, Fuscas, Galaxies e outros carros que marcaram época" },
             { icon: Award, title: "Curadoria de clássicos", desc: "Só carros 20+ anos" },
           ].map(({ icon: Icon, title, desc }) => (
             <div key={title} className="flex items-center gap-3 py-5 md:py-6">
