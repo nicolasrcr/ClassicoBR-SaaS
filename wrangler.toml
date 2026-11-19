@@ -1,0 +1,15 @@
+name = "classic-ride-trade"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+main = "dist/server/server.js"
+assets = { directory = "dist/client" }
+
+[vars]
+# Variáveis públicas (não-secretas) podem ficar aqui
+
+# Segredos são configurados via GitHub Actions secrets:
+#   CLOUDFLARE_API_TOKEN
+#   CLOUDFLARE_ACCOUNT_ID
+#   VITE_SUPABASE_URL
+#   VITE_SUPABASE_ANON_KEY
