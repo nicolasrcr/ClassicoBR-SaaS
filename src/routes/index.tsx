@@ -92,8 +92,8 @@ function Index() {
               </h1>
 
               <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-white/85 animate-fade-up animate-fade-up-2">
-                Compre e venda Opalas, Fuscas, Galaxies, Mavericks e outras lendas
-                com <span className="text-white font-medium">histórico declarado pelo vendedor</span>
+                Encontre o Opala, o Fusca ou o Maverick que você procura, ou anuncie o seu para quem
+                valoriza de verdade. Com <span className="text-white font-medium">histórico declarado pelo vendedor</span>{" "}
                 e conversa com o dono pelo chat do site.
               </p>
 
@@ -128,7 +128,7 @@ function Index() {
                   to="/anunciar"
                   className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/[0.04] backdrop-blur-sm px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10 hover:border-white/40 transition-all"
                 >
-                  <Plus className="h-4 w-4" /> Anunciar meu carro
+                  <Plus className="h-4 w-4" /> Anunciar meu clássico
                 </Link>
                 <Link
                   to="/compra-segura"
@@ -139,27 +139,10 @@ function Index() {
                 </Link>
               </div>
 
-              {/* Inline trust avatars */}
-              <div className="mt-8 flex items-center gap-4 animate-fade-up animate-fade-up-3">
-                <div className="flex -space-x-2">
-                  {["#C4552A", "#C9943A", "var(--color-cat-complete)", "var(--color-cat-todo)"].map((c, i) => (
-                    <div
-                      key={i}
-                      className="h-8 w-8 rounded-full border-2 border-[#0c0a09] ring-1 ring-white/10"
-                      style={{ background: `linear-gradient(135deg, ${c}, ${c}cc)` }}
-                    />
-                  ))}
-                </div>
-                <div className="text-xs text-white/80">
-                  <div className="flex items-center gap-1 text-[color:var(--color-gold-light)]">
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star key={i} className="h-3 w-3 fill-current" />
-                    ))}
-                    <span className="ml-1.5 text-white font-semibold">4.9</span>
-                  </div>
-                  <span>+{totals.sellers} vendedores verificados</span>
-                </div>
-              </div>
+              {/* Prova real: só números do próprio marketplace */}
+              <p className="mt-8 text-xs text-white/80 animate-fade-up animate-fade-up-3">
+                {totals.total} anúncios ativos de {totals.sellers} vendedores em {totals.cities} cidades
+              </p>
             </div>
 
             {/* Right: floating premium stat card (desktop only) */}
@@ -202,7 +185,7 @@ function Index() {
                   </div>
 
                   <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-xs text-white/50">Atualizado agora</span>
+                    <span className="text-xs text-white/50">Os anúncios mais recentes</span>
                     <Link to="/anuncios" className="text-xs text-[color:var(--color-terracotta-light)] hover:text-white font-semibold transition-colors">
                       Ver tudo →
                     </Link>

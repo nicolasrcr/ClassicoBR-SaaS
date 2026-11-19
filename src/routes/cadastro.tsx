@@ -134,7 +134,7 @@ function Cadastro() {
           </div>
           <div>
             <h1 className="font-serif text-3xl text-foreground">Criar conta</h1>
-            <p className="text-sm text-muted-foreground">Junte-se à comunidade ClassicosBR</p>
+            <p className="text-sm text-muted-foreground">Anuncie seu clássico ou encontre o próximo da garagem</p>
           </div>
         </div>
 
